@@ -24,3 +24,4 @@ Developed with ❤️ and caffeine by:
 - Trained models and test data
 - Documentation and technical report (in `/docs`)
 
+> If you like this project please join to our discord to increase the robotics community and feedback! [Join discord here! 🦑](https://discord.gg/gCf6xwBBVd)
