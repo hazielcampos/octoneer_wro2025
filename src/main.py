@@ -24,6 +24,7 @@ def setup():
     GPIO.setwarnings(False)
     motor = Motor(pin_forward=12, pin_backward=13)  # Ajusta los pines según tu conexión
     servo.angle = 50
+    loop()
     
 def loop():
     while True:
@@ -48,7 +49,6 @@ def cleanup():
     pca.deinit()
 try:
     setup()
-    loop()
     
 except KeyboardInterrupt:
     print("Interrupción del usuario, deteniendo el servo.")
