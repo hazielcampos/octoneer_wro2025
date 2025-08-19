@@ -3,7 +3,7 @@ import board
 import busio
 from adafruit_pca9685 import PCA9685
 from adafruit_motor import servo
-from src.libs import GPIO
+from libs import GPIO
 
 # =========================
 # Configuración del servo con PCA9685
