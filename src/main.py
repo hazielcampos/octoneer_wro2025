@@ -38,12 +38,12 @@ def setup():
 # =========================
 def loop():
     while True:
-        servo.angle = 60  # Ajusta el ángulo del servo
-        time.sleep(1)
-        servo.angle = 46  # Ajusta el ángulo del servo
-        time.sleep(1)
-        servo.angle = 53
-        time.sleep(1)
+        angle = int(input("Ingrese el ángulo del servo (0-180): "))
+        if 0 <= angle <= 180:
+            servo.angle = angle
+            print(f"Servo movido a {angle} grados.")
+        else:
+            print("Ángulo fuera de rango. Debe estar entre 0 y 180.")
 
 # =========================
 # Limpieza al finalizar
