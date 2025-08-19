@@ -27,6 +27,17 @@ GPIO.setup(BACKWARD_IO, GPIO.OUT)
 FORWARD_PWM = GPIO.PWM(FORWARD_IO, 1000)  # 1 kHz
 BACKWARD_PWM = GPIO.PWM(BACKWARD_IO, 1000)  # 1 kHz
 
+# =========================
+# Funciones de control del motor
+# =========================
+def forward(speed):
+    BACKWARD_PWM.ChangeDutyCycle(0)
+    FORWARD_PWM.ChangeDutyCycle(speed)
+
+def backward(speed):
+    FORWARD_PWM.ChangeDutyCycle(0)
+    BACKWARD_PWM.ChangeDutyCycle(speed)
+
 def setup():
     servo.angle = 53
     FORWARD_PWM.start(0)
@@ -62,13 +73,3 @@ except KeyboardInterrupt:
 finally:
     cleanup()
     
-# =========================
-# Funciones de control del motor
-# =========================
-def forward(speed):
-    BACKWARD_PWM.ChangeDutyCycle(0)
-    FORWARD_PWM.ChangeDutyCycle(speed)
-
-def backward(speed):
-    FORWARD_PWM.ChangeDutyCycle(0)
-    BACKWARD_PWM.ChangeDutyCycle(speed)
