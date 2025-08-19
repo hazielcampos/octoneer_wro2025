@@ -28,7 +28,7 @@ FORWARD_PWM = GPIO.PWM(FORWARD_IO, 1000)  # 1 kHz
 BACKWARD_PWM = GPIO.PWM(BACKWARD_IO, 1000)  # 1 kHz
 
 def setup():
-    servo.angle = 50
+    servo.angle = 53
     FORWARD_PWM.start(0)
     BACKWARD_PWM.start(0)
     loop()
@@ -40,9 +40,9 @@ def loop():
     while True:
         servo.angle = 60  # Ajusta el ángulo del servo
         time.sleep(1)
-        servo.angle = 40  # Ajusta el ángulo del servo
+        servo.angle = 46  # Ajusta el ángulo del servo
         time.sleep(1)
-        servo.angle = 50
+        servo.angle = 53
         time.sleep(1)
 
 # =========================
