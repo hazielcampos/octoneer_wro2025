@@ -20,8 +20,8 @@ servo = servo.Servo(pca.channels[0])
 # Configuración del GPIO
 # =========================
 
-FORWARD_IO = 12  # Pin GPIO para mover el motor hacia adelante
-BACKWARD_IO = 13  # Pin GPIO para mover el motor hacia atrás
+FORWARD_IO = 13  # Pin GPIO para mover el motor hacia adelante
+BACKWARD_IO = 12  # Pin GPIO para mover el motor hacia atrás
 GPIO.setup(FORWARD_IO, GPIO.OUT)
 GPIO.setup(BACKWARD_IO, GPIO.OUT)
 FORWARD_PWM = GPIO.PWM(FORWARD_IO, 1000)  # 1 kHz
@@ -39,7 +39,7 @@ def backward(speed):
     BACKWARD_PWM.ChangeDutyCycle(speed)
 
 def setup():
-    servo.angle = 53
+    servo.angle = 42
     FORWARD_PWM.start(0)
     BACKWARD_PWM.start(0)
     loop()
@@ -49,9 +49,9 @@ def setup():
 # =========================
 def loop():
     while True:
-        forward(30)
+        forward(50)
         time.sleep(2)  # Mover hacia adelante por 2 segundos
-        backward(30)
+        backward(50)
         time.sleep(2)  # Mover hacia atrás por 2 segundos
         forward(0)  # Detener el motor
         time.sleep(1)
