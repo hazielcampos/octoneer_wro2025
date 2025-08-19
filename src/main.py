@@ -1,52 +1,58 @@
-import RPi.GPIO as GPIO
 import time
-import threading
 import board
 import busio
 from adafruit_pca9685 import PCA9685
 from adafruit_motor import servo
-from control.Motor import Motor
+from src.libs import GPIO
 
+# =========================
+# Configuración del servo con PCA9685
+# =========================
 # Inicializar I2C
 i2c = busio.I2C(board.SCL, board.SDA)
-
 # Inicializar PCA9685
 pca = PCA9685(i2c)
 pca.frequency = 50  # Hz para servos
-
 # Configurar servo en canal 0
 servo = servo.Servo(pca.channels[0])
-motor = None
+
+# =========================
+# Configuración del GPIO
+# =========================
+
+FORWARD_IO = 12  # Pin GPIO para mover el motor hacia adelante
+BACKWARD_IO = 13  # Pin GPIO para mover el motor hacia atrás
+GPIO.setup(FORWARD_IO, GPIO.OUT)
+GPIO.setup(BACKWARD_IO, GPIO.OUT)
+FORWARD_PWM = GPIO.PWM(FORWARD_IO, 1000)  # 1 kHz
+BACKWARD_PWM = GPIO.PWM(BACKWARD_IO, 1000)  # 1 kHz
 
 def setup():
-    global motor
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setwarnings(False)
-    motor = Motor(pin_forward=12, pin_backward=13)  # Ajusta los pines según tu conexión
     servo.angle = 50
+    FORWARD_PWM.start(0)
+    BACKWARD_PWM.start(0)
     loop()
     
+# =========================
+# Función principal
+# =========================
 def loop():
     while True:
-        motor.forward(speed=0.3)
-        time.sleep(1)
-        motor.backward(speed=0.3)
-        time.sleep(1)
-        motor.stop()
-        time.sleep(1)
         servo.angle = 60  # Ajusta el ángulo del servo
         time.sleep(1)
         servo.angle = 40  # Ajusta el ángulo del servo
         time.sleep(1)
-        motor.forward(speed=0.3)
-        time.sleep(1)
         servo.angle = 50
         time.sleep(1)
 
+# =========================
+# Limpieza al finalizar
+# =========================
 def cleanup():
-    motor.stop()
     GPIO.cleanup()
     pca.deinit()
+
+
 try:
     setup()
     
@@ -55,3 +61,14 @@ except KeyboardInterrupt:
     cleanup()
 finally:
     cleanup()
+    
+# =========================
+# Funciones de control del motor
+# =========================
+def forward(speed):
+    BACKWARD_PWM.ChangeDutyCycle(0)
+    FORWARD_PWM.ChangeDutyCycle(speed)
+
+def backward(speed):
+    FORWARD_PWM.ChangeDutyCycle(0)
+    BACKWARD_PWM.ChangeDutyCycle(speed)

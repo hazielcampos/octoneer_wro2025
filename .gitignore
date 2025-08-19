@@ -4,3 +4,4 @@ log
 .vscode
 src/autonomous_robot/.vscode
 src/autonomous_robot/.gitignore
+venv
