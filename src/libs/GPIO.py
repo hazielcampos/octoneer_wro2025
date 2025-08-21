@@ -21,7 +21,7 @@ def setup(pin, mode, pull_up_down=PUD_OFF):
         if pull_up_down == PUD_OFF:
             lgpio.gpio_claim_input(chip, pin)
         else:
-            lgpio.gpio_claim_input(chip, pin, pull_up_down=pull_up_down)
+            lgpio.gpio_claim_input(chip, pin, pull_up_down)
     else:
         raise ValueError("Modo no soportado")
 
