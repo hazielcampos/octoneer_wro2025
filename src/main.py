@@ -100,10 +100,9 @@ def loop():
     global is_running
     while True:
         if get_button():
-            """is_running = not is_running
+            is_running = not is_running
             print("Sistema " + ("iniciado" if is_running else "detenido"))
-            time.sleep(0.3)  # debounce"""
-            print("Button pressed")
+            time.sleep(0.3)  # debounce
         
         time.sleep(0.1)
             
