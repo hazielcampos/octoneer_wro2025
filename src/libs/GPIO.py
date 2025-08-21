@@ -5,7 +5,7 @@ import time
 OUT = 0
 IN = 1
 
-PUD_OFF  = lgpio.SET_BIAS_DISABLE
+PUD_OFF = None
 PUD_DOWN = lgpio.SET_BIAS_PULL_DOWN
 PUD_UP   = lgpio.SET_BIAS_PULL_UP
 
@@ -18,7 +18,10 @@ def setup(pin, mode, pull_up_down=PUD_OFF):
     if mode == OUT:
         lgpio.gpio_claim_output(chip, pin)
     elif mode == IN:
-        lgpio.gpio_claim_input(chip, pin, pull_up_down=pull_up_down)
+        if pull_up_down == PUD_OFF:
+            lgpio.gpio_claim_input(chip, pin)
+        else:
+            lgpio.gpio_claim_input(chip, pin, pull_up_down=pull_up_down)
     else:
         raise ValueError("Modo no soportado")
 
