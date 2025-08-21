@@ -35,7 +35,7 @@ input_io = 17  # Pin GPIO para leer el estado del sensor
 GPIO.setup(input_io, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Configurar el botón con pull-up
 
 def get_button():
-    return GPIO.input(input_io)
+    return not GPIO.input(input_io)
 
 # =========================
 # Funciones de control del motor
