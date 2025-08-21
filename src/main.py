@@ -87,9 +87,6 @@ def command_loop():
     while True:
         if is_running:
             forward(50, 2)
-            stop_and_wait(1)
-            backward(50, 2)
-            stop_and_wait(1)
         else: 
             time.sleep(0.1)  # Esperar si no está en ejecución
             
