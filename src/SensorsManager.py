@@ -52,8 +52,8 @@ def process_frame(frame):
     cv2.putText(frame, f"Zona: {line_zone}", (10, 460), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-    cv2.imshow("Mask", mask)
-    cv2.imshow("Camera Feed", frame)
+    return mask, frame
+    
 
 def get_line_zone():
     return line_zone
@@ -64,15 +64,13 @@ def get_line_zone():
 
 def thread_function():
     while not finished:
-        if is_running:
-            ret, frame = video.read()
-            if not ret:
-                break
-            process_frame(frame)
-            time.sleep(0.05)  # Wait a bit before processing the next frame
-        else:
-            time2.sleep(0.1)  # Wait if not active
-            
+        ret, frame = video.read()
+        if not ret:
+            break
+        mask, frame2 = process_frame(frame)
+        time.sleep(0.05)  # Wait a bit before processing the next frame    
+        cv2.imshow("Mask", mask)
+        cv2.imshow("Camera Feed", frame2)
 
 # =========================
 # Video capture and thread management
