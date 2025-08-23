@@ -68,9 +68,10 @@ def thread_function():
         if not ret:
             break
         mask, frame2 = process_frame(frame)
-        time.sleep(0.05)  # Wait a bit before processing the next frame    
         cv2.imshow("Mask", mask)
         cv2.imshow("Camera Feed", frame2)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
 # =========================
 # Video capture and thread management
@@ -87,6 +88,8 @@ def start():
 def cleanup():
     global finished
     finished = True
-    time.sleep(0.05)  # Wait for the thread to finish
-    video.release()
+    if video is not None:
+        video.release()
     cv2.destroyAllWindows()
+    if process_thread.is_alive():
+        process_thread.join()
