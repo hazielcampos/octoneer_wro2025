@@ -4,10 +4,10 @@ import SensorsManager as sensors
 import time
 
 # =========================
-# Configuración del sensor de botón
+# Button sensor configuration
 # =========================
-input_io = 17  # Pin GPIO para leer el estado del sensor
-GPIO.setup(input_io, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Configurar el botón con pull-up
+input_io = 17  # GPIO pin to read the sensor state
+GPIO.setup(input_io, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Setup button with pull-up
 
 def get_button():
     return not GPIO.input(input_io)

@@ -10,14 +10,14 @@ import time
 from SensorsManager import LINE_CENTER, LINE_LEFT, LINE_RIGHT, LINE_NONE
 
 # =========================
-# constantes
+# Constants
 # =========================
-CENTER_POSITION = 42  # Posición neutral del servo
-LEFT_POSITION = 32 # Posición izquierda del servo
-RIGHT_POSITION = 52  # Posición derecha del servo
+CENTER_POSITION = 42  # Neutral position of the servo
+LEFT_POSITION = 32 # Left position of the servo
+RIGHT_POSITION = 52  # Right position of the servo
 
 # =========================
-# Variables de estado
+# State variables
 # =========================
 is_running = False
 finished = False
@@ -26,18 +26,18 @@ def set_active(active: bool):
     is_running = active
 
 # =========================
-# Configuración del servo con PCA9685
+# PCA9685 and Servo setup
 # =========================
 i2c = busio.I2C(board.SCL, board.SDA)
 pca = PCA9685(i2c)
-pca.frequency = 50  # Hz para servos
+pca.frequency = 50  # Servo frequency
 direction_servo = servo.Servo(pca.channels[0])
 
 # =========================
-# Configuración del GPIO
+# GPIO setup
 # =========================
-FORWARD_IO = 13  # Pin GPIO para mover el motor hacia adelante
-BACKWARD_IO = 12  # Pin GPIO para mover el motor hacia atrás
+FORWARD_IO = 13  # GPIO pin to move the motor forward
+BACKWARD_IO = 12  # GPIO pin to move the motor backward
 GPIO.setup(FORWARD_IO, GPIO.OUT)
 GPIO.setup(BACKWARD_IO, GPIO.OUT)
 FORWARD_PWM = GPIO.PWM(FORWARD_IO, 1000)  #
@@ -54,7 +54,8 @@ def stop_motors():
     BACKWARD_PWM.ChangeDutyCycle(0)
 
 def handle_sensors():
-    time.sleep(0.05)  # Simular procesamiento de sensores
+    time.sleep(0.05)  # Simulate sensor processing delay
+    
 def thread_function():
     while not finished:
         if is_running:
@@ -65,14 +66,14 @@ def thread_function():
 process_thread = threading.Thread(target=thread_function, daemon=True)
 
 def start():
-    direction_servo.angle = CENTER_POSITION  # Posición neutral del servo
-    FORWARD_PWM.start(0)  # Iniciar PWM con ciclo de trabajo 0
-    BACKWARD_PWM.start(0)  # Iniciar PWM con ciclo de trabajo 0
+    direction_servo.angle = CENTER_POSITION  # Neutral position
+    FORWARD_PWM.start(0)  # Start PWM with 0 duty cycle
+    BACKWARD_PWM.start(0) 
     if not process_thread.is_alive():
         process_thread.start()
 
 def cleanup():
     global finished
-    pca.deinit()  # Liberar el PCA9685
+    pca.deinit()  # Deinitialize PCA9685
     finished = True
     stop_motors()

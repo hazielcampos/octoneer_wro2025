@@ -9,11 +9,11 @@ PUD_OFF = None
 PUD_DOWN = lgpio.SET_PULL_DOWN
 PUD_UP   = lgpio.SET_PULL_UP
 
-# Abrir chip principal raspberry
+# Open the GPIO chip (usually chip 0 for Raspberry Pi)
 chip = lgpio.gpiochip_open(0)
 active_pwm = []
 
-# funciones basicas
+# Basic GPIO functions
 def setup(pin, mode, pull_up_down=PUD_OFF):
     if mode == OUT:
         lgpio.gpio_claim_output(chip, pin)
