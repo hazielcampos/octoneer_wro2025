@@ -63,6 +63,8 @@ def get_line_zone():
 # =========================
 
 def thread_function():
+    global video
+    video = cv2.VideoCapture(0)
     while not finished:
         ret, frame = video.read()
         if not ret:
@@ -81,7 +83,6 @@ def start():
     global video
     if video is not None:
         video.release()
-    video = cv2.VideoCapture(0)
     if not process_thread.is_alive():
         process_thread.start()
 
