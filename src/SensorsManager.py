@@ -48,6 +48,12 @@ def process_frame(frame):
         
         x = cx - (roi.shape[1] // 2)
         line_position = x / (roi.shape[1] // 2)
+    
+    cv2.putText(frame, f"Zona: {line_zone}", (10, 460), 
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+    cv2.imshow("Mask", mask)
+    cv2.imshow("Camera Feed", frame)
 
 def get_line_zone():
     return line_zone
