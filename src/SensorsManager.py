@@ -34,7 +34,7 @@ def set_active(active: bool):
 # =========================
 def process_frame(frame):
     global line_position
-    roi = frame[100:230, 80:600]  # Adjust according to your camera
+    roi = frame[140:230, 100:580]  # Adjust according to your camera
     hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
     
     lower_blue = (20, 30, 40)
