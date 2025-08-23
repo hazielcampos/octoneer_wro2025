@@ -7,7 +7,7 @@ from libs import betterTime as time2
 import threading
 import time
 
-from SensorsManager import LINE_CENTER, LINE_LEFT, LINE_RIGHT, LINE_NONE
+from SensorsManager import line_position
 
 # =========================
 # Constants
@@ -53,8 +53,33 @@ def stop_motors():
     FORWARD_PWM.ChangeDutyCycle(0)
     BACKWARD_PWM.ChangeDutyCycle(0)
 
+Kp = 30.0
+Ki = 0.0
+Kd = 10.0
+
+last_error = 0.0
+integral = 0.0
+
+def PID_control():
+    global last_error, integral
+    
+    error = line_position
+    
+    integral += error
+    derivative = error - last_error
+    last_error = error
+    
+    max_offset = (RIGHT_POSITION - CENTER_POSITION)
+    correction = Kp * error + Ki * integral + Kd * derivative
+    
+    angle = CENTER_POSITION + correction * max_offset
+    angle = round(angle / 2) * 2  # Round to nearest even number
+    angle = max(LEFT_POSITION, min(RIGHT_POSITION, angle))
+    direction_servo.angle = angle
+
 def handle_sensors():
-    time.sleep(0.05)  # Simulate sensor processing delay
+    PID_control()
+    forward(50)
     
 def thread_function():
     while not finished:

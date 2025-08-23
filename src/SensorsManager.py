@@ -18,6 +18,7 @@ LINE_NONE = 3
 # =========================
 video = None
 line_zone = "None"
+line_position = 0
 
 # =========================
 # State variables
@@ -32,7 +33,21 @@ def set_active(active: bool):
 # Specific functions of the Sensor Manager
 # =========================
 def process_frame(frame):
-    time.sleep(0.05)  # Simulate processing delay
+    global line_position
+    roi = frame[100:230, 40:640]  # Adjust according to your camera
+    hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+    
+    lower_blue = (20, 30, 40)
+    upper_blue = (140, 255, 255)
+    
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    
+    M = cv2.moments(mask)
+    if M["m00"] > 0:
+        cx = int(M["m10"] / M["m00"])
+        
+        x = cx - (roi.shape[1] // 2)
+        line_position = x / (roi.shape[1] // 2)
 
 def get_line_zone():
     return line_zone
