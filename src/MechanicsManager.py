@@ -75,6 +75,7 @@ def PID_control():
     angle = CENTER_POSITION + correction * max_offset
     angle = round(angle / 2) * 2  # Round to nearest even number
     angle = max(LEFT_POSITION, min(RIGHT_POSITION, angle))
+    print(angle)
     direction_servo.angle = angle
 
 def handle_sensors():
