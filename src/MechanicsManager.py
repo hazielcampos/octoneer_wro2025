@@ -79,13 +79,16 @@ def PID_control():
 
 def handle_sensors():
     PID_control()
-    forward(50)
+    speed = 50 - int(abs(line_position) * 20)
+    forward(speed)
     
 def thread_function():
     while not finished:
         if is_running:
             handle_sensors()
         else:
+            stop_motors()
+            direction_servo.angle = CENTER_POSITION
             time2.sleep(0.1)
 
 process_thread = threading.Thread(target=thread_function, daemon=True)
