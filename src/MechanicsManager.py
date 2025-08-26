@@ -62,7 +62,7 @@ integral = 0.0
 def PID_control():
     global last_error, integral
     
-    error = SensorsManager.line_position
+    error = SensorsManager.line_position * -1
     print(f"Error: {error}")
     
     integral += error
