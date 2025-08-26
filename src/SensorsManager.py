@@ -49,7 +49,7 @@ def process_frame(frame):
         x = cx - (roi.shape[1] // 2)
         line_position = x / (roi.shape[1] // 2)
     
-    cv2.putText(frame, f"Zona: {line_zone}", (10, 460), 
+    cv2.putText(frame, f"Posicion: {line_position}", (10, 460), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
     return mask, frame

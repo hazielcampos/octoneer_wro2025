@@ -7,8 +7,7 @@ from libs import betterTime as time2
 import threading
 import time
 
-from SensorsManager import line_position
-
+import SensorsManager
 # =========================
 # Constants
 # =========================
@@ -63,7 +62,7 @@ integral = 0.0
 def PID_control():
     global last_error, integral
     
-    error = line_position
+    error = SensorsManager.line_position
     print(f"Error: {error}")
     
     integral += error
@@ -80,7 +79,7 @@ def PID_control():
 
 def handle_sensors():
     PID_control()
-    speed = 50 - int(abs(line_position) * 20)
+    speed = 50 - int(abs(SensorsManager.line_position) * 20)
     forward(speed)
     
 def thread_function():
