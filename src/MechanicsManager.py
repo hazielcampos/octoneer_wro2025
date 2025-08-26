@@ -52,9 +52,9 @@ def stop_motors():
     FORWARD_PWM.ChangeDutyCycle(0)
     BACKWARD_PWM.ChangeDutyCycle(0)
 
-Kp = 0.8
+Kp = 2
 Ki = 0.0
-Kd = 0.05
+Kd = 0.2
 
 last_error = 0.0
 integral = 0.0
