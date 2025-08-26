@@ -54,7 +54,7 @@ def stop_motors():
 
 Kp = 1.2
 Ki = 0.0
-Kd = 0.3
+Kd = 0.2
 
 last_error = 0.0
 integral = 0.0
