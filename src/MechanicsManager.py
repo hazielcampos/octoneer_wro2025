@@ -52,9 +52,9 @@ def stop_motors():
     FORWARD_PWM.ChangeDutyCycle(0)
     BACKWARD_PWM.ChangeDutyCycle(0)
 
-Kp = 1.2
+Kp = 0.8
 Ki = 0.0
-Kd = 0.2
+Kd = 0.05
 
 last_error = 0.0
 integral = 0.0
@@ -79,7 +79,7 @@ def PID_control():
 
 def handle_sensors():
     PID_control()
-    speed = 50 - int(abs(SensorsManager.line_position) * 20)
+    speed = 100 - int(abs(SensorsManager.line_position) * 20)
     forward(speed)
     
 def thread_function():
