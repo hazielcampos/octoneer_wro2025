@@ -90,26 +90,28 @@ def handle_curve():
 def handle_walls():
     pass  # Placeholder for wall handling logic
 
+curve_time = 0.3
+
 def handle_obstacle():
     if SensorsManager.obstacle_detected == SensorsManager.OBSTACLE_RED:
         direction_servo.angle = LEFT_POSITION
-        time.sleep(0.5)  # Turn left for 0.5 seconds
+        time.sleep(curve_time)  # Turn left for 0.5 seconds
         direction_servo.angle = RIGHT_POSITION
-        time.sleep(0.5)  # Turn right for 0.5 seconds
+        time.sleep(curve_time)  # Turn right for 0.5 seconds
         direction_servo.angle = LEFT_POSITION
-        time.sleep(0.25)
+        time.sleep(curve_time / 2)
         direction_servo.angle = CENTER_POSITION
     elif SensorsManager.obstacle_detected == SensorsManager.OBSTACLE_GREEN:
         direction_servo.angle = RIGHT_POSITION
-        time.sleep(0.5)  # Turn right for 0.5 seconds
+        time.sleep(curve_time)  # Turn right for 0.5 seconds
         direction_servo.angle = LEFT_POSITION
-        time.sleep(0.5)  # Turn left for 0.5 seconds
+        time.sleep(curve_time)  # Turn left for 0.5 seconds
         direction_servo.angle = RIGHT_POSITION
-        time.sleep(0.25)
+        time.sleep(curve_time / 2)
         direction_servo.angle = CENTER_POSITION
 
 def handle_sensors():
-    #handle_curve()
+    handle_curve()
     #handle_obstacle()
     speed = 100
     forward(speed)
