@@ -77,7 +77,7 @@ def PID_control():
     angle = max(LEFT_POSITION, min(RIGHT_POSITION, angle))
     direction_servo.angle = angle
 
-curve = 0.4
+curve = 0.5
 
 def handle_curve():
     indication = SensorsManager.curve_indication
