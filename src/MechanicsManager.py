@@ -88,6 +88,7 @@ def handle_curve():
         direction_servo.angle = CENTER_POSITION
 
 def handle_sensors():
+    handle_curve()
     speed = 40
     forward(speed)
     
