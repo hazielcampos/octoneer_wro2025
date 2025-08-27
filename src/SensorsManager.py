@@ -17,6 +17,16 @@ CURVE_NONE = 0
 CURVE_STARTS = 1
 CURVE_ENDS = 2
 
+OBSTACLE_NONE = 0
+OBSTACLE_GREEN = 1
+OBSTACLE_RED = 2
+
+WALL_TO_LEFT = 1
+WALL_TO_RIGHT = 2
+WALL_NONE = 0
+
+
+
 # =========================
 # Global variables
 # =========================
@@ -24,6 +34,8 @@ video = None
 line_zone = "None"
 line_position = 0
 curve_indication = CURVE_NONE
+obstacle_detected = OBSTACLE_NONE
+wall_correction = 0
 
 # =========================
 # State variables
@@ -37,6 +49,12 @@ def set_active(active: bool):
 # ========================
 # Specific functions of the Sensor Manager
 # =========================
+def get_wall_detection():
+    pass
+
+def obstacle_detected_func():
+    return obstacle_detected
+
 def get_curve_indication(frame):
     global curve_indication
     

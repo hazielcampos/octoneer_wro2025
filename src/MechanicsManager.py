@@ -81,16 +81,37 @@ def handle_curve():
     indication = SensorsManager.curve_indication
     if indication == SensorsManager.CURVE_STARTS:
         direction_servo.angle = RIGHT_POSITION
-        time.sleep(0.6)  # Small delay to ensure the curve is initiated
     elif indication == SensorsManager.CURVE_ENDS:
         time.sleep(0.3)  # Small delay to ensure the curve is completed
         direction_servo.angle = CENTER_POSITION
     else:
         direction_servo.angle = CENTER_POSITION
 
+def handle_walls():
+    pass  # Placeholder for wall handling logic
+
+def handle_obstacle():
+    if SensorsManager.obstacle_detected == SensorsManager.OBSTACLE_RED:
+        direction_servo.angle = LEFT_POSITION
+        time.sleep(0.5)  # Turn left for 0.5 seconds
+        direction_servo.angle = RIGHT_POSITION
+        time.sleep(0.5)  # Turn right for 0.5 seconds
+        direction_servo.angle = LEFT_POSITION
+        time.sleep(0.25)
+        direction_servo.angle = CENTER_POSITION
+    elif SensorsManager.obstacle_detected == SensorsManager.OBSTACLE_GREEN:
+        direction_servo.angle = RIGHT_POSITION
+        time.sleep(0.5)  # Turn right for 0.5 seconds
+        direction_servo.angle = LEFT_POSITION
+        time.sleep(0.5)  # Turn left for 0.5 seconds
+        direction_servo.angle = RIGHT_POSITION
+        time.sleep(0.25)
+        direction_servo.angle = CENTER_POSITION
+
 def handle_sensors():
     handle_curve()
-    speed = 40
+    handle_obstacle()
+    speed = 100
     forward(speed)
     
 def thread_function():
@@ -100,7 +121,7 @@ def thread_function():
         else:
             stop_motors()
             direction_servo.angle = CENTER_POSITION
-            time2.sleep(0.1)
+            time.sleep(0.1)
 
 process_thread = threading.Thread(target=thread_function, daemon=True)
 
