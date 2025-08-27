@@ -109,8 +109,8 @@ def handle_obstacle():
         direction_servo.angle = CENTER_POSITION
 
 def handle_sensors():
-    handle_curve()
-    handle_obstacle()
+    #handle_curve()
+    #handle_obstacle()
     speed = 100
     forward(speed)
     
