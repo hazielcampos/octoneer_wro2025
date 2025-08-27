@@ -113,7 +113,7 @@ def handle_obstacle():
 def handle_sensors():
     handle_curve()
     #handle_obstacle()
-    speed = 100
+    speed = 90
     forward(speed)
     
 def thread_function():
