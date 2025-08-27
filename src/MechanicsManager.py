@@ -83,6 +83,7 @@ def handle_curve():
     indication = SensorsManager.curve_indication
     if indication == SensorsManager.CURVE_STARTS:
         direction_servo.angle = RIGHT_POSITION
+        time.sleep(curve*1.5)  # Small delay to ensure the curve is completed
     elif indication == SensorsManager.CURVE_ENDS:
         time.sleep(curve)  # Small delay to ensure the curve is completed
         direction_servo.angle = CENTER_POSITION
