@@ -11,9 +11,9 @@ import SensorsManager
 # =========================
 # Constants
 # =========================
-CENTER_POSITION = 40  # Neutral position of the servo
-LEFT_POSITION = 30 # Left position of the servo
-RIGHT_POSITION = 50  # Right position of the servo
+CENTER_POSITION = 41  # Neutral position of the servo
+LEFT_POSITION = 31 # Left position of the servo
+RIGHT_POSITION = 51  # Right position of the servo
 
 # =========================
 # State variables
@@ -90,7 +90,7 @@ def handle_curve():
 def handle_walls():
     pass  # Placeholder for wall handling logic
 
-curve_time = 0.5
+curve_time = 0.6
 
 def handle_obstacle():
     if SensorsManager.obstacle_detected == SensorsManager.OBSTACLE_RED:
