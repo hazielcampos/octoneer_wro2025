@@ -59,9 +59,9 @@ def get_curve_indication(frame):
     blue_detected = blue_pixels > 500
     orange_detected = orange_pixels > 500
     
-    if blue_detected and not orange_detected:
+    if blue_detected:
         curve_indication = CURVE_STARTS
-    elif orange_detected and not blue_detected:
+    elif orange_detected:
         curve_indication = CURVE_ENDS
     else:
         curve_indication = CURVE_NONE
