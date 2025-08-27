@@ -11,9 +11,9 @@ import SensorsManager
 # =========================
 # Constants
 # =========================
-CENTER_POSITION = 42  # Neutral position of the servo
-LEFT_POSITION = 32 # Left position of the servo
-RIGHT_POSITION = 52  # Right position of the servo
+CENTER_POSITION = 40  # Neutral position of the servo
+LEFT_POSITION = 30 # Left position of the servo
+RIGHT_POSITION = 50  # Right position of the servo
 
 # =========================
 # State variables
