@@ -56,6 +56,11 @@ def get_curve_indication(frame):
     blue_pixels = cv2.countNonZero(mask_blue)
     orange_pixels = cv2.countNonZero(mask_orange)
     
+    cv2.putText(frame, f"Azul: {blue_pixels}", (10, 60), 
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+    cv2.putText(frame, f"Naranja: {orange_pixels}", (10, 90), 
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 140, 255), 2)
+    
     blue_detected = blue_pixels > 500
     orange_detected = orange_pixels > 500
     
