@@ -90,7 +90,7 @@ def handle_curve():
 def handle_walls():
     pass  # Placeholder for wall handling logic
 
-curve_time = 0.8
+curve_time = 1.2
 
 def handle_obstacle():
     if SensorsManager.obstacle_detected == SensorsManager.OBSTACLE_RED:
