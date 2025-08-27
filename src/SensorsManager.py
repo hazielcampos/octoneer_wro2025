@@ -39,8 +39,12 @@ def set_active(active: bool):
 # =========================
 def get_curve_indication(frame):
     global curve_indication
-    roi = frame[140:230, 200:480]  # Adjust according to your camera
-    cv2.rectangle(frame, roi[0], (roi[0][0]+roi[1][0], roi[0][1]+roi[1][1]), (0,255,0), 2) # Draw rectangle for ROI
+    
+    x1, y1 = 200, 140
+    x2, y2 = 480, 230
+    
+    roi = frame[y1:y2, x1:x2]  # Adjust according to your camera
+    cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2) # Draw rectangle for ROI
     hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
     lower_blue = (20, 30, 40)
     upper_blue = (140, 255, 255)
