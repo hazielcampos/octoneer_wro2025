@@ -77,9 +77,18 @@ def PID_control():
     angle = max(LEFT_POSITION, min(RIGHT_POSITION, angle))
     direction_servo.angle = angle
 
+def handle_curve():
+    indication = SensorsManager.curve_indication
+    if indication == SensorsManager.CURVE_STARTS:
+        direction_servo.angle = RIGHT_POSITION
+    elif indication == SensorsManager.CURVE_ENDS:
+        time.sleep(0.3)  # Small delay to ensure the curve is completed
+        direction_servo.angle = CENTER_POSITION
+    else:
+        direction_servo.angle = CENTER_POSITION
+
 def handle_sensors():
-    PID_control()
-    speed = 100 - int(abs(SensorsManager.line_position) * 20)
+    speed = 40
     forward(speed)
     
 def thread_function():

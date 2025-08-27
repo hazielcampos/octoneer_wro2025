@@ -13,12 +13,17 @@ LINE_LEFT = 1
 LINE_RIGHT = 2
 LINE_NONE = 3
 
+CURVE_NONE = 0
+CURVE_STARTS = 1
+CURVE_ENDS = 2
+
 # =========================
 # Global variables
 # =========================
 video = None
 line_zone = "None"
 line_position = 0
+curve_indication = CURVE_NONE
 
 # =========================
 # State variables
@@ -32,7 +37,38 @@ def set_active(active: bool):
 # ========================
 # Specific functions of the Sensor Manager
 # =========================
-def process_frame(frame):
+def get_curve_indication(frame):
+    global curve_indication
+    roi = frame[140:230, 200:480]  # Adjust according to your camera
+    cv2.rectangle(frame, roi[0], (roi[0][0]+roi[1][0], roi[0][1]+roi[1][1]), (0,255,0), 2) # Draw rectangle for ROI
+    hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+    lower_blue = (20, 30, 40)
+    upper_blue = (140, 255, 255)
+    lower_orange = (0, 50, 50)
+    upper_orange = (20, 255, 255)
+    mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
+    mask_orange = cv2.inRange(hsv, lower_orange, upper_orange)
+    
+    blue_pixels = cv2.countNonZero(mask_blue)
+    orange_pixels = cv2.countNonZero(mask_orange)
+    
+    blue_detected = blue_pixels > 500
+    orange_detected = orange_pixels > 500
+    
+    if blue_detected and not orange_detected:
+        curve_indication = CURVE_STARTS
+    elif orange_detected and not blue_detected:
+        curve_indication = CURVE_ENDS
+    else:
+        curve_indication = CURVE_NONE
+    
+    cv2.putText(frame, f"Curva: {curve_indication}", (10, 30), 
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+    cv2.imshow("Mask blue", mask_blue)
+    cv2.imshow("Mask orange", mask_orange)
+        
+
+def get_line_position(frame):
     global line_position
     roi = frame[140:230, 200:480]  # Adjust according to your camera
     hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
@@ -52,8 +88,11 @@ def process_frame(frame):
     cv2.putText(frame, f"Posicion: {line_position}", (10, 460), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-    return mask, frame
-    
+    cv2.imshow("Mask line", mask)  
+
+def process_frame(frame):
+    get_curve_indication(frame)
+    get_line_position(frame)
 
 def get_line_zone():
     return line_zone
@@ -69,9 +108,8 @@ def thread_function():
         ret, frame = video.read()
         if not ret:
             break
-        mask, frame2 = process_frame(frame)
-        cv2.imshow("Mask", mask)
-        cv2.imshow("Camera Feed", frame2)
+        process_frame(frame)
+        cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
