@@ -61,7 +61,7 @@ def get_curve_indication(frame):
     cv2.putText(frame, f"Naranja: {orange_pixels}", (10, 90), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 140, 255), 2)
     
-    blue_detected = blue_pixels > 500
+    blue_detected = blue_pixels > 1200
     orange_detected = orange_pixels > 500
     
     if blue_detected:
