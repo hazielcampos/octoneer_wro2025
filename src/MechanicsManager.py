@@ -83,9 +83,8 @@ def handle_curve():
     indication = SensorsManager.curve_indication
     if indication == SensorsManager.CURVE_STARTS:
         direction_servo.angle = RIGHT_POSITION
-        time.sleep(curve*1.3)  # Small delay to ensure the curve is completed
     elif indication == SensorsManager.CURVE_ENDS:
-        time.sleep(curve)  # Small delay to ensure the curve is completed
+        time.sleep(0.3)  # Small delay to ensure the curve is completed
         direction_servo.angle = CENTER_POSITION
     else:
         direction_servo.angle = CENTER_POSITION
@@ -116,7 +115,7 @@ def handle_obstacle():
 def handle_sensors():
     handle_curve()
     #handle_obstacle()
-    speed = 90
+    speed = 40
     forward(speed)
     
 def thread_function():
