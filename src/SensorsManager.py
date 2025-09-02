@@ -58,13 +58,13 @@ def obstacle_detected_func():
 def get_curve_indication(frame):
     global curve_indication
     
-    x1, y1 = 200, 140
-    x2, y2 = 480, 230
+    x1, y1 = 200, 200
+    x2, y2 = 1080, 300
     
     roi = frame[y1:y2, x1:x2]  # Adjust according to your camera
     cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2) # Draw rectangle for ROI
     hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
-    lower_blue = (20, 30, 40)
+    lower_blue = (40, 50, 60)
     upper_blue = (140, 255, 255)
     lower_orange = (0, 50, 50)
     upper_orange = (20, 255, 255)
@@ -79,7 +79,7 @@ def get_curve_indication(frame):
     cv2.putText(frame, f"Naranja: {orange_pixels}", (10, 90), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 140, 255), 2)
     
-    blue_detected = blue_pixels > 1200
+    blue_detected = blue_pixels > 3000
     orange_detected = orange_pixels > 500
     
     if blue_detected:
