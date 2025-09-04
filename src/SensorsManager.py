@@ -49,77 +49,48 @@ def set_active(active: bool):
 # ========================
 # Specific functions of the Sensor Manager
 # =========================
-def get_wall_detection():
+walls1_x1, walls1_x2 = 0, 0 # Left wall
+walls1_y1, walls1_y2 = 0, 0 # Left wall
+
+walls2_x1, walls2_x2 = 0, 0 # Front wall
+walls2_y1, walls2_y2 = 0, 0 # Front wall
+
+walls3_x1, walls3_x2 = 0, 0 # Right wall
+walls3_y1, walls3_y2 = 0, 0 # Right wall
+def walls(frame) -> list[tuple[float, float]]: # returns the x, y of the walls detected
     pass
 
-def obstacle_detected_func():
-    return obstacle_detected
+curve1_x1, curve1_x2 = 0, 0 # Top
+curve1_y1, curve1_y2 = 0, 0 # Top
 
-def get_curve_indication(frame):
-    global curve_indication
-    
-    x1, y1 = 200, 200
-    x2, y2 = 1080, 300
-    
-    roi = frame[y1:y2, x1:x2]  # Adjust according to your camera
-    cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2) # Draw rectangle for ROI
-    hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
-    lower_blue = (40, 50, 60)
-    upper_blue = (140, 255, 255)
-    lower_orange = (0, 50, 50)
-    upper_orange = (20, 255, 255)
-    mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
-    mask_orange = cv2.inRange(hsv, lower_orange, upper_orange)
-    
-    blue_pixels = cv2.countNonZero(mask_blue)
-    orange_pixels = cv2.countNonZero(mask_orange)
-    
-    cv2.putText(frame, f"Azul: {blue_pixels}", (10, 60), 
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
-    cv2.putText(frame, f"Naranja: {orange_pixels}", (10, 90), 
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 140, 255), 2)
-    
-    blue_detected = blue_pixels > 3000
-    orange_detected = orange_pixels > 500
-    
-    if blue_detected:
-        curve_indication = CURVE_STARTS
-    elif orange_detected:
-        curve_indication = CURVE_ENDS
-    else:
-        curve_indication = CURVE_NONE
-    
-    cv2.putText(frame, f"Curva: {curve_indication}", (10, 30), 
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-    cv2.imshow("Mask blue", mask_blue)
-    cv2.imshow("Mask orange", mask_orange)
-        
+curve2_x1, curve2_x2 = 0, 0 # Bottom
+curve2_y1, curve2_y2 = 0, 0 # Bottom
+def curve_indicators(frame) -> list[tuple[float, float]]: # returns the x, y of the curve indicators
+    pass
 
-def get_line_position(frame):
-    global line_position
-    roi = frame[140:230, 200:480]  # Adjust according to your camera
-    hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
-    
-    lower_blue = (20, 30, 40)
-    upper_blue = (140, 255, 255)
-    
-    mask = cv2.inRange(hsv, lower_blue, upper_blue)
-    
-    M = cv2.moments(mask)
-    if M["m00"] > 0:
-        cx = int(M["m10"] / M["m00"])
-        
-        x = cx - (roi.shape[1] // 2)
-        line_position = x / (roi.shape[1] // 2)
-    
-    cv2.putText(frame, f"Posicion: {line_position}", (10, 460), 
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+def parking_slot(frame) -> tuple[float, float]: # returns de x, y of the parking slot center
+    pass
 
-    cv2.imshow("Mask line", mask)  
+ostbsacle_x1, obstacle_x2 = 0, 0
+obstacle_y1, obstacle_y2 = 0, 0
+def nearest_obstacle(frame) -> tuple[int, tuple[int, int]]: # returns OBSTACLE_NONE, OBSTACLE_GREEN or OBSTACLE_RED
+    pass
 
+def draw_layout(frame):
+    cv2.rectangle(frame, (curve1_x1, curve1_y1), (curve1_x2, curve1_y2), (255, 0, 0), 2) # Top
+    cv2.rectangle(frame, (curve2_x1, curve2_y1), (curve2_x2, curve2_y2), (255, 0, 0), 2) # Bottom
+    
+    cv2.rectangle(frame, (walls1_x1, walls1_y1), (walls1_x2, walls1_y2), (0, 255, 0), 2) # Left
+    cv2.rectangle(frame, (walls2_x1, walls2_y1), (walls2_x2, walls2_y2), (0, 255, 0), 2) # Front
+    cv2.rectangle(frame, (walls3_x1, walls3_y1), (walls3_x2, walls3_y2), (0, 255, 0), 2) # Right
+    
+    cv2.rectangle(frame, (ostbsacle_x1, obstacle_y1), (obstacle_x2, obstacle_y2), (0, 0, 255), 2) # Obstacle detection area
+    
 def process_frame(frame):
-    get_curve_indication(frame)
-    get_line_position(frame)
+    walls_positions = walls(frame)
+    curve_positions = curve_indicators(frame)
+    parking_position = parking_slot(frame)
+    obstacle_type, obstacle_position = nearest_obstacle(frame)
 
 def get_line_zone():
     return line_zone
@@ -135,8 +106,18 @@ def thread_function():
     video.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
     video.set(cv2.CAP_PROP_FPS, 30)
     
+    ret, frame = video.read()
+
+    if ret:  
+        # Guarda la imagen en el directorio deseado
+        cv2.imwrite("./frame_guardado.jpg", frame)
+        print("✅ Frame guardado con éxito")
+    else:
+        print("❌ No se pudo capturar el frame")
+    
     while not finished:
         ret, frame = video.read()
+        time.sleep(0.01) # Small delay to reduce CPU usage
         if not ret:
             break
         process_frame(frame)

@@ -52,76 +52,15 @@ def stop_motors():
     FORWARD_PWM.ChangeDutyCycle(0)
     BACKWARD_PWM.ChangeDutyCycle(0)
 
-Kp = 3
-Ki = 0.0
-Kd = 0.2
-
-last_error = 0.0
-integral = 0.0
-
-def PID_control():
-    global last_error, integral
+def handle_camera() -> tuple[int, int]:
+    speed = 20
+    angle = CENTER_POSITION
     
-    error = SensorsManager.line_position * -1
-    print(f"Error: {error}")
-    
-    integral += error
-    derivative = error - last_error
-    last_error = error
-    
-    max_offset = (RIGHT_POSITION - CENTER_POSITION)
-    correction = Kp * error + Ki * integral + Kd * derivative
-    
-    angle = CENTER_POSITION + correction * max_offset
-    angle = round(angle / 2) * 2  # Round to nearest even number
-    angle = max(LEFT_POSITION, min(RIGHT_POSITION, angle))
-    direction_servo.angle = angle
-
-curve = 0.4
-
-on_curve = False
-
-def handle_curve():
-    indication = SensorsManager.curve_indication
-    if indication == SensorsManager.CURVE_STARTS:
-        on_curve = True
-        direction_servo.angle = RIGHT_POSITION
-        time.sleep(curve)  # Small delay to ensure the curve is completed
-        on_curve = False
-    elif indication == SensorsManager.CURVE_ENDS:
-        if on_curve:
-            time.sleep(curve * 0.5)  # Small delay to ensure the curve is completed
-        direction_servo.angle = CENTER_POSITION
-    else:
-        direction_servo.angle = CENTER_POSITION
-
-def handle_walls():
-    pass  # Placeholder for wall handling logic
-
-curve_time = 1.5
-
-def handle_obstacle():
-    if SensorsManager.obstacle_detected == SensorsManager.OBSTACLE_RED:
-        direction_servo.angle = LEFT_POSITION
-        time.sleep(curve_time)  # Turn left for 0.5 seconds
-        direction_servo.angle = RIGHT_POSITION
-        time.sleep(curve_time)  # Turn right for 0.5 seconds
-        direction_servo.angle = LEFT_POSITION
-        time.sleep(curve_time / 2)
-        direction_servo.angle = CENTER_POSITION
-    elif SensorsManager.obstacle_detected == SensorsManager.OBSTACLE_GREEN:
-        direction_servo.angle = RIGHT_POSITION
-        time.sleep(curve_time)  # Turn right for 0.5 seconds
-        direction_servo.angle = LEFT_POSITION
-        time.sleep(curve_time)  # Turn left for 0.5 seconds
-        direction_servo.angle = RIGHT_POSITION
-        time.sleep(curve_time / 2)
-        direction_servo.angle = CENTER_POSITION
+    return speed, angle
 
 def handle_sensors():
-    handle_curve()
-    #handle_obstacle()
-    speed = 40
+    speed, angle = handle_camera()
+    direction_servo.angle = angle
     forward(speed)
     
 def thread_function():
