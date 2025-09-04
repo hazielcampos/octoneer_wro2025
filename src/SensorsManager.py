@@ -58,7 +58,7 @@ walls2_y1, walls2_y2 = 0, 0 # Front wall
 walls3_x1, walls3_x2 = 0, 0 # Right wall
 walls3_y1, walls3_y2 = 0, 0 # Right wall
 def walls(frame) -> list[tuple[float, float]]: # returns the x, y of the walls detected
-    pass
+    return []
 
 curve1_x1, curve1_x2 = 0, 0 # Top
 curve1_y1, curve1_y2 = 0, 0 # Top
@@ -66,15 +66,15 @@ curve1_y1, curve1_y2 = 0, 0 # Top
 curve2_x1, curve2_x2 = 0, 0 # Bottom
 curve2_y1, curve2_y2 = 0, 0 # Bottom
 def curve_indicators(frame) -> list[tuple[float, float]]: # returns the x, y of the curve indicators
-    pass
+    return []
 
 def parking_slot(frame) -> tuple[float, float]: # returns de x, y of the parking slot center
-    pass
+    return (0.0, 0.0)
 
 ostbsacle_x1, obstacle_x2 = 0, 0
 obstacle_y1, obstacle_y2 = 0, 0
 def nearest_obstacle(frame) -> tuple[int, tuple[int, int]]: # returns OBSTACLE_NONE, OBSTACLE_GREEN or OBSTACLE_RED
-    pass
+    return OBSTACLE_NONE, (0, 0)
 
 def draw_layout(frame):
     cv2.rectangle(frame, (curve1_x1, curve1_y1), (curve1_x2, curve1_y2), (255, 0, 0), 2) # Top
@@ -90,7 +90,8 @@ def process_frame(frame):
     walls_positions = walls(frame)
     curve_positions = curve_indicators(frame)
     parking_position = parking_slot(frame)
-    obstacle_type, obstacle_position = nearest_obstacle(frame)
+    #obstacle_type, obstacle_position = nearest_obstacle(frame)
+    time.sleep(0.01) # Small delay to reduce CPU usage
 
 def get_line_zone():
     return line_zone
