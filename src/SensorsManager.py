@@ -49,30 +49,29 @@ def set_active(active: bool):
 # ========================
 # Specific functions of the Sensor Manager
 # =========================
-walls1_x1, walls1_x2 = 0, 62 # Left wall
-walls1_y1, walls1_y2 = 287, 455 # Left wall
-
-walls2_x1, walls2_x2 = 463, 816 # Front wall
-walls2_y1, walls2_y2 = 53, 120 # Front wall
-
-walls3_x1, walls3_x2 = 1223, 1280 # Right wall
-walls3_y1, walls3_y2 = 188, 367 # Right wall
+lWall_h, lWall_s, lWall_v = 0, 0, 0
+uWall_h, uWall_s, uWall_v = 0, 0, 0
 def walls(frame) -> list[tuple[float, float]]: # returns the x, y of the walls detected
     return []
 
-curve1_x1, curve1_x2 = 326, 954 # Bottom
-curve1_y1, curve1_y2 = 172, 228 # Bottom
+lOrange_h, lOrange_s, lOrange_v = 0, 0, 0
+uOrange_h, uOrange_s, uOrange_v = 0, 0, 0
 
-curve2_x1, curve2_x2 = 326, 954 # Top
-curve2_y1, curve2_y2 = 120, 172 # Top
+lBlue_h, lBlue_s, lBlue_v = 0, 0, 0
+uBlue_h, uBlue_s, uBlue_v = 0, 0, 0
 def curve_indicators(frame) -> list[tuple[float, float]]: # returns the x, y of the curve indicators
     return []
 
+lParking_h, lParking_s, lParking_v = 0, 0, 0
+uParking_h, uParking_s, uParking_v = 0, 0, 0
 def parking_slot(frame) -> tuple[float, float]: # returns de x, y of the parking slot center
     return (0.0, 0.0)
 
-ostbsacle_x1, obstacle_x2 = 0, 0
-obstacle_y1, obstacle_y2 = 0, 0
+lGreen_h, lGreen_s, lGreen_v = 0, 0, 0
+uGreen_h, lGreen_s, lGreen_v = 0, 0, 0
+
+lRed_h, lRed_s, lRed_v = 0, 0, 0
+uRed_h, uRed_s, uRed_v = 0, 0, 0
 def nearest_obstacle(frame) -> tuple[int, tuple[int, int]]: # returns OBSTACLE_NONE, OBSTACLE_GREEN or OBSTACLE_RED
     return OBSTACLE_NONE, (0, 0)
 
@@ -80,15 +79,6 @@ ignored_x1, ignored_x2 = 0, 1280
 ignored_y1, ignored_y2 = 525, 720
 
 def draw_layout(frame):
-    cv2.rectangle(frame, (curve1_x1, curve1_y1), (curve1_x2, curve1_y2), (255, 0, 0), 2) # Bottom
-    cv2.rectangle(frame, (curve2_x1, curve2_y1), (curve2_x2, curve2_y2), (255, 0, 0), 2) # Top
-    
-    cv2.rectangle(frame, (walls1_x1, walls1_y1), (walls1_x2, walls1_y2), (0, 255, 0), 2) # Left
-    cv2.rectangle(frame, (walls2_x1, walls2_y1), (walls2_x2, walls2_y2), (0, 255, 0), 2) # Front
-    cv2.rectangle(frame, (walls3_x1, walls3_y1), (walls3_x2, walls3_y2), (0, 255, 0), 2) # Right
-    
-    cv2.rectangle(frame, (ostbsacle_x1, obstacle_y1), (obstacle_x2, obstacle_y2), (0, 0, 255), 2) # Obstacle detection area
-    
     cv2.rectangle(frame, (ignored_x1, ignored_y1), (ignored_x2, ignored_y2), (0, 255, 255), 2)
     
 def process_frame(frame):
