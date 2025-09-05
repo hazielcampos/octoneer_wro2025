@@ -36,10 +36,11 @@ def get_accel_gyro():
 # -------------------------------
 dt = 0.05  # intervalo (50ms)
 alpha = 0.98  # peso del giroscopio
-pitch, roll = 0.0, 0.0
+
+pitch, roll, yaw = 0.0, 0.0, 0.0
 
 def update_orientation():
-    global pitch, roll
+    global pitch, roll, yaw
 
     ax, ay, az, gx, gy, gz = get_accel_gyro()
 
@@ -50,21 +51,31 @@ def update_orientation():
     # Integración del giroscopio
     pitch += gx * dt
     roll += gy * dt
+    yaw += gz * dt  # ⚠️ sin magnetómetro se deriva
 
-    # Filtro complementario
+    # Filtro complementario (solo para pitch y roll)
     pitch = alpha * pitch + (1 - alpha) * accel_pitch
     roll = alpha * roll + (1 - alpha) * accel_roll
 
-    return pitch, roll
+    return pitch, roll, yaw
 
 # -------------------------------
 # Tkinter GUI
 # -------------------------------
 root = tk.Tk()
-root.title("MPU6050 - Horizonte Artificial")
+root.title("MPU6050 - Orientación Robot")
 
 canvas = tk.Canvas(root, width=400, height=400, bg="black")
-canvas.pack()
+canvas.grid(row=0, column=0, rowspan=4)
+
+label_pitch = tk.Label(root, text="Pitch: 0°", font=("Arial", 14))
+label_pitch.grid(row=0, column=1, sticky="w")
+
+label_roll = tk.Label(root, text="Roll: 0°", font=("Arial", 14))
+label_roll.grid(row=1, column=1, sticky="w")
+
+label_yaw = tk.Label(root, text="Yaw: 0°", font=("Arial", 14))
+label_yaw.grid(row=2, column=1, sticky="w")
 
 def draw_horizon(pitch, roll):
     canvas.delete("all")
@@ -79,7 +90,7 @@ def draw_horizon(pitch, roll):
     x3, y3 = size, size
     x4, y4 = -size, size
 
-    # Rotar y desplazar según pitch/roll
+    # Rotar por roll
     angle = math.radians(roll)
     cos_a, sin_a = math.cos(angle), math.sin(angle)
 
@@ -90,8 +101,9 @@ def draw_horizon(pitch, roll):
         points.append(cx + xr)
         points.append(cy + yr + pitch*2)  # desplazar vertical por pitch
 
-    # Dibujar cielo (azul) y tierra (marrón)
+    # Dibujar tierra (marrón)
     canvas.create_polygon(points, fill="sienna", outline="")
+    # Dibujar cielo (azul)
     canvas.create_polygon(points[0:4] + [points[6], points[7], points[0], points[1]], fill="skyblue", outline="")
 
     # Línea del horizonte
@@ -102,8 +114,14 @@ def draw_horizon(pitch, roll):
     canvas.create_line(cx, cy-20, cx, cy+20, fill="white", width=2)
 
 def update():
-    pitch, roll = update_orientation()
+    pitch, roll, yaw = update_orientation()
     draw_horizon(pitch, roll)
+
+    # Actualizar etiquetas
+    label_pitch.config(text=f"Pitch: {pitch:.1f}°")
+    label_roll.config(text=f"Roll: {roll:.1f}°")
+    label_yaw.config(text=f"Yaw: {yaw:.1f}°")
+
     root.after(int(dt*1000), update)
 
 update()
