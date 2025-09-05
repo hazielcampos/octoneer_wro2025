@@ -50,15 +50,15 @@ def set_active(active: bool):
 # Specific functions of the Sensor Manager
 # =========================
 lWall_h, lWall_s, lWall_v = 0, 0, 0
-uWall_h, uWall_s, uWall_v = 0, 0, 0
+uWall_h, uWall_s, uWall_v = 124, 255, 41
 def walls(frame) -> list[tuple[float, float]]: # returns the x, y of the walls detected
     return []
 
-lOrange_h, lOrange_s, lOrange_v = 0, 0, 0
-uOrange_h, uOrange_s, uOrange_v = 0, 0, 0
+lOrange_h, lOrange_s, lOrange_v = 0, 54, 148
+uOrange_h, uOrange_s, uOrange_v = 24, 128, 185
 
-lBlue_h, lBlue_s, lBlue_v = 0, 0, 0
-uBlue_h, uBlue_s, uBlue_v = 0, 0, 0
+lBlue_h, lBlue_s, lBlue_v = 109, 36, 45
+uBlue_h, uBlue_s, uBlue_v = 179, 189, 119
 def curve_indicators(frame) -> list[tuple[float, float]]: # returns the x, y of the curve indicators
     return []
 
@@ -67,11 +67,11 @@ uParking_h, uParking_s, uParking_v = 0, 0, 0
 def parking_slot(frame) -> tuple[float, float]: # returns de x, y of the parking slot center
     return (0.0, 0.0)
 
-lGreen_h, lGreen_s, lGreen_v = 0, 0, 0
-uGreen_h, lGreen_s, lGreen_v = 0, 0, 0
+lGreen_h, lGreen_s, lGreen_v = 35, 22, 50
+uGreen_h, lGreen_s, lGreen_v = 82, 139, 126
 
-lRed_h, lRed_s, lRed_v = 0, 0, 0
-uRed_h, uRed_s, uRed_v = 0, 0, 0
+lRed_h, lRed_s, lRed_v = 0, 112, 87
+uRed_h, uRed_s, uRed_v = 179, 187, 133
 def nearest_obstacle(frame) -> tuple[int, tuple[int, int]]: # returns OBSTACLE_NONE, OBSTACLE_GREEN or OBSTACLE_RED
     return OBSTACLE_NONE, (0, 0)
 
