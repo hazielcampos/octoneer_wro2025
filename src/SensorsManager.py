@@ -119,6 +119,7 @@ def thread_function():
         
         yaw = gyro.get_yaw()
         ret, frame = video.read()
+        print(yaw)
         time.sleep(0.01) # Small delay to reduce CPU usage
         if not ret:
             break
