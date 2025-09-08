@@ -81,7 +81,6 @@ def turn_degrees(turn_target):
         # Solo acumula en la dirección correcta
         if (turn_target > 0 and step > 0) or (turn_target < 0 and step < 0):
             accumulated += step
-        print(accumulated)
         previous_angle = current_angle
         direction_servo.angle = RIGHT_POSITION if turn_target > 0 else LEFT_POSITION
         if abs(accumulated) >= abs(turn_target):

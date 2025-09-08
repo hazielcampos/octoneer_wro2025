@@ -101,6 +101,7 @@ def get_line_zone():
 
 def thread_function():
     global video, yaw
+    gyro.start()
     video = cv2.VideoCapture(0)
     video.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     video.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
@@ -118,8 +119,8 @@ def thread_function():
     while not finished:
         
         yaw = gyro.get_yaw()
+        print(f"Yaw: {yaw}")
         ret, frame = video.read()
-        print(yaw)
         time.sleep(0.01) # Small delay to reduce CPU usage
         if not ret:
             break
