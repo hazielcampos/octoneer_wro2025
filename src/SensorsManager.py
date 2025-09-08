@@ -49,7 +49,7 @@ def set_active(active: bool):
     is_running = active
     
 # gyro sensor
-gyro = MPU6050.MPU6050()
+gyro = MPU6050.MPU6050(True)
 # ========================
 # Specific functions of the Sensor Manager
 # =========================
@@ -102,6 +102,7 @@ def get_line_zone():
 def thread_function():
     global video, yaw
     gyro.start()
+    gyro.reset_yaw()
     video = cv2.VideoCapture(0)
     video.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     video.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
