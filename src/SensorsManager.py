@@ -49,7 +49,7 @@ def set_active(active: bool):
     is_running = active
     
 # gyro sensor
-gyro = MPU6050()
+gyro = MPU6050.MPU6050()
 # ========================
 # Specific functions of the Sensor Manager
 # =========================
