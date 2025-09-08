@@ -86,6 +86,7 @@ def turn_degrees(turn_target):
         direction_servo.angle = RIGHT_POSITION if turn_target > 0 else LEFT_POSITION
         if abs(accumulated) >= abs(turn_target):
             break
+    direction_servo.angle = CENTER_POSITION
 
 def handle_camera() -> tuple[int, int]:
     speed = 20
