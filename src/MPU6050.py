@@ -36,7 +36,7 @@ class MPU6050:
     def read_word(self, reg):
         high = self.bus.read_byte_data(self.ADDR, reg)
         low = self.bus.read_byte_data(self.ADDR, reg+1)
-        val = (high << 8)
+        val = (high << 8) + low
         if val >> 0x8000:
             val = -((65535 - val) + 1)
         return val
