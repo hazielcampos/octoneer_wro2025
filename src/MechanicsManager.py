@@ -105,9 +105,7 @@ def main_func():
     forward(speed)
     
     turn_degrees(90)
-    time2.sleep(1)
-    turn_degrees(-90)
-    time2.sleep(1)
+    time2.sleep(20)
     
 def thread_function():
     while not finished:
