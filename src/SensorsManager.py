@@ -5,6 +5,7 @@ import threading
 import cv2
 from libs import betterTime as time2
 import time
+import MPU6050
 # ==========================
 # Contants
 # ==========================
@@ -36,6 +37,7 @@ line_position = 0
 curve_indication = CURVE_NONE
 obstacle_detected = OBSTACLE_NONE
 wall_correction = 0
+yaw = 0
 
 # =========================
 # State variables
@@ -46,6 +48,8 @@ def set_active(active: bool):
     global is_running
     is_running = active
     
+# gyro sensor
+gyro = MPU6050()
 # ========================
 # Specific functions of the Sensor Manager
 # =========================
@@ -112,6 +116,8 @@ def thread_function():
         print("❌ No se pudo capturar el frame")
     
     while not finished:
+        
+        yaw = gyro.get_yaw()
         ret, frame = video.read()
         time.sleep(0.01) # Small delay to reduce CPU usage
         if not ret:
