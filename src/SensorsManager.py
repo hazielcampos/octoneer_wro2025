@@ -100,7 +100,7 @@ def get_line_zone():
 # =========================
 
 def thread_function():
-    global video
+    global video, yaw
     video = cv2.VideoCapture(0)
     video.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     video.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
