@@ -92,7 +92,7 @@ class MPU6050:
         print("Yaw reseteado (offset actualizado)")
         
     def get_yaw(self):
-        return self.yaw
+        return ((self.yaw - self.yaw_offset) % 360.0 + 360.0) % 360.0
     
     def update(self):
         now = time.time()
