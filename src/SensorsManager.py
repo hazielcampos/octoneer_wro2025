@@ -147,7 +147,7 @@ def process_frame(hsv,frame):
         last_curves = curves
     last_area = 0
     curve = CURVE_NONE
-    min_area = 20
+    min_area = 10
     for curve_type, area, cnt in curves:
         if area < min_area:
             curve= CURVE_NONE
