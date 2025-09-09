@@ -86,7 +86,7 @@ def detect_orange(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        if area > 5:
+        if area > 2:
             cv2.drawContours(frame, [cnt], -1, (0, 165, 255), 2)  # naranja
             curves.append((CURVE_ORANGE, area, cnt))
     return curves
@@ -101,7 +101,7 @@ def detect_blue(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        if area > 5:
+        if area > 2:
             cv2.drawContours(frame, [cnt], -1, (255, 0, 0), 2)  # azul
             curves.append((CURVE_BLUE, area, cnt))
     return curves
