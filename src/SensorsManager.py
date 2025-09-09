@@ -98,8 +98,8 @@ def curve_indicators(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
 
         # Encontrar contornos
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-        for cnt in contours:
+        large_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > 300]
+        for cnt in large_contours:
             area = cv2.contourArea(cnt)
 
             # Filtrar ruido: solo contornos suficientemente grandes
@@ -172,7 +172,6 @@ def thread_function():
     video.set(cv2.CAP_PROP_FPS, 30)
     
     ret, frame = video.read()
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     if ret:  
         # Guarda la imagen en el directorio deseado
@@ -186,6 +185,8 @@ def thread_function():
         ret, frame = video.read()
         if not ret:
             break
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        
         frame_display = frame.copy()
         process_frame(hsv, frame_display)
         cv2.imshow("Frame", frame_display)
