@@ -70,8 +70,8 @@ uOrange_h, uOrange_s, uOrange_v = 13, 156, 153
 orange_lower = (lOrange_h, lOrange_s, lOrange_v)
 orange_upper = (uOrange_h, uOrange_s, uOrange_v)
 
-lBlue_h, lBlue_s, lBlue_v = 109, 36, 45
-uBlue_h, uBlue_s, uBlue_v = 179, 189, 119
+lBlue_h, lBlue_s, lBlue_v = 112, 0, 21
+uBlue_h, uBlue_s, uBlue_v = 136, 169, 80
 blue_lower = (lBlue_h, lBlue_s, lBlue_v)
 blue_upper = (uBlue_h, uBlue_s, uBlue_v)
 last_curves = None
