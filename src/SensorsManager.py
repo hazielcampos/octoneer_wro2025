@@ -79,9 +79,9 @@ last_curves = None
 def detect_orange(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     """Detecta curvas naranjas, dibuja contornos y devuelve (tipo, área, contorno)"""
     curves = []
-    #mask = cv2.inRange(hsv, orange_lower, orange_upper)
+    mask = cv2.inRange(hsv, orange_lower, orange_upper)
     # Mostrar máscara opcional
-    cv2.imshow("Orange Mask", mask)
+    #cv2.imshow("Orange Mask", mask)
     
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for cnt in contours:
@@ -94,9 +94,9 @@ def detect_orange(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
 def detect_blue(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     """Detecta curvas azules, dibuja contornos y devuelve (tipo, área, contorno)"""
     curves = []
-    #mask = cv2.inRange(hsv, blue_lower, blue_upper)
+    mask = cv2.inRange(hsv, blue_lower, blue_upper)
     # Mostrar máscara opcional
-    cv2.imshow("Blue Mask", mask)
+    #cv2.imshow("Blue Mask", mask)
     
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for cnt in contours:
