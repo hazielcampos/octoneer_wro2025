@@ -169,7 +169,6 @@ def thread_function():
     
     ret, frame = video.read()
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    process_frame(hsv, frame)
 
     if ret:  
         # Guarda la imagen en el directorio deseado
@@ -184,7 +183,7 @@ def thread_function():
         time.sleep(0.01) # Small delay to reduce CPU usage
         if not ret:
             break
-        process_frame(frame)
+        process_frame(hsv, frame)
         cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
