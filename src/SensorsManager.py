@@ -151,7 +151,6 @@ def process_frame(hsv,frame):
     
     parking_position = parking_slot(frame)
     #obstacle_type, obstacle_position = nearest_obstacle(frame)
-    time.sleep(0.01) # Small delay to reduce CPU usage
 
 def get_line_zone():
     return line_zone
@@ -180,11 +179,11 @@ def thread_function():
     while not finished:
         
         ret, frame = video.read()
-        time.sleep(0.01) # Small delay to reduce CPU usage
         if not ret:
             break
-        process_frame(hsv, frame)
-        cv2.imshow("Frame", frame)
+        frame_display = frame.copy()
+        process_frame(hsv, frame_display)
+        cv2.imshow("Frame", frame_display)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
