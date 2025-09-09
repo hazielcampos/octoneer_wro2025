@@ -88,6 +88,7 @@ def thread_function():
             
             # Maneja curvas sin dormir
             if SensorsManager.STATUS == SensorsManager.TURNING and not is_turning:
+                print("Turning")
                 is_turning = True
                 if SensorsManager.CURVE_TYPE == SensorsManager.CURVE_ORANGE:
                     direction_servo.angle = LEFT_POSITION
@@ -100,6 +101,7 @@ def thread_function():
                 direction_servo.angle = CENTER_POSITION
                 is_turning = False
                 SensorsManager.STATUS = SensorsManager.GOING_STRAIGHT
+                print("Straightening")
             
             time.sleep(0.01)  # Ciclo rápido, no bloqueante
         else:
