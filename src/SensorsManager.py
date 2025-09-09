@@ -64,8 +64,8 @@ uWall_h, uWall_s, uWall_v = 124, 255, 41
 def walls(frame) -> list[tuple[float, float]]: # returns the x, y of the walls detected
     return []
 
-lOrange_h, lOrange_s, lOrange_v = 0, 51, 0
-uOrange_h, uOrange_s, uOrange_v = 13, 156, 153
+lOrange_h, lOrange_s, lOrange_v = 6, 51, 134
+uOrange_h, uOrange_s, uOrange_v = 13, 139, 188
 
 orange_lower = (lOrange_h, lOrange_s, lOrange_v)
 orange_upper = (uOrange_h, uOrange_s, uOrange_v)
