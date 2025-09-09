@@ -11,9 +11,9 @@ import SensorsManager
 # =========================
 # Constants
 # =========================
-CENTER_POSITION = 55  # Neutral position of the servo
-LEFT_POSITION = 45 # Left position of the servo
-RIGHT_POSITION = 65  # Right position of the servo
+CENTER_POSITION = 52  # Neutral position of the servo
+LEFT_POSITION = 62 # Left position of the servo
+RIGHT_POSITION = 42  # Right position of the servo
 is_turning = False
 
 # =========================
