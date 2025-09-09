@@ -7,6 +7,8 @@ from libs import betterTime as time2
 import time
 import numpy as np
 import MechanicsManager
+from i2c_manager import i2c
+import adafruit_vl53l0x
 # ==========================
 # Contants
 # ==========================
@@ -36,6 +38,14 @@ WALL_TO_RIGHT = 2
 WALL_NONE = 0
 
 
+# =======================
+# Distance sensor
+# =======================
+
+vlx = adafruit_vl53l0x.VL53L0X(i2c)
+
+def get_distance():
+    return vlx.range
 
 # =========================
 # Global variables
@@ -186,7 +196,7 @@ def thread_function():
         print("❌ No se pudo capturar el frame")
     
     while not finished:
-        
+        print(get_distance())
         ret, frame = video.read()
         if not ret:
             break

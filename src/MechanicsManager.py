@@ -6,7 +6,7 @@ from libs import GPIO
 from libs import betterTime as time2
 import threading
 import time
-
+from i2c_manager import i2c
 import SensorsManager
 # =========================
 # Constants
@@ -28,7 +28,6 @@ def set_active(active: bool):
 # =========================
 # PCA9685 and Servo setup
 # =========================
-i2c = busio.I2C(board.SCL, board.SDA)
 pca = PCA9685(i2c)
 pca.frequency = 50  # Servo frequency
 direction_servo = servo.Servo(pca.channels[0])
@@ -98,7 +97,7 @@ def thread_function():
                 turning_start = time.time()
             
             # Termina giro según temporizador, sin bloquear
-            if is_turning and time.time() - turning_start >= 2:
+            if is_turning and time.time() - turning_start >= 1.5:
                 direction_servo.angle = CENTER_POSITION
                 is_turning = False
                 SensorsManager.STATUS = SensorsManager.GOING_STRAIGHT
