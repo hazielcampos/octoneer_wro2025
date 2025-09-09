@@ -81,6 +81,7 @@ def main_func():
 def thread_function():
     global is_turning
     while not finished:
+        print(SensorsManager.get_distance())
         if is_running:
             # Mueve motores
             forward(30)
