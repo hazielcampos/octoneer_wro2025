@@ -5,7 +5,8 @@ import threading
 import cv2
 from libs import betterTime as time2
 import time
-import MPU6050
+import numpy as np
+import MechanicsManager
 # ==========================
 # Contants
 # ==========================
@@ -15,8 +16,16 @@ LINE_RIGHT = 2
 LINE_NONE = 3
 
 CURVE_NONE = 0
-CURVE_STARTS = 1
-CURVE_ENDS = 2
+CURVE_ORANGE = 1
+CURVE_BLUE = 2
+
+TURNING = 0
+GOING_STRAIGHT = 1
+PARKING = 2
+
+STATUS = TURNING
+CURVE_TYPE = CURVE_NONE
+
 
 OBSTACLE_NONE = 0
 OBSTACLE_GREEN = 1
@@ -37,7 +46,6 @@ line_position = 0
 curve_indication = CURVE_NONE
 obstacle_detected = OBSTACLE_NONE
 wall_correction = 0
-yaw = 0
 
 # =========================
 # State variables
@@ -48,8 +56,6 @@ def set_active(active: bool):
     global is_running
     is_running = active
     
-# gyro sensor
-gyro = MPU6050.MPU6050(True)
 # ========================
 # Specific functions of the Sensor Manager
 # =========================
@@ -61,10 +67,47 @@ def walls(frame) -> list[tuple[float, float]]: # returns the x, y of the walls d
 lOrange_h, lOrange_s, lOrange_v = 0, 54, 148
 uOrange_h, uOrange_s, uOrange_v = 24, 128, 185
 
+orange_lower = (lOrange_h, lOrange_s, lOrange_v)
+orange_upper = (uOrange_h, uOrange_s, uOrange_v)
+
 lBlue_h, lBlue_s, lBlue_v = 109, 36, 45
 uBlue_h, uBlue_s, uBlue_v = 179, 189, 119
-def curve_indicators(frame) -> list[tuple[float, float]]: # returns the x, y of the curve indicators
-    return []
+blue_lower = (lBlue_h, lBlue_s, lBlue_v)
+blue_upper = (uBlue_h, uBlue_s, uBlue_v)
+def curve_indicators(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
+    """
+    Detecta las curvas naranja y azul, dibuja sus contornos y devuelve:
+    - El tipo de curva (ORANGE o BLUE)
+    - El área del contorno
+    - El contorno en sí
+    """
+    curves = []
+
+    # Diccionario de colores a procesar
+    colors = {
+        CURVE_ORANGE: (orange_lower, orange_upper, (0, 165, 255)),  # BGR naranja
+        CURVE_BLUE: (blue_lower, blue_upper, (255, 0, 0)),          # BGR azul
+    }
+
+    for curve_type, (lower, upper, draw_color) in colors.items():
+        # Crear máscara
+        mask = cv2.inRange(hsv, lower, upper)
+
+        # Encontrar contornos
+        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        for cnt in contours:
+            area = cv2.contourArea(cnt)
+
+            # Filtrar ruido: solo contornos suficientemente grandes
+            if area > 300:
+                # Dibujar contorno en el frame
+                cv2.drawContours(frame, [cnt], -1, draw_color, 2)
+
+                # Guardar información de la curva
+                curves.append((curve_type, area, cnt))
+
+    return curves
 
 lParking_h, lParking_s, lParking_v = 0, 0, 0
 uParking_h, uParking_s, uParking_v = 0, 0, 0
@@ -85,9 +128,27 @@ ignored_y1, ignored_y2 = 525, 720
 def draw_layout(frame):
     cv2.rectangle(frame, (ignored_x1, ignored_y1), (ignored_x2, ignored_y2), (0, 255, 255), 2)
     
-def process_frame(frame):
+def process_frame(hsv,frame):
     walls_positions = walls(frame)
-    curve_positions = curve_indicators(frame)
+    global STATUS, CURVE_TYPE
+    curves = curve_indicators(hsv, frame)
+    last_area = 0
+    curve = CURVE_NONE
+    min_area = 500
+    for curve_type, area, cnt in curves:
+        if area < min_area:
+            curve= CURVE_NONE
+            continue
+        elif area > last_area:
+            last_area = area
+            curve = curve_type
+    if curve != CURVE_NONE:
+        cv2.putText(frame, f"Curve: {'ORANGE' if curve == CURVE_ORANGE else 'BLUE'}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+        CURVE_TYPE = curve
+        STATUS = TURNING
+        while MechanicsManager.is_running == True:
+            time.sleep(0.01)
+    
     parking_position = parking_slot(frame)
     #obstacle_type, obstacle_position = nearest_obstacle(frame)
     time.sleep(0.01) # Small delay to reduce CPU usage
@@ -100,15 +161,15 @@ def get_line_zone():
 # =========================
 
 def thread_function():
-    global video, yaw
-    gyro.start()
-    gyro.reset_yaw()
+    global video
     video = cv2.VideoCapture(0)
     video.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     video.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
     video.set(cv2.CAP_PROP_FPS, 30)
     
     ret, frame = video.read()
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    process_frame(hsv)
 
     if ret:  
         # Guarda la imagen en el directorio deseado
@@ -119,8 +180,6 @@ def thread_function():
     
     while not finished:
         
-        yaw = gyro.get_yaw()
-        print(f"Yaw: {yaw}")
         ret, frame = video.read()
         time.sleep(0.01) # Small delay to reduce CPU usage
         if not ret:
