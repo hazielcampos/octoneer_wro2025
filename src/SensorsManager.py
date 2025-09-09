@@ -169,7 +169,7 @@ def thread_function():
     
     ret, frame = video.read()
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    process_frame(hsv)
+    process_frame(hsv, frame)
 
     if ret:  
         # Guarda la imagen en el directorio deseado
