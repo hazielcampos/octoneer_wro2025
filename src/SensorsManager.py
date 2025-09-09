@@ -74,6 +74,7 @@ lBlue_h, lBlue_s, lBlue_v = 109, 36, 45
 uBlue_h, uBlue_s, uBlue_v = 179, 189, 119
 blue_lower = (lBlue_h, lBlue_s, lBlue_v)
 blue_upper = (uBlue_h, uBlue_s, uBlue_v)
+last_curves = None
 def curve_indicators(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     """
     Detecta las curvas naranja y azul, dibuja sus contornos y devuelve:
@@ -81,6 +82,8 @@ def curve_indicators(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     - El área del contorno
     - El contorno en sí
     """
+    if MechanicsManager.is_turning:
+        return last_curves if last_curves is not None else []
     curves = []
 
     # Diccionario de colores a procesar
@@ -130,8 +133,12 @@ def draw_layout(frame):
     
 def process_frame(hsv,frame):
     walls_positions = walls(frame)
-    global STATUS, CURVE_TYPE
+    global STATUS, CURVE_TYPE, last_curves
     curves = curve_indicators(hsv, frame)
+    if MechanicsManager.is_turning:
+        curves = last_curves if last_curves is not None else curves
+    else:
+        last_curves = curves
     last_area = 0
     curve = CURVE_NONE
     min_area = 500
@@ -146,8 +153,6 @@ def process_frame(hsv,frame):
         cv2.putText(frame, f"Curve: {'ORANGE' if curve == CURVE_ORANGE else 'BLUE'}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
         CURVE_TYPE = curve
         STATUS = TURNING
-        while MechanicsManager.is_running == True:
-            time.sleep(0.01)
     
     parking_position = parking_slot(frame)
     #obstacle_type, obstacle_position = nearest_obstacle(frame)
