@@ -79,7 +79,7 @@ last_curves = None
 def detect_orange(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     """Detecta curvas naranjas, dibuja contornos y devuelve (tipo, área, contorno)"""
     curves = []
-    mask = cv2.inRange(hsv, orange_lower, orange_upper)
+    #mask = cv2.inRange(hsv, orange_lower, orange_upper)
     # Mostrar máscara opcional
     cv2.imshow("Orange Mask", mask)
     
@@ -94,7 +94,7 @@ def detect_orange(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
 def detect_blue(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     """Detecta curvas azules, dibuja contornos y devuelve (tipo, área, contorno)"""
     curves = []
-    mask = cv2.inRange(hsv, blue_lower, blue_upper)
+    #mask = cv2.inRange(hsv, blue_lower, blue_upper)
     # Mostrar máscara opcional
     cv2.imshow("Blue Mask", mask)
     
@@ -172,8 +172,8 @@ def get_line_zone():
 def thread_function():
     global video
     video = cv2.VideoCapture(0)
-    video.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    video.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    video.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    video.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
     video.set(cv2.CAP_PROP_FPS, 30)
     
     ret, frame = video.read()
