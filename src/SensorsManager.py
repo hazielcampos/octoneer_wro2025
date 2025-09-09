@@ -87,7 +87,7 @@ def detect_orange(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     for cnt in contours:
         area = cv2.contourArea(cnt)
         if area > 1:
-            cv2.drawContours(frame, [cnt], -1, (0, 165, 255), 2)  # naranja
+            #cv2.drawContours(frame, [cnt], -1, (0, 165, 255), 2)  # naranja
             curves.append((CURVE_ORANGE, area, cnt))
     return curves
 
@@ -102,7 +102,7 @@ def detect_blue(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     for cnt in contours:
         area = cv2.contourArea(cnt)
         if area > 1:
-            cv2.drawContours(frame, [cnt], -1, (255, 0, 0), 2)  # azul
+            #cv2.drawContours(frame, [cnt], -1, (255, 0, 0), 2)  # azul
             curves.append((CURVE_BLUE, area, cnt))
     return curves
 
@@ -194,7 +194,7 @@ def thread_function():
         
         frame_display = frame.copy()
         process_frame(hsv, frame_display)
-        cv2.imshow("Frame", frame_display)
+        #cv2.imshow("Frame", frame_display)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 

@@ -80,10 +80,28 @@ def main_func():
     handle_sensors()
         
 def thread_function():
+    global is_turning
     while not finished:
-        
         if is_running:
-            main_func()
+            # Mueve motores
+            forward(30)
+            
+            # Maneja curvas sin dormir
+            if SensorsManager.STATUS == SensorsManager.TURNING and not is_turning:
+                is_turning = True
+                if SensorsManager.CURVE_TYPE == SensorsManager.CURVE_ORANGE:
+                    direction_servo.angle = LEFT_POSITION
+                elif SensorsManager.CURVE_TYPE == SensorsManager.CURVE_BLUE:
+                    direction_servo.angle = RIGHT_POSITION
+                turning_start = time.time()
+            
+            # Termina giro según temporizador, sin bloquear
+            if is_turning and time.time() - turning_start >= 1:
+                direction_servo.angle = CENTER_POSITION
+                is_turning = False
+                SensorsManager.STATUS = SensorsManager.GOING_STRAIGHT
+            
+            time.sleep(0.01)  # Ciclo rápido, no bloqueante
         else:
             stop_motors()
             direction_servo.angle = CENTER_POSITION
