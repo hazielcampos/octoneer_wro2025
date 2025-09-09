@@ -75,42 +75,48 @@ uBlue_h, uBlue_s, uBlue_v = 179, 189, 119
 blue_lower = (lBlue_h, lBlue_s, lBlue_v)
 blue_upper = (uBlue_h, uBlue_s, uBlue_v)
 last_curves = None
+
+def detect_orange(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
+    """Detecta curvas naranjas, dibuja contornos y devuelve (tipo, área, contorno)"""
+    curves = []
+    mask = cv2.inRange(hsv, orange_lower, orange_upper)
+    # Mostrar máscara opcional
+    cv2.imshow("Orange Mask", mask)
+    
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    for cnt in contours:
+        area = cv2.contourArea(cnt)
+        if area > 300:
+            cv2.drawContours(frame, [cnt], -1, (0, 165, 255), 2)  # naranja
+            curves.append((CURVE_ORANGE, area, cnt))
+    return curves
+
+def detect_blue(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
+    """Detecta curvas azules, dibuja contornos y devuelve (tipo, área, contorno)"""
+    curves = []
+    mask = cv2.inRange(hsv, blue_lower, blue_upper)
+    # Mostrar máscara opcional
+    cv2.imshow("Blue Mask", mask)
+    
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    for cnt in contours:
+        area = cv2.contourArea(cnt)
+        if area > 300:
+            cv2.drawContours(frame, [cnt], -1, (255, 0, 0), 2)  # azul
+            curves.append((CURVE_BLUE, area, cnt))
+    return curves
+
 def curve_indicators(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     """
-    Detecta las curvas naranja y azul, dibuja sus contornos y devuelve:
-    - El tipo de curva (ORANGE o BLUE)
-    - El área del contorno
-    - El contorno en sí
+    Combina ambas detecciones (naranja y azul) pero procesadas por separado.
     """
     if MechanicsManager.is_turning:
         return last_curves if last_curves is not None else []
+    
     curves = []
-
-    # Diccionario de colores a procesar
-    colors = {
-        CURVE_ORANGE: (orange_lower, orange_upper, (0, 165, 255)),  # BGR naranja
-        CURVE_BLUE: (blue_lower, blue_upper, (255, 0, 0)),          # BGR azul
-    }
-
-    for curve_type, (lower, upper, draw_color) in colors.items():
-        # Crear máscara
-        mask = cv2.inRange(hsv, lower, upper)
-        cv2.imshow(f"Mask", mask)
-
-        # Encontrar contornos
-        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        large_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > 300]
-        for cnt in large_contours:
-            area = cv2.contourArea(cnt)
-
-            # Filtrar ruido: solo contornos suficientemente grandes
-            if area > 300:
-                # Dibujar contorno en el frame
-                cv2.drawContours(frame, [cnt], -1, draw_color, 2)
-
-                # Guardar información de la curva
-                curves.append((curve_type, area, cnt))
-
+    curves += detect_orange(hsv, frame)
+    curves += detect_blue(hsv, frame)
+    
     return curves
 
 lParking_h, lParking_s, lParking_v = 0, 0, 0
