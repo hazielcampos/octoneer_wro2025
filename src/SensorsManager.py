@@ -167,8 +167,8 @@ def get_line_zone():
 def thread_function():
     global video
     video = cv2.VideoCapture(0)
-    video.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-    video.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+    video.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    video.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
     video.set(cv2.CAP_PROP_FPS, 30)
     
     ret, frame = video.read()
