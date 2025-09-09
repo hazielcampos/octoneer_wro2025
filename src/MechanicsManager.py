@@ -88,7 +88,7 @@ def thread_function():
             
             # Maneja curvas sin dormir
             if SensorsManager.STATUS == SensorsManager.TURNING and not is_turning:
-                print("Turning")
+                print(f"Turning {SensorsManager.CURVE_TYPE}")
                 time.sleep(0.1)  # Pequeña pausa para estabilidad
                 is_turning = True
                 if SensorsManager.CURVE_TYPE == SensorsManager.CURVE_ORANGE:
