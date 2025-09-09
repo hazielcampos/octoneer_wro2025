@@ -68,7 +68,7 @@ def handle_sensors():
             direction_servo.angle = LEFT_POSITION
         elif SensorsManager.CURVE_TYPE == SensorsManager.CURVE_BLUE:
             direction_servo.angle = RIGHT_POSITION
-        time.sleep(1.5)
+        time.sleep(1)
         direction_servo.angle = CENTER_POSITION
         is_turning = False
         SensorsManager.STATUS = SensorsManager.GOING_STRAIGHT
