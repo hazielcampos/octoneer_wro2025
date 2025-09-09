@@ -71,6 +71,8 @@ def handle_sensors():
         time.sleep(1.5)
         direction_servo.angle = CENTER_POSITION
         is_turning = False
+        time.sleep(0.5)
+        SensorsManager.STATUS = SensorsManager.GOING_STRAIGHT
 
 def main_func():
     speed = 30
