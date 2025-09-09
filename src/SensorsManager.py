@@ -95,6 +95,7 @@ def curve_indicators(hsv, frame) -> list[tuple[int, float, np.ndarray]]:
     for curve_type, (lower, upper, draw_color) in colors.items():
         # Crear máscara
         mask = cv2.inRange(hsv, lower, upper)
+        cv2.imshow(f"Mask", mask)
 
         # Encontrar contornos
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
