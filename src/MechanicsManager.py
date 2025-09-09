@@ -60,13 +60,17 @@ def handle_camera() -> tuple[int, int]:
     return speed, angle
 
 def handle_sensors():
+    global is_turning
     if SensorsManager.STATUS == SensorsManager.TURNING:
+        print("Turning")
+        is_turning = True
         if SensorsManager.CURVE_TYPE == SensorsManager.CURVE_ORANGE:
             direction_servo.angle = LEFT_POSITION
         elif SensorsManager.CURVE_TYPE == SensorsManager.CURVE_BLUE:
             direction_servo.angle = RIGHT_POSITION
         time.sleep(1.5)
         direction_servo.angle = CENTER_POSITION
+        is_turning = False
 
 def main_func():
     speed = 30
