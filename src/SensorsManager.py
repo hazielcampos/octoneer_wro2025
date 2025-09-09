@@ -139,7 +139,6 @@ def draw_layout(frame):
     cv2.rectangle(frame, (ignored_x1, ignored_y1), (ignored_x2, ignored_y2), (0, 255, 255), 2)
     
 def process_frame(hsv,frame):
-    walls_positions = walls(frame)
     global STATUS, CURVE_TYPE, last_curves
     curves = curve_indicators(hsv, frame)
     if MechanicsManager.is_turning:
@@ -161,7 +160,6 @@ def process_frame(hsv,frame):
         CURVE_TYPE = curve
         STATUS = TURNING
     
-    parking_position = parking_slot(frame)
     #obstacle_type, obstacle_position = nearest_obstacle(frame)
 
 def get_line_zone():
