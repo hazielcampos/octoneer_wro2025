@@ -14,7 +14,7 @@ pca.frequency = 50  # Hz para servos
 # Configurar servo en canal 0
 direction_servo = servo.Servo(pca.channels[0])
 
-direction_servo.angle = 0  # Ajusta el ángulo inicial del servo
+direction_servo.angle = 100  # Ajusta el ángulo inicial del servo
 
 
 while True:
