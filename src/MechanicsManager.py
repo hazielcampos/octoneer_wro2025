@@ -92,13 +92,13 @@ def thread_function():
                 time.sleep(0.1)  # Pequeña pausa para estabilidad
                 is_turning = True
                 if SensorsManager.CURVE_TYPE == SensorsManager.CURVE_ORANGE:
-                    direction_servo.angle = LEFT_POSITION
-                elif SensorsManager.CURVE_TYPE == SensorsManager.CURVE_BLUE:
                     direction_servo.angle = RIGHT_POSITION
+                elif SensorsManager.CURVE_TYPE == SensorsManager.CURVE_BLUE:
+                    direction_servo.angle = LEFT_POSITION
                 turning_start = time.time()
             
             # Termina giro según temporizador, sin bloquear
-            if is_turning and time.time() - turning_start >= 1:
+            if is_turning and time.time() - turning_start >= 2:
                 direction_servo.angle = CENTER_POSITION
                 is_turning = False
                 SensorsManager.STATUS = SensorsManager.GOING_STRAIGHT
