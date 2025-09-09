@@ -15,7 +15,19 @@ CENTER_POSITION = 52  # Neutral position of the servo
 LEFT_POSITION = 62 # Left position of the servo
 RIGHT_POSITION = 42  # Right position of the servo
 is_turning = False
+distance_threshold = 0  # Distance threshold in mm
 
+def measure_center_distance():
+    global distance_threshold
+    distance_sum = 0
+    samples = 5
+    for i in range(samples):
+        distance = SensorsManager.get_distance()
+        distance_sum += distance
+        time.sleep(0.1)
+    final = distance_sum / samples
+    distance_threshold = final
+    return final
 # =========================
 # State variables
 # =========================
@@ -78,13 +90,58 @@ def main_func():
     forward(speed)
     handle_sensors()
         
+    
+# =========================
+# PID variables
+# =========================
+Kp = 0.3   # Proporcional
+Ki = 0.0   # Integral
+Kd = 0.1   # Derivativo
+
+integral = 0
+last_error = 0
+last_time = time.time()
+
+def PID_control(target_distance, current_distance):
+    global integral, last_error, last_time
+
+    # Calcular error (positivo si está más lejos de lo deseado)
+    error = target_distance - current_distance
+
+    # Tiempo transcurrido desde la última llamada
+    now = time.time()
+    dt = now - last_time if now - last_time > 0 else 1e-6
+
+    # Componentes del PID
+    proportional = Kp * error
+    integral += Ki * error * dt
+    derivative = Kd * (error - last_error) / dt
+
+    output = proportional + integral + derivative
+
+    # Actualizar memoria
+    last_error = error
+    last_time = now
+
+    # Convertimos salida a corrección de servo
+    correction = CENTER_POSITION + output
+
+    # Limitar a rango permitido del servo
+    correction = max(RIGHT_POSITION, min(LEFT_POSITION, correction))
+
+    direction_servo.angle = correction
+    # Debug
+    print(f"[PID] Target={target_distance:.1f}mm Current={current_distance:.1f}mm "
+        f"Error={error:.1f} Out={output:.2f} Servo={correction}")
 def thread_function():
     global is_turning
     while not finished:
         print(SensorsManager.get_distance())
         if is_running:
+            measure_center_distance()
+            print(f"Distance threshold set to: {distance_threshold} mm")
             # Mueve motores
-            forward(30)
+            forward(20)
             
             # Maneja curvas sin dormir
             if SensorsManager.STATUS == SensorsManager.TURNING and not is_turning:
@@ -96,6 +153,10 @@ def thread_function():
                 elif SensorsManager.CURVE_TYPE == SensorsManager.CURVE_BLUE:
                     direction_servo.angle = LEFT_POSITION
                 turning_start = time.time()
+            elif SensorsManager.STATUS == SensorsManager.GOING_STRAIGHT and not is_turning:
+                direction_servo.angle = CENTER_POSITION
+                PID_control(distance_threshold, SensorsManager.get_distance())
+                print("Going straight")
             
             # Termina giro según temporizador, sin bloquear
             if is_turning and time.time() - turning_start >= 1.5:
