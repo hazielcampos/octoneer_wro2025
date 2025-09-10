@@ -1,12 +1,16 @@
-import adafruit_vl53l0x
-from utils.i2c_manager import i2c
-import libs.GPIO as GPIO
-
+import board
+import busio
+import adafruit_vl53l1x
 import time
 
-sensor = adafruit_vl53l0x.VL53L0X(i2c)
-time.sleep(0.1)
+i2c = busio.I2C(board.SCL, board.SDA)
+vl53 = adafruit_vl53l1x.VL53L1X(i2c)
+
+vl53.distance_mode = 2   # 1=short, 2=long
+vl53.timing_budget = 200 # ms
 
 while True:
-    print("Distance: {} mm".format(sensor.range))
-    time.sleep(0.5)
+    if vl53.data_ready:
+        print("Distance: {} mm".format(vl53.distance))
+        vl53.clear_interrupt()
+        time.sleep(0.1)
