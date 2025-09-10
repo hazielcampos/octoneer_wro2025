@@ -8,6 +8,7 @@ sensor_right.init_sensor()
 #sensor_left.init_sensor()
     
 try:
+    print("Press Ctrl-C to stop")
     while True:
         print(sensor_right.get_distance())
         time.sleep(0.1)
