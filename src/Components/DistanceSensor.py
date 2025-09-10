@@ -10,7 +10,7 @@ class DistanceSensor:
 
         # Configura XSHUT
         GPIO.setup(self.xshut, GPIO.OUT)
-        GPIO.output(self.xshut, GPIO.HIGH)   # Apagado
+        GPIO.output(self.xshut, GPIO.LOW)   # Apagado
         time.sleep(0.01)
         self.sensor = None
         
