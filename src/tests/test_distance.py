@@ -11,6 +11,8 @@ try:
     print("Press Ctrl-C to stop")
     while True:
         print(sensor_right.get_distance())
+        print(sensor_left.get_distance())
         time.sleep(0.1)
 except KeyboardInterrupt:
     sensor_right.sensor.set_address(0x29)
+    sensor_left.sensor.set_address(0x29)
