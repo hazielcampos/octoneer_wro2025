@@ -1,14 +1,12 @@
-import board
-import busio
+import VL53L0X
 
-i2c = busio.I2C(board.SCL, board.SDA)
+import time
 
-while not i2c.try_lock():
-    pass
+tof = VL53L0X.VL53L0X(i2c_bus=1, i2c_address=0x29)
+tof.open()
+tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
-addr = 0x29
-buf = bytearray(1)
-i2c.writeto_then_readfrom(addr, bytes([0xC0]), buf)  # registro de identificación
-print("Sensor ID:", hex(buf[0]))
-
-i2c.unlock()
+while True:
+    distance = tof.get_distance()
+    print("Distance: {} mm".format(distance))
+    time.sleep(0.1)
