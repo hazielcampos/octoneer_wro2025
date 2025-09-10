@@ -1,1 +1,0 @@
-# Installers, runners, test, etc, just my playground for bash files.
