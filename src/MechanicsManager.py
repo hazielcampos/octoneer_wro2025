@@ -8,19 +8,7 @@ from Components.Motor import forward, stop_motors, start as start_pwm
 from Components.Servo import set_angle, CENTER_POSITION, LEFT_POSITION, RIGHT_POSITION, disable as disable_servo
 
 is_turning = False
-distance_threshold = 0  # Distance threshold in mm
 
-def measure_center_distance():
-    global distance_threshold
-    distance_sum = 0
-    samples = 5
-    for i in range(samples):
-        distance = SensorsManager.get_distance()
-        distance_sum += distance
-        time.sleep(0.1)
-    final = distance_sum / samples
-    distance_threshold = final
-    return final
 # =========================
 # State variables
 # =========================
@@ -30,6 +18,12 @@ def set_active(active: bool):
     global is_running
     is_running = active        
     
+
+def on_orange_detected():
+    pass
+def on_blue_detected():
+    pass
+
 # =========================
 # PID variables
 # =========================

@@ -21,6 +21,13 @@ OBSTACLE_RED = 2
 sensor_right = DistanceSensor(xshut_pin=22, new_address=0x30)
 sensor_left = DistanceSensor(xshut_pin=27, new_address=0x31)
 
+def get_left_distance() -> float:
+    return sensor_left.get_distance()
+
+def get_right_distance() -> float:
+    return sensor_right.get_distance()
+
+
 # =========================
 # Global variables
 # =========================
@@ -52,6 +59,16 @@ def nearest_obstacle(frame) -> tuple[int, tuple[int, int]]: # returns OBSTACLE_N
     
 def process_frame(hsv,frame):
     pass
+lowerOrange_r, lowerOrange_g, lowerOrange_b, lowerOrange_c, lowerOrange_temp, lowerOrange_lux = 0, 100, 100
+upperOrange_r, upperOrange_g, upperOrange_b, upperOrange_c, upperOrange_temp, upperOrange_lux = 20, 255, 255
+
+lowerBlue_r, lowerBlue_g, lowerBlue_b, lowerBlue_c, lowerBlue_temp, lowerBlue_lux = 100, 150, 0
+upperBlue_r, upperBlue_g, upperBlue_b, upperBlue_c, upperBlue_temp, upperBlue_lux = 140, 255, 255
+def process_color_sensor():
+    (r, g, b, c), temp, lux = ColorSensor.sensor_read()
+    
+    # cuando detecta naranja llamar a MechanicsManager.on_orange_detected()
+    # cuando detecta azul llamar a MechanicsManager.on_blue_detected()
     
 # =========================
 # Thread function
