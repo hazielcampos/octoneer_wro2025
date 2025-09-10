@@ -1,13 +1,11 @@
-from Components.DistanceSensor import DistanceSensor
+import adafruit_vl53l0x
+from utils.i2c_manager import i2c
+
 import time
 
-sensor_right = DistanceSensor(xshut_pin=22, new_address=0x29)
-#sensor_left = DistanceSensor(xshut_pin=27, new_address=0x31)
-
-sensor_right.init_sensor()
-#sensor_left.init_sensor()
+sensor = adafruit_vl53l0x.VL53L0X(i2c)
+time.sleep(0.1)
 
 while True:
-    print(sensor_right.get_distance())
-    #print(sensor_left.get_distance())
-    time.sleep(0.001)
+    print("Distance: {} mm".format(sensor.range))
+    time.sleep(0.5)
