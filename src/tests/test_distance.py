@@ -1,4 +1,4 @@
-from src.Components.DistanceSensor import DistanceSensor
+from Components.DistanceSensor import DistanceSensor
 import time
 
 sensor_right = DistanceSensor(xshut_pin=22, new_address=0x30)
