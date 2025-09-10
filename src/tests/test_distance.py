@@ -9,4 +9,3 @@ tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 while True:
     distance = tof.get_distance()
     print("Distance: {} mm".format(distance))
-    time.sleep(0.1)
