@@ -12,6 +12,7 @@ class DistanceSensor:
         GPIO.setup(self.xshut, GPIO.OUT)
         GPIO.output(self.xshut, GPIO.LOW)   # Apagado
         time.sleep(0.01)
+        self.sensor = None
         
     def init_sensor(self):
         # Enciende
@@ -26,4 +27,6 @@ class DistanceSensor:
         self.sensor = sensor
 
     def get_distance(self):
+        if self.sensor is None:
+            return 0
         return self.sensor.range
