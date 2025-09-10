@@ -8,6 +8,8 @@ IN = 1
 PUD_OFF = None
 PUD_DOWN = lgpio.SET_PULL_DOWN
 PUD_UP   = lgpio.SET_PULL_UP
+LOW = 0
+HIGH = 1
 
 # Open the GPIO chip (usually chip 0 for Raspberry Pi)
 chip = lgpio.gpiochip_open(0)
