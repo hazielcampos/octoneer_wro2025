@@ -6,8 +6,10 @@ sensor_right = DistanceSensor(xshut_pin=22, new_address=0x30)
 
 sensor_right.init_sensor()
 #sensor_left.init_sensor()
-
-while True:
-    print(sensor_right.get_distance())
-#    print(sensor_left.get_distance())
-    time.sleep(0.001)
+    
+try:
+    while True:
+        print(sensor_right.get_distance())
+        time.sleep(0.1)
+except KeyboardInterrupt:
+    sensor_right.sensor.set_address(0x29)
