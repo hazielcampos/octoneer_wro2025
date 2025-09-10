@@ -1,28 +1,27 @@
-# Octoneer – Vehículo Autónomo del Equipo Octobots
+# Octoneer – Autonomous Vehicle by Team Octobots
 
-**Octoneer** es un robot autónomo desarrollado por el **Equipo Octobots** para el reto **World Robot Olympiad (WRO) México Future Engineers 2025**.
+**Octoneer** is an autonomous self-driving robot developed by **Team Octobots** for the **Mexico World Robot Olympiad (WRO) Future Engineers 2025** challenge.
 
-Este proyecto se enfoca en construir un vehículo autónomo modular de alto rendimiento utilizando:
+This project focuses on building a modular, high-performance autonomous vehicle using:
 
-- 🧠 **Raspberry Pi 5 (16GB)** como unidad de procesamiento principal
-- 🎥 **Cámara de Profundidad Studica** para percepción y conciencia espacial
-- 🧭 **YDLidar X2S** para detección de obstáculos y refinamiento de trayectorias
-- ⚙️ Un sistema de control personalizado con ajuste PID, lógica de estacionamiento y planificación dinámica de rutas
-- 🧩 Arquitectura modular (visión, control, estacionamiento, navegación)
-- 📦 Sistema basado en ROS 2 o Python (dependiendo de la implementación final)
-- 📝 Documentación limpia y flujo de trabajo basado en Git para trabajo en equipo y mantenibilidad
+- 🧠 **Raspberry Pi 5 (16GB)** as the main processing unit
+- 🎥 **Studica Depth Camera** for perception and spatial awareness
+- 🧭 **YDLidar X2S** for obstacle detection and trajectory refinement
+- ⚙️ A custom control system with PID tuning, parking logic, and dynamic path planning
+- 🧩 Modular architecture (vision, control, parking, navigation)
+- 📦 ROS 2 or Python-based system (depending on final implementation)
+- 📝 Clean documentation and Git-based workflow for teamwork and maintainability
 
-> Nuestro objetivo es competir a nivel nacional y clasificar para el **WRO Internacional 2026 en Singapur**.
+> Our goal is to compete at the national level and qualify for the **WRO International 2026 in Singapore**.
 
-Desarrollado con ❤️ y cafeína por:
-- Haziel Campos – Desarrollador principal, sistemas de percepción y control
-- Equipo Octobots – Diseño mecánico, estrategia e integración
+Developed with ❤️ and caffeine by:
+- Haziel Campos – Lead developer, perception & control systems
+- Team Octobots – Mechanical design, strategy and integration
 
-📁 Este repositorio incluye:
-- Código fuente para percepción, control y navegación
-- Referencias de CAD y diagramas de hardware
-- Modelos entrenados y datos de prueba
-- Documentación e informe técnico (en `/docs`)
+📁 This repository includes:
+- Source code for perception, control, and navigation
+- CAD references and hardware diagrams
+- Trained models and test data
+- Documentation and technical report (in `/docs`)
 
-> Si te gusta este proyecto, ¡únete a nuestro Discord para aumentar la comunidad de robótica y recibir retroalimentación! [Únete al Discord aquí! 🦑](https://discord.gg/gCf6xwBBVd)
-
+> If you like this project please join to our discord to increase the robotics community and feedback! [Join discord here! 🦑](https://discord.gg/gCf6xwBBVd)
