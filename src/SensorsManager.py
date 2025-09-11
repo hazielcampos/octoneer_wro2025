@@ -75,11 +75,11 @@ def nearest_obstacle(frame) -> tuple[int, tuple[int, int]]: # returns OBSTACLE_N
     
 def process_frame(hsv,frame):
     pass
-lowerOrange_r, lowerOrange_g, lowerOrange_b, lowerOrange_c, lowerOrange_temp, lowerOrange_lux = 0, 100, 100
-upperOrange_r, upperOrange_g, upperOrange_b, upperOrange_c, upperOrange_temp, upperOrange_lux = 20, 255, 255
+lowerOrange_r, lowerOrange_g, lowerOrange_b, lowerOrange_c, lowerOrange_temp, lowerOrange_lux = 0, 100, 100, 0, 0, 0
+upperOrange_r, upperOrange_g, upperOrange_b, upperOrange_c, upperOrange_temp, upperOrange_lux = 20, 255, 255, 0, 0, 0
 
-lowerBlue_r, lowerBlue_g, lowerBlue_b, lowerBlue_c, lowerBlue_temp, lowerBlue_lux = 100, 150, 0
-upperBlue_r, upperBlue_g, upperBlue_b, upperBlue_c, upperBlue_temp, upperBlue_lux = 140, 255, 255
+lowerBlue_r, lowerBlue_g, lowerBlue_b, lowerBlue_c, lowerBlue_temp, lowerBlue_lux = 100, 150, 0, 0, 0, 0
+upperBlue_r, upperBlue_g, upperBlue_b, upperBlue_c, upperBlue_temp, upperBlue_lux = 140, 255, 255, 0, 0, 0
 def process_color_sensor():
     (r, g, b, c), temp, lux = color.get_color()
     
