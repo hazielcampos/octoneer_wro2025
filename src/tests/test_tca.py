@@ -1,5 +1,6 @@
 import board, busio, adafruit_tca9548a
 import adafruit_tcs34725
+import adafruit_vl53l0x
 import time
 
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -11,6 +12,8 @@ tcs = adafruit_tcs34725.TCS34725(tca[0])
 tcs.integration_time = 200
 tcs.gain = 4
 
+vlx = adafruit_vl53l0x.VL53L0X(tca[1])
+
 try:
     print("Press Ctrl-C to stop")
     while True:
@@ -21,6 +24,7 @@ try:
         print("Color: ({0}, {1}, {2}, {3})".format(r, g, b, c))
         print("Color Temperature: {0} K".format(color_temp))
         print("Luminosity: {0} Lux".format(lux))
+        print("Distance: {} mm".format(vlx.range))
         time.sleep(0.5)
 except KeyboardInterrupt:
     print("Stopped by User")
