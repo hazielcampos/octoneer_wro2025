@@ -11,7 +11,8 @@ tcs = adafruit_tcs34725.TCS34725(tca[2])
 tcs.integration_time = 50
 tcs.gain = 4
 
-vlx = adafruit_vl53l0x.VL53L0X(tca[1])
+vlx_r = adafruit_vl53l0x.VL53L0X(tca[1])
+vlx_l = adafruit_vl53l0x.VL53L0X(tca[0])
 
 try:
     print("Press Ctrl-C to stop")
@@ -23,6 +24,7 @@ try:
         print("Color: ({0}, {1}, {2}, {3})".format(r, g, b, c))
         print("Color Temperature: {0} K".format(color_temp))
         print("Luminosity: {0} Lux".format(lux))
-        print("Distance: {} mm".format(vlx.range))
+        print("Distance right: {} mm".format(vlx_r.range))
+        print("Distance left: {} mm".format(vlx_l.range))
 except KeyboardInterrupt:
     print("Stopped by User")
