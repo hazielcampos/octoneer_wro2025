@@ -31,5 +31,7 @@ try:
         print("left: ",sensor_left.get_distance())
         time.sleep(0.1)
 except KeyboardInterrupt:
+    print("Stopped by User")
+finally:
     sensor_right.sensor.set_address(0x29)
     sensor_left.sensor.set_address(0x29)
