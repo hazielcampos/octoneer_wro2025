@@ -1,6 +1,12 @@
 import libs.GPIO as GPIO
+from utils.i2c_manager import i2c
+import adafruit_tcs34725
 import time
 
+
+color_sensor = adafruit_tcs34725.TCS34725(i2c)
+color_sensor.integration_time = 24
+color_sensor.gain = 4
 TRIG_1 = 23
 ECHO_1 = 24
 
@@ -39,6 +45,11 @@ try:
         dist2 = medir_distancia(TRIG_2, ECHO_2)
         print(f"Distancia2: {dist2:.2f} cm")
         time.sleep(1)
+        r, g, b, c = color_sensor.color_raw
+        temp = color_sensor.color_temperature
+        lux = color_sensor.lux
+        print(f"Color: {r} {g} {b} {c} - {temp} - {lux}")
+        
 
 except KeyboardInterrupt:
     print("Medición detenida por el usuario")
