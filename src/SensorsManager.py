@@ -99,9 +99,10 @@ y1, y2 = 400, 480
 def detect_color(hsv):
     roi = hsv[y1:y2, x1:x2]
     cv2.rectangle(hsv, (x1, y1), (x2, y2), (255, 0, 0), 2)
-    cv2.imshow("ROI", roi)
     mask_orange = cv2.inRange(roi, lower_orange, upper_orange)
     mask_blue = cv2.inRange(roi, lower_blue, upper_blue)
+    cv2.imshow("Mask Orange", mask_orange)
+    cv2.imshow("Mask Blue", mask_blue)
     
     orange_count = cv2.countNonZero(mask_orange)
     blue_count = cv2.countNonZero(mask_blue)
