@@ -9,7 +9,7 @@ RIGHT_POSITION = 42  # Right position of the servo
 # =========================
 # PCA9685 and Servo setup
 # =========================
-pca = PCA9685(i2c)
+pca = PCA9685(i2c, address=0x43)
 pca.frequency = 50  # Servo frequency
 direction_servo = servo.Servo(pca.channels[0])
 
