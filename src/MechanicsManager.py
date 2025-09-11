@@ -111,10 +111,10 @@ def thread_function():
     while not finished:
         if is_running:
             if not is_turning:
-                forward(5)
+                forward(2)
                 PID_control()
             else:
-                forward(10)
+                forward(2)
                 
         else:
             stop_motors()
