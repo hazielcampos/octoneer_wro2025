@@ -1,13 +1,17 @@
 import libs.GPIO as GPIO
 import time
 
-TRIG = 23
-ECHO = 24
+TRIG_1 = 23
+ECHO_1 = 24
 
-GPIO.setup(TRIG, GPIO.OUT)
-GPIO.setup(ECHO, GPIO.IN)
+TRIG_2 = 6
+ECHO_2 = 5
+GPIO.setup(TRIG_1, GPIO.OUT)
+GPIO.setup(ECHO_1, GPIO.IN)
 
-def medir_distancia():
+GPIO.setup(TRIG_2, GPIO.OUT)
+GPIO.setup(ECHO_2, GPIO.IN)
+def medir_distancia(TRIG, ECHO):
     # Asegurarse de que TRIG esté en bajo
     GPIO.output(TRIG, False)
     time.sleep(0.0002)
@@ -30,8 +34,10 @@ def medir_distancia():
 
 try:
     while True:
-        dist = medir_distancia()
+        dist = medir_distancia(TRIG_1, ECHO_1)
         print(f"Distancia: {dist:.2f} cm")
+        dist2 = medir_distancia(TRIG_2, ECHO_2)
+        print(f"Distancia2: {dist2:.2f} cm")
         time.sleep(1)
 
 except KeyboardInterrupt:
