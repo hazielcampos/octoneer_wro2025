@@ -4,8 +4,8 @@
 import threading
 import cv2
 import numpy as np
-from Components.DistanceSensor import DistanceSensor
 from Components.ColorSensor import ColorSensor
+from Components.Ultrasonic import Ultrasonic
 # ==========================
 # Contants
 # ==========================
@@ -16,16 +16,16 @@ OBSTACLE_RED = 2
 # =======================
 # Distance sensor
 # =======================
-sensor_right = DistanceSensor(1)
-sensor_left = DistanceSensor(0)
+sensor_right = Ultrasonic(23, 24)
+sensor_left = Ultrasonic(6, 5)
 
 def get_left_distance() -> float:
-    return sensor_left.get_distance()
+    return sensor_left.distance
 
 def get_right_distance() -> float:
-    return sensor_right.get_distance()
+    return sensor_right.distance
 
-color = ColorSensor(2)
+color = ColorSensor()
 
 """ Returns the difference between the left and right distance sensors.
 If the right distance is greater than the left distance, the result will be negative.
