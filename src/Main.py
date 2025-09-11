@@ -1,4 +1,4 @@
-from libs import GPIO, betterTime as time2
+import libs.GPIO as GPIO
 import MechanicsManager as mechanics
 import SensorsManager as sensors
 import time
@@ -24,7 +24,6 @@ def main():
 def global_active(is_active: bool):
     sensors.set_active(is_active)
     mechanics.set_active(is_active)
-    time2.set_active(is_active)
 
 def loop():
     global is_running
