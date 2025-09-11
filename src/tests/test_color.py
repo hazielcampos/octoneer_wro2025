@@ -43,7 +43,7 @@ def process_color_sensor():
         current_color = "orange"
     elif is_blue:
         current_color = "blue"        
-    time.sleep(0.01)
+    time.sleep(0.001)
     
 def display():
     clear()
