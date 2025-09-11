@@ -112,7 +112,7 @@ def PID_control():
 # =========================
 def thread_function():
     while not finished:
-        SensorsManager.logs[0] = f"Turning: {is_turning}"
+        SensorsManager.logs[0] = "Turning: " + is_turning
         
         if is_running:
             if color_vuelta == "naranja":
