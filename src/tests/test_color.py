@@ -11,12 +11,22 @@ def clear():
     else:
         _ = os.system('clear')
 
+def process_color_sensor():
+    # Obtener valores del sensor
+    r, g, b, c = color.color  # raw values
+    total = r + g + b
+    if total == 0:
+        return  # evitar división por cero
+    
+    # Normalizar valores RGB
+    r_norm = r / total
+    g_norm = g / total
+    b_norm = b / total
+    clear()
+    print(f"R norm: {r_norm}, G norm: {g_norm}, B norm: {b_norm}")
 try:
     print("Press Ctrl-C to stop")
     while True:
-        (r, g, b, c), temp, lux = color.color, color.temp, color.lux
-        clear()
-        print(f"R: {r}, G: {g}, B: {b}, C: {c}, Temp: {temp}, Lux: {lux}")
-        time.sleep(0.1)
+        process_color_sensor()
 except KeyboardInterrupt:
     pass
