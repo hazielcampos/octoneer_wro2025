@@ -48,7 +48,7 @@ def on_blue_detected():
 # =========================
 # PID variables
 # =========================
-Kp = 0.05   # Proporcional
+Kp = 0.03   # Proporcional
 Ki = 0.0   # Integral
 Kd = 0.01   # Derivativo
 
@@ -61,7 +61,7 @@ def PID_control():
 
     # Calcular error (positivo si está más lejos de lo deseado)
     error = SensorsManager.get_error()
-    if error > 130 or error < -130:
+    if error > 150 or error < -150:
         error = 0.0
 
     # Tiempo transcurrido desde la última llamada
@@ -98,7 +98,7 @@ def thread_function():
     while not finished:
         if is_running:
             if not is_turning:
-                #forward(10)
+                forward(10)
                 PID_control()
                 
         else:
