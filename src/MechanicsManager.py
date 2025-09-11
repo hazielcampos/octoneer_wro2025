@@ -30,6 +30,7 @@ def on_orange_detected():
         is_turning = True
         forward(20)
         set_angle(RIGHT_POSITION)
+    time.sleep(0.1) # wait to be sure the robot is in the line
         
 def on_blue_detected():
     if not is_running:
@@ -44,6 +45,7 @@ def on_blue_detected():
         is_turning = True
         forward(20)
         set_angle(LEFT_POSITION)
+    time.sleep(0.1) # wait to be sure the robot is in the line
 
 # =========================
 # PID variables
