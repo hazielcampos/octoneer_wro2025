@@ -1,4 +1,4 @@
-from libs.GPIO import GPIO
+import libs.GPIO as GPIO
 
 # =========================
 # GPIO setup
