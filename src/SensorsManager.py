@@ -94,8 +94,7 @@ def in_range(point, lower, upper):
     return lower[0] <= t <= upper[0] and lower[1] <= l <= upper[1]
 
 def process_color_sensor():
-    # Obtener valores del sensor
-    r, g, b, c = color.color  # raw values
+    r, g, b, c = color.color
     total = r + g + b
     if total == 0:
         return  # evitar división por cero
@@ -105,14 +104,18 @@ def process_color_sensor():
     g_norm = g / total
     b_norm = b / total
 
-    # Umbrales para naranja
-    # Ajusta según tu sensor y condiciones de luz
-    is_orange = r_norm > 0.45 and g_norm > 0.25 and b_norm < 0.2
+    # Umbrales con tolerancia ±0.05
+    # Naranja aproximado: r=0.394, g=0.34, b=0.28
+    is_orange = (0.35 <= r_norm <= 0.44) and \
+                (0.29 <= g_norm <= 0.39) and \
+                (0.23 <= b_norm <= 0.33)
 
-    # Umbrales para azul
-    is_blue = b_norm > 0.4 and r_norm < 0.25 and g_norm < 0.25
+    # Azul aproximado: r=0.28, g=0.33, b=0.39
+    is_blue = (0.23 <= r_norm <= 0.33) and \
+              (0.28 <= g_norm <= 0.38) and \
+              (0.34 <= b_norm <= 0.44)
 
-    # Lógica de giro basada en color detectado
+    # Llamar a funciones de giro solo si el color actual no coincide con el giro en curso
     if is_orange and MechanicsManager.turn_color != "orange":
         MechanicsManager.on_orange_detected()
     elif is_blue and MechanicsManager.turn_color != "blue":
