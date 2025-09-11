@@ -43,9 +43,9 @@ If the result is zero, the robot is centered between the two walls.
 # for the color sensor to detect the curve start line indicator
 max_error_to_get_zero = 20 # cm
 def get_error() -> float:
-    error = get_left_distance() - get_right_distance() / 10.0 # convert mm to cm
-    if abs(error) > max_error_to_get_zero:
-        return 0.0
+    error = get_left_distance() - get_right_distance() # convert mm to cm
+    #if abs(error) > max_error_to_get_zero:
+    #    return 0.0
     return error
 # =========================
 # Global variables

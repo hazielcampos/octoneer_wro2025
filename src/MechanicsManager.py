@@ -59,6 +59,7 @@ def PID_control():
 
     # Limitar a rango permitido del servo
     correction = max(RIGHT_POSITION, min(LEFT_POSITION, correction))
+    correction = int(round(correction))
 
     set_angle(correction)
     # Debug
