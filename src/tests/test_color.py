@@ -53,5 +53,6 @@ try:
     print("Press Ctrl-C to stop")
     while True:
         process_color_sensor()
+        display()
 except KeyboardInterrupt:
     pass
