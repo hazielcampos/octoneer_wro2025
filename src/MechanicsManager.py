@@ -30,6 +30,7 @@ def on_orange_detected():
             print("Fin del giro izquierdo, reseteando")
             is_turning = False
             turn_color = "ninguno"
+            time.sleep(0.4)
             set_angle(CENTER_POSITION)
     else:
         # inicia giro a la derecha
@@ -51,6 +52,7 @@ def on_blue_detected():
             print("Fin del giro derecho, reseteando")
             is_turning = False
             turn_color = "ninguno"
+            time.sleep(0.4)
             set_angle(CENTER_POSITION)
     else:
         # inicia giro a la izquierda
@@ -118,7 +120,7 @@ def thread_function():
                 on_orange_detected()
             elif color_vuelta == "azul":
                 on_blue_detected()
-            if not is_turning:
+            elif not is_turning:
                 forward(0)
                 PID_control()
             else:
