@@ -107,10 +107,10 @@ def detect_color(hsv):
     orange_count = cv2.countNonZero(mask_orange)
     blue_count = cv2.countNonZero(mask_blue)
     
-    if orange_count > 500 and MechanicsManager.color_vuelta != "orange":
+    if orange_count > 500 and MechanicsManager.color_vuelta != "naranja":
         cv2.putText(hsv, "NARANJA", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 165, 255), 2)
         MechanicsManager.color_vuelta = "naranja"
-    elif blue_count > 500 and MechanicsManager.color_vuelta != "blue":
+    elif blue_count > 500 and MechanicsManager.color_vuelta != "azul":
         cv2.putText(hsv, "AZUL", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
         MechanicsManager.color_vuelta = "azul"
     else:
