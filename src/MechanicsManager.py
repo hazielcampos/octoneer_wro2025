@@ -28,6 +28,7 @@ def on_orange_detected():
         set_angle(CENTER_POSITION)
         time.sleep(0.5) # wait to be sure the robot is in the line
     elif not is_turning:
+        print("Turning right")
         is_turning = True
         turn_color = "orange"
         stop_motors()
@@ -45,6 +46,7 @@ def on_blue_detected():
         set_angle(CENTER_POSITION)
         time.sleep(0.5) # wait to be sure the robot is in the line
     elif not is_turning:
+        print("Turning left")
         is_turning = True
         turn_color = "blue"
         stop_motors()
