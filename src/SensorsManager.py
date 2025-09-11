@@ -3,11 +3,9 @@
 # =========================
 import threading
 import cv2
-from libs import betterTime as time2
 import numpy as np
-from utils.i2c_manager import i2c
 from Components.DistanceSensor import DistanceSensor
-import Components.ColorSensor as ColorSensor
+from Components.ColorSensor import ColorSensor
 # ==========================
 # Contants
 # ==========================
@@ -18,8 +16,8 @@ OBSTACLE_RED = 2
 # =======================
 # Distance sensor
 # =======================
-sensor_right = DistanceSensor(xshut_pin=22, new_address=0x30)
-sensor_left = DistanceSensor(xshut_pin=27, new_address=0x31)
+sensor_right = DistanceSensor(1)
+sensor_left = DistanceSensor(0)
 
 def get_left_distance() -> float:
     return sensor_left.get_distance()
@@ -27,7 +25,25 @@ def get_left_distance() -> float:
 def get_right_distance() -> float:
     return sensor_right.get_distance()
 
+color = ColorSensor(2)
 
+""" Returns the difference between the left and right distance sensors.
+If the right distance is greater than the left distance, the result will be negative.
+else it will be positive.
+
+This value can be used to determine the direction to turn to center the robot between two walls.
+For example, if the result is negative, the robot should turn left to center itself.
+If the result is positive, the robot should turn right to center itself.
+If the result is zero, the robot is centered between the two walls.
+"""
+# if the error is more than this value, the error is considered zero bc probably it is the start of a curve so we have to wait
+# for the color sensor to detect the curve start line indicator
+max_error_to_get_zero = 20 # cm
+def get_error() -> float:
+    error = get_left_distance() - get_right_distance() / 10.0 # convert mm to cm
+    if abs(error) > max_error_to_get_zero:
+        return 0.0
+    return error
 # =========================
 # Global variables
 # =========================
@@ -65,7 +81,7 @@ upperOrange_r, upperOrange_g, upperOrange_b, upperOrange_c, upperOrange_temp, up
 lowerBlue_r, lowerBlue_g, lowerBlue_b, lowerBlue_c, lowerBlue_temp, lowerBlue_lux = 100, 150, 0
 upperBlue_r, upperBlue_g, upperBlue_b, upperBlue_c, upperBlue_temp, upperBlue_lux = 140, 255, 255
 def process_color_sensor():
-    (r, g, b, c), temp, lux = ColorSensor.sensor_read()
+    (r, g, b, c), temp, lux = color.get_color()
     
     # cuando detecta naranja llamar a MechanicsManager.on_orange_detected()
     # cuando detecta azul llamar a MechanicsManager.on_blue_detected()
