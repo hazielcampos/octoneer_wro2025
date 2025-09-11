@@ -18,6 +18,8 @@ def set_active(active: bool):
     
 
 def on_orange_detected():
+    if not is_running:
+        return
     global is_turning
     print("Orange detected")
     if is_turning:
@@ -30,6 +32,8 @@ def on_orange_detected():
         set_angle(RIGHT_POSITION)
         
 def on_blue_detected():
+    if not is_running:
+        return
     global is_turning
     print("Blue detected")
     if is_turning:
