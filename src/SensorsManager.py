@@ -93,8 +93,8 @@ upper_orange = (18, 95, 210) # hsv
 lower_blue = (105, 55, 85)
 upper_blue = (117, 123, 130)
 
-x1, x2 = 220, 420
-y1, y2 = 480, 0
+x1, x2 = 200, 400
+y1, y2 = 400, 480
 
 def detect_color(hsv):
     roi = hsv[y1:y2, x1:x2]
