@@ -2,6 +2,7 @@ import adafruit_tcs34725
 from utils.i2c_manager import i2c
 import threading
 
+
 class ColorSensor:
     def __init__(self):
         self.sensor = adafruit_tcs34725.TCS34725(i2c)

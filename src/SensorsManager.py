@@ -7,6 +7,15 @@ import numpy as np
 from Components.ColorSensor import ColorSensor
 from Components.Ultrasonic import Ultrasonic
 import MechanicsManager 
+import os
+
+def clear():
+    # for windows
+    if os.name == 'nt':
+        _ = os.system('cls')
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = os.system('clear')
 # ==========================
 # Contants
 # ==========================
@@ -90,6 +99,7 @@ lower_blue = (8000, 50) # temp and lux
 upper_blue = (9000, 200)
 def process_color_sensor():
     point = (color.temp, color.lux)
+    clear()
     print(f"Temp: {color.temp}, Lux: {color.lux}")
     if in_range(point, lower_orange, upper_orange):
         print("Orange detected")
