@@ -9,12 +9,12 @@ from adafruit_motor import servo
 # Inicializar I2C
 i2c = busio.I2C(board.SCL, board.SDA)
 # Inicializar PCA9685
-pca = PCA9685(i2c)
+pca = PCA9685(i2c, address=0x43)
 pca.frequency = 50  # Hz para servos
 # Configurar servo en canal 0
 direction_servo = servo.Servo(pca.channels[0])
 
-direction_servo.angle = 100  # Ajusta el ángulo inicial del servo
+direction_servo.angle = 52  # Ajusta el ángulo inicial del servo
 
 
 while True:
