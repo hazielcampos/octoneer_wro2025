@@ -108,10 +108,13 @@ def detect_color(hsv):
     blue_count = cv2.countNonZero(mask_blue)
     
     if orange_count > 500 and MechanicsManager.turn_color != "orange":
+        cv2.putText(hsv, "NARANJA", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 165, 255), 2)
         MechanicsManager.on_orange_detected()
     elif blue_count > 500 and MechanicsManager.turn_color != "blue":
+        cv2.putText(hsv, "AZUL", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
         MechanicsManager.on_blue_detected()
     else:
+        cv2.putText(hsv, "NINGUNO", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
         return None
 def process_frame(hsv,frame):
     detect_color(hsv)
