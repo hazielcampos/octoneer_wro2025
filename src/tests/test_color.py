@@ -15,6 +15,7 @@ last_color = None
 current_color = None
 
 def process_color_sensor():
+    global current_color, last_color
     r, g, b, c = color.color
     total = r + g + b
     current_color = "white"
@@ -48,8 +49,6 @@ def display():
     clear()
     print("Current Color: ", current_color)
     print("Last Color: ", last_color)
-    last_color = current_color
-try:
     print("Press Ctrl-C to stop")
     while True:
         process_color_sensor()
