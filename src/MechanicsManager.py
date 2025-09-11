@@ -1,6 +1,5 @@
 
 from libs import GPIO
-from libs import betterTime as time2
 import threading
 import time
 import SensorsManager
