@@ -1,5 +1,4 @@
 
-from libs import GPIO
 import threading
 import time
 import SensorsManager
