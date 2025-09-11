@@ -50,6 +50,7 @@ def display():
     print("Current Color: ", current_color)
     print("Last Color: ", last_color)
     print("Press Ctrl-C to stop")
+try:
     while True:
         process_color_sensor()
         display()
