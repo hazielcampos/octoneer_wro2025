@@ -9,7 +9,7 @@ tca = adafruit_tca9548a.TCA9548A(i2c, address=0x70)
 print("TCA9548A presente en 0x70")  # si esto no da error, el TCA responde
 tcs = adafruit_tcs34725.TCS34725(tca[0])
 
-tcs.integration_time = 30
+tcs.integration_time = 24
 tcs.gain = 4
 
 vlx = adafruit_vl53l0x.VL53L0X(tca[1])
@@ -25,6 +25,5 @@ try:
         print("Color Temperature: {0} K".format(color_temp))
         print("Luminosity: {0} Lux".format(lux))
         print("Distance: {} mm".format(vlx.range))
-        time.sleep(0.5)
 except KeyboardInterrupt:
     print("Stopped by User")
