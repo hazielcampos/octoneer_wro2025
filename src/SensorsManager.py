@@ -142,7 +142,7 @@ def thread_function():
         frame_display = frame.copy()
         
         process_frame(hsv, frame_display)
-        cv2.imshow(hsv)
+        cv2.imshow("hsv", hsv)
         
         #cv2.imshow("Frame", frame_display)
         if cv2.waitKey(1) & 0xFF == ord('q'):
