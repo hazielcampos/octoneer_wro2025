@@ -112,6 +112,8 @@ def PID_control():
 # =========================
 def thread_function():
     while not finished:
+        SensorsManager.logs[0] = f"Turning: {is_turning}"
+        
         if is_running:
             if color_vuelta == "naranja":
                 on_orange_detected()
@@ -128,7 +130,6 @@ def thread_function():
             set_angle(CENTER_POSITION)
             is_turning = False
             time.sleep(0.1)
-            SensorsManager.logs[0] = f"Turning: {is_turning}"
 
 process_thread = threading.Thread(target=thread_function, daemon=True)
 
