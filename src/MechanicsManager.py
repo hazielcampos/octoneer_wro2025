@@ -81,8 +81,8 @@ def PID_control():
 
     set_angle(correction)
     # Debug
-    print(f"[PID] Error: {error} "
-        f"Servo={correction}")
+    #print(f"[PID] Error: {error} "
+    #    f"Servo={correction}")
     
 # =========================
 # Threaded processing
