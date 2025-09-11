@@ -4,9 +4,10 @@ import libs.GPIO as GPIO
 import time
 
 class DistanceSensor:
-    def __init__(self, xshut_pin, new_address=0x29):
+    def __init__(self, xshut_pin, new_address=0x29, old_address=0x29):
         self.xshut = xshut_pin
         self.address = new_address
+        self.old_address = old_address
 
         # Configura XSHUT
         GPIO.setup(self.xshut, GPIO.OUT)
@@ -20,7 +21,7 @@ class DistanceSensor:
         time.sleep(0.05)
 
         # Inicializa con dirección por defecto
-        sensor = adafruit_vl53l0x.VL53L0X(i2c)
+        sensor = adafruit_vl53l0x.VL53L0X(i2c, address=self.old_address)
 
         # Cambia dirección
         sensor.set_address(self.address)
