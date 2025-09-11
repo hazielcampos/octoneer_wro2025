@@ -52,7 +52,7 @@ def PID_control():
 
     # Calcular error (positivo si está más lejos de lo deseado)
     error = SensorsManager.get_error()
-    if error > 100 or error < -100:
+    if error > 500 or error < -500:
         error = 0.0
 
     # Tiempo transcurrido desde la última llamada
@@ -89,7 +89,7 @@ def thread_function():
     while not finished:
         if is_running:
             if not is_turning:
-                forward(20)
+                forward(10)
                 PID_control()
                 
         else:
