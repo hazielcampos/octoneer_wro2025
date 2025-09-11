@@ -87,40 +87,40 @@ uRed_h, uRed_s, uRed_v = 179, 187, 133
 def nearest_obstacle(frame) -> tuple[int, tuple[int, int]]: # returns OBSTACLE_NONE, OBSTACLE_GREEN or OBSTACLE_RED
     return OBSTACLE_NONE, (0, 0)
     
+lower_orange = (0, 50, 55) #hsv
+upper_orange = (18, 95, 210) # hsv
+
+lower_blue = (105, 55, 85)
+upper_blue = (117, 123, 130)
+
+x1, x2 = 220, 420
+y1, y2 = 140, 340
+
+def detect_color(hsv):
+    roi = hsv[y1:y2, x1:x2]
+    cv2.rectangle(hsv, (x1, y1), (x2, y2), (255, 0, 0), 2)
+    cv2.imshow("ROI", roi)
+    mask_orange = cv2.inRange(roi, lower_orange, upper_orange)
+    mask_blue = cv2.inRange(roi, lower_blue, upper_blue)
+    
+    orange_count = cv2.countNonZero(mask_orange)
+    blue_count = cv2.countNonZero(mask_blue)
+    
+    if orange_count > 500 and MechanicsManager.turn_color != "orange":
+        MechanicsManager.on_orange_detected()
+    elif blue_count > 500 and MechanicsManager.turn_color != "blue":
+        MechanicsManager.on_blue_detected()
+    else:
+        return None
 def process_frame(hsv,frame):
+    
     pass
 def in_range(point, lower, upper):
     t, l = point
     return lower[0] <= t <= upper[0] and lower[1] <= l <= upper[1]
 
-def process_color_sensor():
-    r, g, b, c = color.color
-    total = r + g + b
-    if total == 0:
-        return  # evitar división por cero
-    
-    # Normalizar valores RGB
-    r_norm = r / total
-    g_norm = g / total
-    b_norm = b / total
 
-    # Umbrales con tolerancia ±0.05
-    # Naranja aproximado: r=0.394, g=0.34, b=0.28
-    is_orange = (0.35 <= r_norm <= 0.44) and \
-                (0.29 <= g_norm <= 0.39) and \
-                (0.23 <= b_norm <= 0.33)
 
-    # Azul aproximado: r=0.28, g=0.33, b=0.39
-    is_blue = (0.23 <= r_norm <= 0.33) and \
-              (0.28 <= g_norm <= 0.38) and \
-              (0.34 <= b_norm <= 0.44)
-
-    # Llamar a funciones de giro solo si el color actual no coincide con el giro en curso
-    if is_orange and MechanicsManager.turn_color != "orange":
-        MechanicsManager.on_orange_detected()
-    elif is_blue and MechanicsManager.turn_color != "blue":
-        MechanicsManager.on_blue_detected()
-    
 # =========================
 # Thread function
 # =========================
@@ -142,7 +142,7 @@ def thread_function():
         frame_display = frame.copy()
         
         process_frame(hsv, frame_display)
-        process_color_sensor()
+        cv2.imshow(hsv)
         
         #cv2.imshow("Frame", frame_display)
         if cv2.waitKey(1) & 0xFF == ord('q'):
