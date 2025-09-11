@@ -6,6 +6,7 @@ import cv2
 import numpy as np
 from Components.ColorSensor import ColorSensor
 from Components.Ultrasonic import Ultrasonic
+import MechanicsManager 
 # ==========================
 # Contants
 # ==========================
@@ -78,14 +79,26 @@ def nearest_obstacle(frame) -> tuple[int, tuple[int, int]]: # returns OBSTACLE_N
     
 def process_frame(hsv,frame):
     pass
-lowerOrange_r, lowerOrange_g, lowerOrange_b, lowerOrange_c, lowerOrange_temp, lowerOrange_lux = 0, 100, 100, 0, 0, 0
-upperOrange_r, upperOrange_g, upperOrange_b, upperOrange_c, upperOrange_temp, upperOrange_lux = 20, 255, 255, 0, 0, 0
+def in_range(point, lower, upper):
+    t, l = point
+    return lower[0] <= t <= upper[0] and lower[1] <= l <= upper[1]
 
-lowerBlue_r, lowerBlue_g, lowerBlue_b, lowerBlue_c, lowerBlue_temp, lowerBlue_lux = 100, 150, 0, 0, 0, 0
-upperBlue_r, upperBlue_g, upperBlue_b, upperBlue_c, upperBlue_temp, upperBlue_lux = 140, 255, 255, 0, 0, 0
+lower_orange = (2500, 200) # temp and lux
+upper_orange = (4500, 400) # temp and lux
+
+lower_blue = (8000, 50) # temp and lux
+upper_blue = (9000, 200)
 def process_color_sensor():
-    (r, g, b, c), temp, lux = color.color, color.temp, color.lux
+    point = (color.temp, color.lux)
     
+    if in_range(point, lower_orange, upper_orange):
+        print("Orange detected")
+        MechanicsManager.on_orange_detected()
+    elif in_range(point, lower_blue, upper_blue):
+        print("Blue detected")
+        MechanicsManager.on_blue_detected()
+    # detectar color con el sensor de color
+        
     # cuando detecta naranja llamar a MechanicsManager.on_orange_detected()
     # cuando detecta azul llamar a MechanicsManager.on_blue_detected()
     
