@@ -95,8 +95,8 @@ def in_range(point, lower, upper):
 lower_orange = 3000 # temp and lux
 upper_orange = 5000 # temp and lux
 
-lower_blue = 8000 # temp and lux
-upper_blue = 11000
+lower_blue = 7000 # temp and lux
+upper_blue = 9000
 
 lower_white = 5500
 upper_white = 7500
