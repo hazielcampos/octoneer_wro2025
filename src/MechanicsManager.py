@@ -107,11 +107,7 @@ def thread_function():
     while not finished:
         
         if is_running:
-            if color_vuelta == "naranja":
-                on_orange_detected()
-            elif color_vuelta == "azul":
-                on_blue_detected()
-            elif not is_turning:
+            if not is_turning:
                 forward(1)
                 PID_control()
             else:
