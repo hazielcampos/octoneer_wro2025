@@ -35,11 +35,11 @@ integral = 0
 last_error = 0
 last_time = time.time()
 
-def PID_control(target_distance, current_distance):
+def PID_control():
     global integral, last_error, last_time
 
     # Calcular error (positivo si está más lejos de lo deseado)
-    error = target_distance - current_distance
+    error = SensorsManager.get_error()
 
     # Tiempo transcurrido desde la última llamada
     now = time.time()
@@ -64,8 +64,8 @@ def PID_control(target_distance, current_distance):
 
     set_angle(correction)
     # Debug
-    print(f"[PID] Target={target_distance:.1f}mm Current={current_distance:.1f}mm "
-        f"Error={error:.1f} Out={output:.2f} Servo={correction}")
+    print(f"[PID] Error: {error} "
+        f"Servo={correction}")
     
 # =========================
 # Threaded processing
