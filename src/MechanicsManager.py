@@ -37,10 +37,10 @@ def on_orange_detected():
         is_turning = True
         turn_color = "orange"
         stop_motors()
-        time.sleep(20)
+        time.sleep(1)
         set_angle(RIGHT_POSITION)
         forward(20)
-        time.sleep(5)
+        time.sleep(1)
                 
 def on_blue_detected():
     global is_turning, turn_color
