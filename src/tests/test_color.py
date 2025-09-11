@@ -42,7 +42,7 @@ def process_color_sensor():
         clear()
         print("Blue detected")
         
-    time.sleep(0.1)
+    time.sleep(0.01)
 try:
     print("Press Ctrl-C to stop")
     while True:
