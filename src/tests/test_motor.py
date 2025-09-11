@@ -9,7 +9,7 @@ def main():
         pwm = int(input("Enter pwm value:"))
         
         forward(50)
-        time.sleep(0.2)
+        time.sleep(0.7)
         forward(pwm)
         input("Press Enter to stop motors...")
         forward(0)
