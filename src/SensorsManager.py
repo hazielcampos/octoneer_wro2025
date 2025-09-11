@@ -103,21 +103,11 @@ lower_white = 5500
 upper_white = 7500
 def process_color_sensor():
     temp = color.temp
-    print(f"Temp: {temp}")
-    
-    if lower_orange < temp and temp < upper_orange:
-        if MechanicsManager.turn_color == "orange":
-            return
+    # promedio móvil o buffer opcional aquí
+    if lower_orange < temp < upper_orange and MechanicsManager.turn_color != "orange":
         MechanicsManager.on_orange_detected()
-    elif lower_blue < temp and temp < upper_blue:
-        if MechanicsManager.turn_color == "blue":
-            return
-        print("Blue detected")
+    elif lower_blue < temp < upper_blue and MechanicsManager.turn_color != "blue":
         MechanicsManager.on_blue_detected()
-    # detectar color con el sensor de color
-        
-    # cuando detecta naranja llamar a MechanicsManager.on_orange_detected()
-    # cuando detecta azul llamar a MechanicsManager.on_blue_detected()
     
 # =========================
 # Thread function

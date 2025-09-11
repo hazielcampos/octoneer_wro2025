@@ -18,40 +18,44 @@ def set_active(active: bool):
 turn_color = None
 
 def on_orange_detected():
+    global is_turning, turn_color
     if not is_running:
         return
-    global is_turning, turn_color
-    print("Orange detected")
-    if is_turning and turn_color != "orange":
-        is_turning = False
-        turn_color = None
-        set_angle(CENTER_POSITION)
-        time.sleep(0.5) # wait to be sure the robot is in the line
-    elif not is_turning:
-        print("Turning right")
+
+    if is_turning:
+        if turn_color != "orange":
+            # el giro comenzó en azul y naranja indica fin del giro
+            print("Fin del giro izquierdo, reseteando")
+            is_turning = False
+            turn_color = None
+            set_angle(CENTER_POSITION)
+    else:
+        # inicia giro a la derecha
+        print("Iniciando giro a la derecha")
         is_turning = True
         turn_color = "orange"
         stop_motors()
         set_angle(RIGHT_POSITION)
-        forward(20)
                 
 def on_blue_detected():
+    global is_turning, turn_color
     if not is_running:
         return
-    global is_turning, turn_color
-    print("Blue detected")
-    if is_turning and turn_color != "blue":
-        is_turning = False
-        turn_color = None
-        set_angle(CENTER_POSITION)
-        time.sleep(0.5) # wait to be sure the robot is in the line
-    elif not is_turning:
-        print("Turning left")
+
+    if is_turning:
+        if turn_color != "blue":
+            # el giro comenzó en naranja y azul indica fin del giro
+            print("Fin del giro derecho, reseteando")
+            is_turning = False
+            turn_color = None
+            set_angle(CENTER_POSITION)
+    else:
+        # inicia giro a la izquierda
+        print("Iniciando giro a la izquierda")
         is_turning = True
         turn_color = "blue"
         stop_motors()
         set_angle(LEFT_POSITION)
-        forward(20)
         
 
 # =========================
@@ -109,6 +113,8 @@ def thread_function():
             if not is_turning:
                 forward(5)
                 PID_control()
+            else:
+                forward(10)
                 
         else:
             stop_motors()
