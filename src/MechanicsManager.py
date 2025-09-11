@@ -17,6 +17,8 @@ def set_active(active: bool):
     is_running = active        
 turn_color = None
 
+color_vuelta = "ninguno"
+
 def on_orange_detected():
     global is_turning, turn_color
     if not is_running:
@@ -35,7 +37,10 @@ def on_orange_detected():
         is_turning = True
         turn_color = "orange"
         stop_motors()
+        time.sleep(20)
         set_angle(RIGHT_POSITION)
+        forward(20)
+        time.sleep(5)
                 
 def on_blue_detected():
     global is_turning, turn_color
@@ -110,6 +115,10 @@ def PID_control():
 def thread_function():
     while not finished:
         if is_running:
+            if color_vuelta == "naranja":
+                on_orange_detected()
+            elif color_vuelta == "azul":
+                on_blue_detected()
             if not is_turning:
                 forward(2)
                 PID_control()
