@@ -99,7 +99,6 @@ lower_blue = (8000, 50) # temp and lux
 upper_blue = (9000, 200)
 def process_color_sensor():
     point = (color.temp, color.lux)
-    clear()
     print(f"Temp: {color.temp}, Lux: {color.lux}")
     if in_range(point, lower_orange, upper_orange):
         print("Orange detected")
