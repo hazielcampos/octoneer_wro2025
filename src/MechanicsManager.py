@@ -113,6 +113,7 @@ def thread_function():
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
+            is_turning = False
             time.sleep(0.1)
 
 process_thread = threading.Thread(target=thread_function, daemon=True)
