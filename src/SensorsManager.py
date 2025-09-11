@@ -114,9 +114,6 @@ def process_color_sensor():
             return
         print("Blue detected")
         MechanicsManager.on_blue_detected()
-    else:
-        pass
-    time.sleep(0.2)
     # detectar color con el sensor de color
         
     # cuando detecta naranja llamar a MechanicsManager.on_orange_detected()

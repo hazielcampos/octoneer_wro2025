@@ -20,44 +20,37 @@ turn_color = None
 def on_orange_detected():
     if not is_running:
         return
-    global is_turning
+    global is_turning, turn_color
     print("Orange detected")
     if is_turning and turn_color != "orange":
-        print("Resetting turn")
         is_turning = False
         turn_color = None
-        time.sleep(0.5) # wait to be sure the robot is in the line
         set_angle(CENTER_POSITION)
-    elif not is_turning and turn_color != "orange":
+        time.sleep(0.5) # wait to be sure the robot is in the line
+    elif not is_turning:
         is_turning = True
         turn_color = "orange"
         stop_motors()
-        time.sleep(0.2)
         set_angle(RIGHT_POSITION)
-        time.sleep(2)
         forward(20)
                 
 def on_blue_detected():
     if not is_running:
         return
-    global is_turning
+    global is_turning, turn_color
     print("Blue detected")
     if is_turning and turn_color != "blue":
-        print("Resetting turn")
         is_turning = False
         turn_color = None
-        time.sleep(0.5) # wait to be sure the robot is in the line
         set_angle(CENTER_POSITION)
-    elif not is_turning and turn_color != "blue":
+        time.sleep(0.5) # wait to be sure the robot is in the line
+    elif not is_turning:
         is_turning = True
         turn_color = "blue"
         stop_motors()
-        time.sleep(0.2)
         set_angle(LEFT_POSITION)
-        time.sleep(2)
         forward(20)
         
-    time.sleep(0.1) # wait to be sure the robot is in the line
 
 # =========================
 # PID variables
