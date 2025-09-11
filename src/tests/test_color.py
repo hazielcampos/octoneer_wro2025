@@ -35,9 +35,13 @@ def process_color_sensor():
 
     # Llamar a funciones de giro solo si el color actual no coincide con el giro en curso
     if is_orange:
+        clear()
         print("Orange detected")
     elif is_blue:
+        clear()
         print("Blue detected")
+        
+    time.sleep(0.1)
 try:
     print("Press Ctrl-C to stop")
     while True:
