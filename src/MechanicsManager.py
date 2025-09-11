@@ -73,7 +73,8 @@ def PID_control():
 def thread_function():
     while not finished:
         if is_running:
-            time.sleep(0.01)  # Ciclo rápido, no bloqueante
+            forward(20)
+            PID_control()
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
