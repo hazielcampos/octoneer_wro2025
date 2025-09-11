@@ -6,15 +6,11 @@ import adafruit_tcs34725
 
 tca = adafruit_tca9548a.TCA9548A(i2c, address=0x70)
 
-sensor_right = DistanceSensor(tca[1] ,xshut_pin=22, new_address=0x30)
-sensor_left = DistanceSensor(tca[2], xshut_pin=27, new_address=0x31)
-
-sensor_right.init_sensor()
-sensor_left.init_sensor()
-time.sleep(0.1)
-
-
 tcs = adafruit_tcs34725.TCS34725(tca[0])
+time.sleep(0.1)
+sensor_right = DistanceSensor(tca[1])
+time.sleep(0.1)
+sensor_left = DistanceSensor(tca[2])
 
 tcs.integration_time = 200
 tcs.gain = 4
@@ -34,6 +30,3 @@ try:
         time.sleep(0.1)
 except KeyboardInterrupt:
     print("Stopped by User")
-finally:
-    sensor_right.sensor.set_address(0x29)
-    sensor_left.sensor.set_address(0x29)
