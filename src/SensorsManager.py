@@ -123,6 +123,7 @@ def thread_function():
         frame_display = frame.copy()
         
         process_frame(hsv, frame_display)
+        process_color_sensor()
         
         #cv2.imshow("Frame", frame_display)
         if cv2.waitKey(1) & 0xFF == ord('q'):
