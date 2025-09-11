@@ -3,8 +3,8 @@ import libs.GPIO as GPIO
 # =========================
 # GPIO setup
 # =========================
-FORWARD_IO = 13  # GPIO pin to move the motor forward
-BACKWARD_IO = 12  # GPIO pin to move the motor backward
+FORWARD_IO = 12  # GPIO pin to move the motor forward
+BACKWARD_IO = 13  # GPIO pin to move the motor backward
 GPIO.setup(FORWARD_IO, GPIO.OUT)
 GPIO.setup(BACKWARD_IO, GPIO.OUT)
 FORWARD_PWM = GPIO.PWM(FORWARD_IO, 1000)  #
