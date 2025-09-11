@@ -12,6 +12,7 @@ def clear():
         _ = os.system('clear')
 
 def process_color_sensor():
+    clear()
     r, g, b, c = color.color
     total = r + g + b
     if total == 0:
