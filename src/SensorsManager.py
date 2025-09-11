@@ -18,6 +18,8 @@ OBSTACLE_RED = 2
 # =======================
 sensor_right = Ultrasonic(23, 24)
 sensor_left = Ultrasonic(6, 5)
+sensor_right.start()
+sensor_left.start()
 
 def get_left_distance() -> float:
     return sensor_left.distance
@@ -26,6 +28,7 @@ def get_right_distance() -> float:
     return sensor_right.distance
 
 color = ColorSensor()
+color.start()
 
 """ Returns the difference between the left and right distance sensors.
 If the right distance is greater than the left distance, the result will be negative.
