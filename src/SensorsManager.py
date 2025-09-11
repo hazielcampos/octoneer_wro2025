@@ -92,20 +92,25 @@ def in_range(point, lower, upper):
     t, l = point
     return lower[0] <= t <= upper[0] and lower[1] <= l <= upper[1]
 
-lower_orange = (2500, 200) # temp and lux
-upper_orange = (4500, 400) # temp and lux
+lower_orange = 3000 # temp and lux
+upper_orange = 5000 # temp and lux
 
-lower_blue = (8000, 50) # temp and lux
-upper_blue = (9000, 200)
+lower_blue = 8000 # temp and lux
+upper_blue = 11000
+
+lower_white = 5500
+upper_white = 7500
 def process_color_sensor():
-    point = (color.temp, color.lux)
-    print(f"Temp: {color.temp}, Lux: {color.lux}")
-    if in_range(point, lower_orange, upper_orange):
+    temp = color.temp
+    
+    if upper_orange < temp > lower_orange:
         print("Orange detected")
         MechanicsManager.on_orange_detected()
-    elif in_range(point, lower_blue, upper_blue):
+    elif upper_blue < temp > lower_blue:
         print("Blue detected")
         MechanicsManager.on_blue_detected()
+    else:
+        pass
     # detectar color con el sensor de color
         
     # cuando detecta naranja llamar a MechanicsManager.on_orange_detected()
