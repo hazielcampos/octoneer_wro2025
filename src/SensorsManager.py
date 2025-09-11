@@ -8,6 +8,7 @@ from Components.ColorSensor import ColorSensor
 from Components.Ultrasonic import Ultrasonic
 import MechanicsManager 
 import os
+import time
 
 def clear():
     # for windows
@@ -112,6 +113,7 @@ def process_color_sensor():
         MechanicsManager.on_blue_detected()
     else:
         pass
+    time.sleep(0.2)
     # detectar color con el sensor de color
         
     # cuando detecta naranja llamar a MechanicsManager.on_orange_detected()
