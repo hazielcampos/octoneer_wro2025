@@ -11,10 +11,13 @@ def clear():
     else:
         _ = os.system('clear')
 
+last_color = None
+current_color = None
+
 def process_color_sensor():
-    clear()
     r, g, b, c = color.color
     total = r + g + b
+    current_color = "white"
     if total == 0:
         return  # evitar división por cero
     
@@ -36,13 +39,16 @@ def process_color_sensor():
 
     # Llamar a funciones de giro solo si el color actual no coincide con el giro en curso
     if is_orange:
-        clear()
-        print("Orange detected")
+        current_color = "orange"
     elif is_blue:
-        clear()
-        print("Blue detected")
-        
+        current_color = "blue"        
     time.sleep(0.01)
+    
+def display():
+    clear()
+    print("Current Color: ", current_color)
+    print("Last Color: ", last_color)
+    last_color = current_color
 try:
     print("Press Ctrl-C to stop")
     while True:
