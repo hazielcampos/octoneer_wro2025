@@ -102,6 +102,7 @@ lower_white = 5500
 upper_white = 7500
 def process_color_sensor():
     temp = color.temp
+    print(f"Temp: {temp}")
     
     if upper_orange < temp > lower_orange:
         print("Orange detected")
