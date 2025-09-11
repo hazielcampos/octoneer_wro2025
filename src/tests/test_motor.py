@@ -5,6 +5,7 @@ def main():
     start_pwm()
     forward(50)
     input("Press Enter to stop motors...")
+    forward(0)
     stop_motors()
     
 try:
