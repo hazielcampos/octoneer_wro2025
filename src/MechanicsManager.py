@@ -25,9 +25,9 @@ def on_blue_detected():
 # =========================
 # PID variables
 # =========================
-Kp = 0.01   # Proporcional
+Kp = 0.05   # Proporcional
 Ki = 0.0   # Integral
-Kd = 0.001   # Derivativo
+Kd = 0.01   # Derivativo
 
 integral = 0
 last_error = 0
