@@ -113,8 +113,7 @@ def detect_color(hsv):
     else:
         return None
 def process_frame(hsv,frame):
-    
-    pass
+    detect_color(hsv)
 def in_range(point, lower, upper):
     t, l = point
     return lower[0] <= t <= upper[0] and lower[1] <= l <= upper[1]
