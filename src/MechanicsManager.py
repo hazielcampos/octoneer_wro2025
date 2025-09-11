@@ -131,6 +131,7 @@ def thread_function():
             stop_motors()
             set_angle(CENTER_POSITION)
             is_turning = False
+            color_vuelta = "ninguno"
             time.sleep(0.1)
 
 process_thread = threading.Thread(target=thread_function, daemon=True)
