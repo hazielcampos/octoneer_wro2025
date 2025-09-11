@@ -1,5 +1,5 @@
 import time
-from libs.GPIO import GPIO
+import libs.GPIO as GPIO
 import threading
 
 class Ultrasonic:
