@@ -104,10 +104,10 @@ def process_color_sensor():
     temp = color.temp
     print(f"Temp: {temp}")
     
-    if upper_orange < temp > lower_orange:
+    if lower_orange < temp and temp < upper_orange:
         print("Orange detected")
         MechanicsManager.on_orange_detected()
-    elif upper_blue < temp > lower_blue:
+    elif lower_blue < temp and temp < upper_blue:
         print("Blue detected")
         MechanicsManager.on_blue_detected()
     else:
