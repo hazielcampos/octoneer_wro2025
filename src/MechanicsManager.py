@@ -91,7 +91,7 @@ def thread_function():
     while not finished:
         if is_running:
             if not is_turning:
-                forward(10)
+                #forward(10)
                 PID_control()
                 
         else:
