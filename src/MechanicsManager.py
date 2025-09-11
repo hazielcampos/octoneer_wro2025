@@ -122,10 +122,10 @@ def thread_function():
             elif color_vuelta == "azul":
                 on_blue_detected()
             if not is_turning:
-                forward(0.1)
+                forward(0)
                 PID_control()
             else:
-                forward(0.1)
+                forward(0)
                 
         else:
             stop_motors()
