@@ -115,7 +115,6 @@ def detect_color(hsv):
         MechanicsManager.color_vuelta = "azul"
     else:
         cv2.putText(hsv, "NINGUNO", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-        MechanicsManager.color_vuelta = "ninguno"
         return None
 def process_frame(hsv,frame):
     detect_color(hsv)
