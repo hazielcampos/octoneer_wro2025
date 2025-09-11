@@ -18,6 +18,7 @@ def set_active(active: bool):
     
 
 def on_orange_detected():
+    print("Orange detected")
     if is_turning:
         is_turning = False
         time.sleep(0.5) # wait to be sure the robot is in the line
@@ -27,6 +28,7 @@ def on_orange_detected():
         forward(20)
         set_angle(RIGHT_POSITION)
 def on_blue_detected():
+    print("Blue detected")
     if is_turning:
         is_turning = False
         time.sleep(0.5) # wait to be sure the robot is in the line
@@ -52,7 +54,7 @@ def PID_control():
 
     # Calcular error (positivo si está más lejos de lo deseado)
     error = SensorsManager.get_error()
-    if error > 500 or error < -500:
+    if error > 130 or error < -130:
         error = 0.0
 
     # Tiempo transcurrido desde la última llamada
