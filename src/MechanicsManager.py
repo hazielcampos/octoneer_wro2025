@@ -28,8 +28,11 @@ def on_orange_detected():
         set_angle(CENTER_POSITION)
     else:
         is_turning = True
-        forward(20)
+        stop_motors()
+        time.sleep(0.2)
         set_angle(RIGHT_POSITION)
+        time.sleep(2)
+        forward(20)
     time.sleep(0.1) # wait to be sure the robot is in the line
         
 def on_blue_detected():
@@ -43,14 +46,18 @@ def on_blue_detected():
         set_angle(CENTER_POSITION)
     else:
         is_turning = True
-        forward(20)
+        stop_motors()
+        time.sleep(0.2)
         set_angle(LEFT_POSITION)
+        time.sleep(2)
+        forward(20)
+        
     time.sleep(0.1) # wait to be sure the robot is in the line
 
 # =========================
 # PID variables
 # =========================
-Kp = 0.03   # Proporcional
+Kp = 0.05   # Proporcional
 Ki = 0.0   # Integral
 Kd = 0.01   # Derivativo
 
