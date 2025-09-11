@@ -24,6 +24,7 @@ def process_color_sensor():
     b_norm = b / total
     clear()
     print(f"R norm: {r_norm}, G norm: {g_norm}, B norm: {b_norm}")
+    time.sleep(0.1)
 try:
     print("Press Ctrl-C to stop")
     while True:
