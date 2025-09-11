@@ -20,12 +20,12 @@ turn_color = None
 color_vuelta = "ninguno"
 
 def on_orange_detected():
-    global is_turning, turn_color
+    global is_turning, color_vuelta
     if not is_running:
         return
 
     if is_turning:
-        if turn_color != "orange":
+        if color_vuelta != "orange":
             # el giro comenzó en azul y naranja indica fin del giro
             print("Fin del giro izquierdo, reseteando")
             is_turning = False
@@ -36,29 +36,29 @@ def on_orange_detected():
         # inicia giro a la derecha
         print("Iniciando giro a la derecha")
         is_turning = True
-        turn_color = "orange"
+        color_vuelta = "orange"
         set_angle(RIGHT_POSITION)
         forward(1)
         time.sleep(0.5)
                 
 def on_blue_detected():
-    global is_turning, turn_color
+    global is_turning, color_vuelta
     if not is_running:
         return
 
     if is_turning:
-        if turn_color != "blue":
+        if color_vuelta != "blue":
             # el giro comenzó en naranja y azul indica fin del giro
             print("Fin del giro derecho, reseteando")
             is_turning = False
-            turn_color = "ninguno"
+            color_vuelta = "ninguno"
             time.sleep(1)
             set_angle(CENTER_POSITION)
     else:
         # inicia giro a la izquierda
         print("Iniciando giro a la izquierda")
         is_turning = True
-        turn_color = "blue"
+        color_vuelta = "blue"
         set_angle(LEFT_POSITION)
         forward(1)
         time.sleep(0.5)
