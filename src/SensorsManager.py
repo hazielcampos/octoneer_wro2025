@@ -122,16 +122,6 @@ def in_range(point, lower, upper):
     t, l = point
     return lower[0] <= t <= upper[0] and lower[1] <= l <= upper[1]
 
-logs = [" ",
-        " ",
-        " ",
-        " ",
-        " ",]
-def handle_ui(frame):
-    for i in range(len(logs)):
-       log = logs[i]
-       cv2.putText(frame, log, (10, 20*i), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2) 
-
 # =========================
 # Thread function
 # =========================
@@ -153,7 +143,6 @@ def thread_function():
         frame_display = frame.copy()
         
         process_frame(hsv, frame_display)
-        handle_ui(hsv)
         cv2.imshow("hsv", hsv)
         
         #cv2.imshow("Frame", frame_display)
