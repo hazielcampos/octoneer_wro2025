@@ -36,11 +36,9 @@ def on_orange_detected():
         print("Iniciando giro a la derecha")
         is_turning = True
         turn_color = "orange"
-        stop_motors()
-        time.sleep(1)
         set_angle(RIGHT_POSITION)
         forward(20)
-        time.sleep(1)
+        time.sleep(0.5)
                 
 def on_blue_detected():
     global is_turning, turn_color
@@ -66,7 +64,7 @@ def on_blue_detected():
 # =========================
 # PID variables
 # =========================
-Kp = 0.05   # Proporcional
+Kp = 0.04   # Proporcional
 Ki = 0.0   # Integral
 Kd = 0.01   # Derivativo
 
@@ -120,10 +118,10 @@ def thread_function():
             elif color_vuelta == "azul":
                 on_blue_detected()
             if not is_turning:
-                forward(2)
+                forward(5)
                 PID_control()
             else:
-                forward(2)
+                forward(5)
                 
         else:
             stop_motors()
