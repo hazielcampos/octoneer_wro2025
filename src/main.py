@@ -30,7 +30,9 @@ def start():
 def main():
     while True:
         forward(10)
-        time.sleep(0.1)
+        time.sleep(5)
+        forward(100)
+        time.sleep(4)
 
     
 try:
