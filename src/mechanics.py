@@ -1,7 +1,7 @@
 # ======================
 # Important base imports
 # ======================
-from shared import is_running
+import shared
 import time
 import threading
 
@@ -37,7 +37,7 @@ def main():
 # ======================
 def thread_function():
     while True:
-        if is_running:
+        if shared.is_running:
             main()
             time.sleep(0.01)
         else:
