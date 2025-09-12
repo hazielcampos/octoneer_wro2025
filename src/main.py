@@ -26,7 +26,7 @@ def callback_1():
     if not is_running:
         return
     global orientation
-    if ORIEN_NONE:
+    if orientation ==ORIEN_NONE:
         orientation = ORIEN_AH
     if ORIEN_AH:
         set_angle(LEFT_POSITION)
@@ -37,7 +37,7 @@ def callback_2():
     if not is_running:
         return
     global orientation
-    if ORIEN_NONE:
+    if orientation == ORIEN_NONE:
         orientation = ORIEN_H
     if ORIEN_H:
         set_angle(RIGHT_POSITION)
@@ -63,7 +63,7 @@ def vision():
         
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         trigger_line(hsv, frame, callback_1, callback_2)
-        text = "NONE" if orientation == ORIEN_H else "SOMETHING"
+        text = "NONE" if orientation == ORIEN_NONE else "SOMETHING"
         if orientation == ORIEN_AH:
             text = "ANTIHORARIO"
         elif orientation == ORIEN_H:
