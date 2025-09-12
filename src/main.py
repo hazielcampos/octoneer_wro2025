@@ -3,7 +3,7 @@ import cv2
 import time
 from src.components.Motor import forward, stop_motors, start as start_pwm
 from components.Buttton import Button
-
+from detection_functions import trigger_line
 is_running = False
 stop_threads = False
 
@@ -31,6 +31,7 @@ def vision():
             continue
         
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        trigger_line(hsv, frame)
         cv2.imshow("Frame", hsv)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
