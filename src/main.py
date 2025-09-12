@@ -30,10 +30,7 @@ def start():
 def main():
     while True:
         if is_running:
-            forward(10)
-            time.sleep(5)
-            forward(100)
-            time.sleep(4)
+            mechanics.sequence()
         else:
             stop_motors()
 

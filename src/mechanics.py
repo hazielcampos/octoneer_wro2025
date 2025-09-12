@@ -16,24 +16,11 @@ BASE_SPEED = 40
 # ======================
 # Main function
 # ======================
-def main():
+def sequence():
     forward(10)
-    time.sleep(3)
-    forward(20)
-    time.sleep(3)
-    print("Running at base speed")
-    forward(BASE_SPEED)
-    time.sleep(2)  # Dale más tiempo para alcanzar y mantener la velocidad
-    
-    print("Stopping the motors")
-    stop_motors()
-    time.sleep(2)  # Pequeña pausa antes de reiniciar
-
-def run(is_running):
-    if is_running:
-        main()
-    else:
-        stop_motors()
+    time.sleep(5)
+    forward(100)
+    time.sleep(4)
 # ======================
 # Base functions to handle multithreading
 # ======================
