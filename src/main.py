@@ -28,9 +28,9 @@ def callback_1():
     global orientation
     if orientation ==ORIEN_NONE:
         orientation = ORIEN_AH
-    if ORIEN_AH:
+    if orientation == ORIEN_AH:
         set_angle(LEFT_POSITION)
-    elif ORIEN_H:
+    elif orientation ==ORIEN_H:
         time.sleep(turn_end_delay)
         set_angle(CENTER_POSITION)
 def callback_2():
@@ -39,9 +39,9 @@ def callback_2():
     global orientation
     if orientation == ORIEN_NONE:
         orientation = ORIEN_H
-    if ORIEN_H:
+    if orientation == ORIEN_H:
         set_angle(RIGHT_POSITION)
-    elif ORIEN_AH:
+    elif orientation == ORIEN_AH:
         time.sleep(turn_end_delay)
         set_angle(CENTER_POSITION)
 
