@@ -109,7 +109,7 @@ sensor_right = HCSR04(24, 23)
 sensor_left = HCSR04(5, 6)
 
 def mechanics():
-    global orientation, turn_end_start, turns, is_running
+    global orientation, turn_end_start, turns, is_running, is_turning
     start_pwm()
     while not stop_threads:
         if is_running:
