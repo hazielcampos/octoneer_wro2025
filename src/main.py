@@ -5,13 +5,21 @@ import time
 from components.Buttton import Button
 
 # =========================
+# State object
+# =========================
+is_running = False
+
+
+# =========================
 # Button sensor configuration
 # =========================
 
 button = Button(17, True)
 
 def btn_callback():
-    print("Btn pressed")
+    global is_running
+    is_running = not is_running
+    print(is_running)
 
 button.set_callback(btn_callback)
 
