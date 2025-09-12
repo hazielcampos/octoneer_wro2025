@@ -18,6 +18,7 @@ def setup():
     mechanics.start()
 
 def main():
+    print("Robot iniciado con exito... el loop principal comenzara a ejecutarse.")
     loop()
 
 def loop():
