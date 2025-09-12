@@ -19,7 +19,7 @@ BASE_SPEED = 40
 def run():
     forward(2)
     time.sleep(5)
-    forward(100)
+    forward(4)
     time.sleep(4)
 # ======================
 # Base functions to handle multithreading
