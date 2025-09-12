@@ -29,10 +29,13 @@ def start():
 
 def main():
     while True:
-        forward(10)
-        time.sleep(5)
-        forward(100)
-        time.sleep(4)
+        if is_running:
+            forward(10)
+            time.sleep(5)
+            forward(100)
+            time.sleep(4)
+        else:
+            stop_motors()
 
     
 try:
@@ -45,3 +48,4 @@ except Exception as e:
     print(f"Error inesperado: {e}")
 finally:
     print("Sistema detenido correctamente.")
+    stop_motors()
