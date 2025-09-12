@@ -10,6 +10,7 @@ btn = Button(17, True)
 def btn_callback():
     global is_running
     is_running = not is_running
+btn.set_callback(btn_callback)
 
 def main():
     start_pwm()
