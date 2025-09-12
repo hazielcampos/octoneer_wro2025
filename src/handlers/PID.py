@@ -1,5 +1,5 @@
 import time
-from src.components.Servo import CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
+from components.Servo import CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 
 Kp = 0.03
 Ki = 0.0
@@ -26,7 +26,6 @@ def PID_control(error):
     # Actualizar memoria
     last_error = error
     last_time = now
-    print(error)
 
     # Convertimos salida a corrección de servo
     correction = CENTER_POSITION + output
