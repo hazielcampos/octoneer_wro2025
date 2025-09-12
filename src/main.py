@@ -68,6 +68,7 @@ def vision():
     cv2.destroyAllWindows()
 
 def mechanics():
+    global orientation
     start_pwm()
     while not stop_threads:
         if is_running:
@@ -76,6 +77,7 @@ def mechanics():
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
+            orientation = ORIEN_NONE
 
 def main():
     thread_mechanics = threading.Thread(target=mechanics, daemon=True)
