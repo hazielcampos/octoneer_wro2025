@@ -18,6 +18,7 @@ btn.set_callback(btn_callback)
 def callback_1():
     set_angle(LEFT_POSITION)
 def callback_2():
+    time.sleep(1)
     set_angle(CENTER_POSITION)
 
 def vision():
@@ -50,7 +51,7 @@ def mechanics():
     start_pwm()
     while not stop_threads:
         if is_running:
-            forward(20)
+            forward(30)
             time.sleep(1)
         else:
             stop_motors()
