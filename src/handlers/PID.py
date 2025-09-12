@@ -26,6 +26,7 @@ def PID_control(error):
     # Actualizar memoria
     last_error = error
     last_time = now
+    print(error)
 
     # Convertimos salida a corrección de servo
     correction = CENTER_POSITION + output
@@ -33,6 +34,5 @@ def PID_control(error):
     # Limitar a rango permitido del servo
     correction = max(RIGHT_POSITION, min(LEFT_POSITION, correction))
     correction = int(round(correction))
-    print(correction)
 
     return correction
