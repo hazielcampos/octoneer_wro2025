@@ -29,7 +29,9 @@ def vision():
         ret, frame = cap.read()
         if not ret:
             continue
-        cv2.imshow("Frame", frame)
+        
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        cv2.imshow("Frame", hsv)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
             break
