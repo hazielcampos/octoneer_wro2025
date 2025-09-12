@@ -8,7 +8,7 @@ RIGHT_POSITION = 42  # Right position of the servo
 
 Kp = 0.05
 Ki = 0.0
-Kd = 0.01
+Kd = 0.02
 
 integral = 0
 last_error = 0
