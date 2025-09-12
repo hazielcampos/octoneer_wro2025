@@ -8,8 +8,6 @@ def main():
     while True:
         pwm = int(input("Enter pwm value:"))
         
-        forward(50) # Inertia breaker pulse
-        time.sleep(0.7)
         forward(pwm)
         input("Press Enter to stop motors...")
         stop_motors()
