@@ -132,6 +132,7 @@ def mechanics():
             stop_motors()
             set_angle(CENTER_POSITION)
             orientation = ORIEN_NONE
+            turns = 0
 
 def main():
     thread_mechanics = threading.Thread(target=mechanics, daemon=True)
