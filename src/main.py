@@ -1,12 +1,36 @@
+"""
+Codigo desarrollado por Haziel Vds
+Malas palabras durante el desarrollo: 745
+Tazas de cafe: 6
+Horas de sueño: 2
+
+El codigo hace lo siguiente:
+- El robot se inicializa
+- Espera a que opriman el boton
+- Cuando se oprime el boton, comienza con PID hasta detectar el inicio de una curva
+- Cuando detecta el inicio de una curva pone en servo en posicion para girar
+- Sigue girando hasta que detecta el final de esa curva
+- Al detectar el final de la curva, sin bloquear el hilo de video, espera unos segundos mas girando antes de enderezar
+- Vuelve a comenzar con pid
+- Esto se repite por 12 curvas o 3 vueltas
+- El robot se detiene a la 3er vuelta
+"""
+
+
 import threading
 import cv2
 import time
 from components.Motor import forward, stop_motors, start as start_pwm
+from components.HCSR04 import HCSR04
 from components.Buttton import Button
 from detection_functions import trigger_line
 from components.Servo import set_angle, CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
+from handlers.PID import PID_control
+
 is_running = False
 stop_threads = False
+is_turning = False
+turns = 0
 
 ORIEN_H = 0
 ORIEN_AH = 1
@@ -22,28 +46,32 @@ def btn_callback():
 btn.set_callback(btn_callback)
 
 turn_end_delay = 1.4
+turn_end_start = 0
+
 def callback_1():
     if not is_running:
         return
-    global orientation
+    global orientation, is_turning, turn_end_start
     if orientation ==ORIEN_NONE:
         orientation = ORIEN_AH
     if orientation == ORIEN_AH:
         set_angle(LEFT_POSITION)
+        is_turning = True
     elif orientation ==ORIEN_H:
-        time.sleep(turn_end_delay)
-        set_angle(CENTER_POSITION)
+        turn_end_start = time.time()
+
+
 def callback_2():
     if not is_running:
         return
-    global orientation
+    global orientation, is_turning, turn_end_start
     if orientation == ORIEN_NONE:
         orientation = ORIEN_H
     if orientation == ORIEN_H:
         set_angle(RIGHT_POSITION)
+        is_turning = True
     elif orientation == ORIEN_AH:
-        time.sleep(turn_end_delay)
-        set_angle(CENTER_POSITION)
+        turn_end_start = time.time()
 
 def vision():
     global stop_threads
@@ -77,13 +105,29 @@ def vision():
     cap.release()
     cv2.destroyAllWindows()
 
+sensor_right = HCSR04(24, 23)
+sensor_left = HCSR04(5, 6)
+
 def mechanics():
-    global orientation
+    global orientation, turn_end_start, turns, is_running
     start_pwm()
     while not stop_threads:
         if is_running:
             forward(40)
-            time.sleep(1)
+            if not is_turning:
+                correction = PID_control(sensor_left.distance - sensor_right.distance)
+                set_angle(correction)
+            if turn_end_start > 0 and (time.time() - turn_end_start) > turn_end_delay:
+                turns += 1
+                set_angle(CENTER_POSITION)
+                turn_end_start = 0
+                is_turning = False
+            laps = turns / 4
+            if laps >= 3:
+                time.sleep(1)
+                stop_motors()
+                is_running = False
+            time.sleep(0.2)
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
