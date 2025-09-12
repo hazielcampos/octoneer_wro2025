@@ -1,5 +1,5 @@
 from src.components.HCSR04 import HCSR04
-from utils.terminal import clear
+from src.utils.terminal import clear
 import time
 
 right = HCSR04(24, 23)
