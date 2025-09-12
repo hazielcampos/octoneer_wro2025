@@ -11,7 +11,7 @@ from components.Buttton import Button
 button = Button(17, True)
 
 def btn_callback():
-    print("Btn state changed")
+    print("Btn pressed")
 
 button.set_callback(btn_callback)
 
