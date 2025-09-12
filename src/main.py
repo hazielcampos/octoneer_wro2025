@@ -41,7 +41,7 @@ def callback_2():
         orientation = ORIEN_H
     if ORIEN_H:
         set_angle(RIGHT_POSITION)
-    elif ORIEN_H:
+    elif ORIEN_AH:
         time.sleep(turn_end_delay)
         set_angle(CENTER_POSITION)
 
