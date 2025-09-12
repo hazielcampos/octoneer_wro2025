@@ -5,15 +5,14 @@ from components.Motor import forward, stop_motors, start as start_pwm
 from components.Buttton import Button
 from detection_functions import trigger_line
 from components.Servo import set_angle, CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
-
-TURN_ORANGE = 0
-TURN_BLUE = 1
-TURN_NONE = 3
-
 is_running = False
 stop_threads = False
-turning = False
-turn_color = TURN_NONE
+
+ORIEN_H = 0
+ORIEN_AH = 1
+ORIEN_NONE = 2
+
+orientation = ORIEN_NONE
 
 btn = Button(17, True)
 
@@ -22,37 +21,25 @@ def btn_callback():
     is_running = not is_running
 btn.set_callback(btn_callback)
 
-def end_curve():
-    time.sleep(1)
-    set_angle(CENTER_POSITION)
-
+turn_end_delay = 1.4
 def callback_1():
-    if not is_running:
-        return
-    global turning, turn_color
-    if turning and turn_color != TURN_ORANGE:
-        end_curve()
-        turning = False
-        turn_color = TURN_NONE
-        time.sleep(0.1)
-    else:
-        turning = True
-        turn_color = TURN_ORANGE
+    global orientation
+    if ORIEN_NONE:
+        orientation = ORIEN_AH
+    if ORIEN_AH:
         set_angle(LEFT_POSITION)
-        
+    elif ORIEN_H:
+        time.sleep(turn_end_delay)
+        set_angle(CENTER_POSITION)
 def callback_2():
-    if not is_running:
-        return
-    global turning, turn_color
-    if turning and turn_color != TURN_BLUE:
-        end_curve()
-        turning = False
-        turn_color = TURN_NONE
-        time.sleep(0.1)
-    else:
-        turning = True
-        turn_color = TURN_BLUE
+    global orientation
+    if ORIEN_NONE:
+        orientation = ORIEN_H
+    if ORIEN_H:
         set_angle(RIGHT_POSITION)
+    elif ORIEN_H:
+        time.sleep(turn_end_delay)
+        set_angle(CENTER_POSITION)
 
 def vision():
     global stop_threads
@@ -89,8 +76,6 @@ def mechanics():
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
-            turning = False
-            turn_color = TURN_NONE
 
 def main():
     thread_mechanics = threading.Thread(target=mechanics, daemon=True)
