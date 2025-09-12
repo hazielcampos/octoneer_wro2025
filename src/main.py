@@ -55,6 +55,7 @@ def mechanics():
             time.sleep(1)
         else:
             stop_motors()
+            set_angle(CENTER_POSITION)
 
 def main():
     thread_mechanics = threading.Thread(target=mechanics, daemon=True)
