@@ -15,11 +15,13 @@ from components.Servo import set_angle, CENTER_POSITION, LEFT_POSITION, RIGHT_PO
 # CONSTANTS
 # ======================
 BASE_SPEED = 40
-
+running_flag = False
 # ======================
 # Main function
 # ======================
 def main():
+    global running_flag
+    running_flag = True
     forward(10)
     time.sleep(3)
     forward(20)
@@ -31,6 +33,7 @@ def main():
     print("Stopping the motors")
     stop_motors()
     time.sleep(0.5)  # Pequeña pausa antes de reiniciar
+    running_flag = False
 
 # ======================
 # Base module functions to make it work
@@ -38,13 +41,12 @@ def main():
 # ======================
 def thread_function():
     while True:
-        if shared.is_running:
+        if shared.is_running and not running_flag:
             main()
-            time.sleep(0.01)
-        else:
+        elif not shared.is_running:
             # Do something else
             stop_motors()
-            time.sleep(0.01)
+        time.sleep(0.01)
 # ======================
 # Base functions to handle multithreading
 # ======================
