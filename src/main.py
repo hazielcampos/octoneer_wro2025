@@ -23,6 +23,8 @@ btn.set_callback(btn_callback)
 
 turn_end_delay = 1.4
 def callback_1():
+    if not is_running:
+        return
     global orientation
     if ORIEN_NONE:
         orientation = ORIEN_AH
@@ -32,6 +34,8 @@ def callback_1():
         time.sleep(turn_end_delay)
         set_angle(CENTER_POSITION)
 def callback_2():
+    if not is_running:
+        return
     global orientation
     if ORIEN_NONE:
         orientation = ORIEN_H
