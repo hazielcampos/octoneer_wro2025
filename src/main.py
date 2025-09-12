@@ -45,7 +45,7 @@ def btn_callback():
     is_running = not is_running
 btn.set_callback(btn_callback)
 
-turn_end_delay = 1.4
+turn_end_delay = 1
 turn_end_start = 0
 
 def callback_1():
