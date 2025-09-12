@@ -1,5 +1,6 @@
 from src.components.HCSR04 import HCSR04
 from src.utils.terminal import clear
+from src.handlers.PID import PID_control
 import time
 
 right = HCSR04(24, 23)
@@ -10,6 +11,8 @@ try:
         clear()
         print(f"D. Right: {right.distance}")
         print(f"D. Left: {left.distance}")
-        time.sleep(0.1)
+        correction = PID_control(right.distance - left.distance)
+        print(f"Correction: {correction}")
+        time.sleep(0.01)
 except KeyboardInterrupt:
     print("User interrupt")
