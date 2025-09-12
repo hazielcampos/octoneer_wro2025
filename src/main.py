@@ -124,7 +124,7 @@ def mechanics():
                 is_turning = False
             laps = turns / 4
             if laps >= 3:
-                time.sleep(1)
+                time.sleep(0.2)
                 stop_motors()
                 is_running = False
             time.sleep(0.2)
