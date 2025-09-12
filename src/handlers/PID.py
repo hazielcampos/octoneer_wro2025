@@ -12,10 +12,6 @@ last_time = time.time()
 def PID_control(error):
     global integral, last_error, last_time
 
-    # Calcular error (positivo si está más lejos de lo deseado)
-    if error > 150 or error < -150:
-        error = 0.0
-
     # Tiempo transcurrido desde la última llamada
     now = time.time()
     dt = now - last_time if now - last_time > 0 else 1e-6
