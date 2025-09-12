@@ -52,6 +52,6 @@ try:
         print(f"D. Left: {left.distance}")
         correction = PID_control(right.distance - left.distance)
         print(f"Correction: {correction}")
-        time.sleep(0.01)
+        time.sleep(0.04)
 except KeyboardInterrupt:
     print("User interrupt")
