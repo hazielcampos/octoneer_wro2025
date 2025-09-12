@@ -16,8 +16,8 @@ BASE_SPEED = 40
 # ======================
 # Main function
 # ======================
-def sequence():
-    forward(10)
+def run():
+    forward(2)
     time.sleep(5)
     forward(100)
     time.sleep(4)
