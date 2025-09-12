@@ -28,8 +28,7 @@ def start():
 
 def main():
     while True:
-        if is_running:
-            mechanics.main()
+        mechanics.run(is_running)
         time.sleep(0.1)
 
     
