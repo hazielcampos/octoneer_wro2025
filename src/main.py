@@ -30,7 +30,7 @@ def start():
 def main():
     while True:
         if is_running:
-            mechanics.sequence()
+            mechanics.run()
         else:
             stop_motors()
 
