@@ -6,12 +6,15 @@ import time
 def main():
     start_pwm()
     while True:
-        pwm = int(input("Enter pwm value:"))
+        forward(5)
+        input("Press Enter to next speed...")
+        forward(10)
+        input("Press Enter to next speed...")
+        forward(20)
+        input("Press Enter to next speed...")
+        forward(40)
+        input("Press Enter to next speed...")
         
-        forward(pwm)
-        input("Press Enter to stop motors...")
-        stop_motors()
-        time.sleep(0.1)
     
 try:
     main()
