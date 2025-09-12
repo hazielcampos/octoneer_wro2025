@@ -27,6 +27,8 @@ def end_curve():
     set_angle(CENTER_POSITION)
 
 def callback_1():
+    if not is_running:
+        return
     global turning, turn_color
     if turning and turn_color != TURN_ORANGE:
         end_curve()
@@ -39,6 +41,8 @@ def callback_1():
         set_angle(LEFT_POSITION)
         
 def callback_2():
+    if not is_running:
+        return
     global turning, turn_color
     if turning and turn_color != TURN_BLUE:
         end_curve()
@@ -85,6 +89,8 @@ def mechanics():
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
+            turning = False
+            turn_color = TURN_NONE
 
 def main():
     thread_mechanics = threading.Thread(target=mechanics, daemon=True)
