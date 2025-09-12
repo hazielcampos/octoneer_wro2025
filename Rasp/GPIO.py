@@ -58,24 +58,19 @@ class PWM:
         self.thread.start()
     
     def _run(self):
-        period = 1.0 / self.freq    
         try:
+            period = 1.0 / self.freq 
             while self.running:
                 with self.lock:
                     duty = self.duty
-                high_time = period * duty / 100.0
+                high_time = period * (duty / 100.0)
                 low_time = period - high_time
-
-                start = time.perf_counter()
                 if duty > 0:
                     lgpio.gpio_write(self.chip, self.pin, 1)
-                    while time.perf_counter() - start < high_time:
-                        pass
-
+                    time.sleep(high_time)
                 if duty < 100:
                     lgpio.gpio_write(self.chip, self.pin, 0)
-                    while time.perf_counter() - start < period:
-                        pass
+                    time.sleep(low_time)
         except Exception as e:
             print(f"Error in PWM thread: {e}")
             lgpio.gpio_write(self.chip, self.pin, 0)

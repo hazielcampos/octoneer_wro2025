@@ -4,6 +4,7 @@ import sensors as sensors
 import time
 from components.Buttton import Button
 
+from components.Motor import forward, stop_motors, start as start_pwm
 # =========================
 # State object
 # =========================
@@ -24,11 +25,11 @@ def btn_callback():
 button.set_callback(btn_callback)
 
 def start():
-    mechanics.start()
+    pass
 
 def main():
     while True:
-        mechanics.run(is_running)
+        forward(10)
         time.sleep(0.1)
 
     
