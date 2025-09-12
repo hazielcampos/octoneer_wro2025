@@ -51,7 +51,7 @@ def mechanics():
     start_pwm()
     while not stop_threads:
         if is_running:
-            forward(30)
+            forward(40)
             time.sleep(1)
         else:
             stop_motors()
