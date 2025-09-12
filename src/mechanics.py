@@ -20,6 +20,12 @@ BASE_SPEED = 40
 # Main function
 # ======================
 def main():
+    print("Running at really low speed")
+    forward(10)
+    time.sleep(1)
+    print("Speed increased to 20")
+    forward(20)
+    time.sleep(1)
     print("Running pwm at base speed")
     forward(BASE_SPEED)
     time.sleep(1)
