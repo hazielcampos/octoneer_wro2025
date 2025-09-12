@@ -20,22 +20,17 @@ BASE_SPEED = 40
 # Main function
 # ======================
 def main():
-    print("Running at really low speed")
-    forward(10)
-    time.sleep(1)
-    print("Speed increased to 20")
-    forward(20)
-    time.sleep(1)
-    print("Running pwm at base speed")
+    print("Starting with inertia breaker pulse")
+    forward(50)  # Pulso de inercia
+    time.sleep(0.7)
+    
+    print("Running at base speed")
     forward(BASE_SPEED)
-    time.sleep(1)
-    print("Increasing speed by 10")
-    forward(BASE_SPEED + 10)
-    time.sleep(1)
+    time.sleep(2)  # Dale más tiempo para alcanzar y mantener la velocidad
+    
     print("Stopping the motors")
     stop_motors()
-    print("Wait 3 seconds to restart")
-    time.sleep(3)
+    time.sleep(0.5)  # Pequeña pausa antes de reiniciar
 
 # ======================
 # Base module functions to make it work
@@ -48,6 +43,7 @@ def thread_function():
             time.sleep(0.01)
         else:
             # Do something else
+            stop_motors()
             time.sleep(0.01)
 # ======================
 # Base functions to handle multithreading
