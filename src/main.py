@@ -25,7 +25,7 @@ def btn_callback():
 button.set_callback(btn_callback)
 
 def start():
-    pass
+    start_pwm()
 
 def main():
     while True:
