@@ -27,7 +27,7 @@ def main():
     
     print("Stopping the motors")
     stop_motors()
-    time.sleep(0.5)  # Pequeña pausa antes de reiniciar
+    time.sleep(2)  # Pequeña pausa antes de reiniciar
 
 def run(is_running):
     if is_running:
