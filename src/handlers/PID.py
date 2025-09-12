@@ -1,9 +1,9 @@
 import time
 from components.Servo import CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 
-Kp = 0.04
+Kp = 0.03
 Ki = 0.0
-Kd = 0.02
+Kd = 0.005
 
 integral = 0
 last_error = 0
