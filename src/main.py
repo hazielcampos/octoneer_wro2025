@@ -59,6 +59,12 @@ def vision():
         
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         trigger_line(hsv, frame, callback_1, callback_2)
+        text = "NONE" if orientation == ORIEN_H else "SOMETHING"
+        if orientation == ORIEN_AH:
+            text = "ANTIHORARIO"
+        elif orientation == ORIEN_H:
+            text = "HORARIO"
+        cv2.putText(frame, text, (10, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 0), 2)
         cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
