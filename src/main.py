@@ -33,6 +33,8 @@ def main():
 
     
 try:
+    start()
+    time.sleep(0.3)
     main()
 except KeyboardInterrupt:
     print("Interrupción del usuario, limpiando...")
