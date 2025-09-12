@@ -1,8 +1,5 @@
 import Rasp.GPIO as GPIO
 import time
-
-last_speed = 0
-
 # =========================
 # GPIO setup
 # =========================
@@ -17,23 +14,11 @@ def start():
     BACKWARD_PWM.start(0)
 
 def forward(speed):
-    global last_speed
-    if last_speed == 0:
-        BACKWARD_PWM.ChangeDutyCycle(0)
-        FORWARD_PWM.ChangeDutyCycle(50)
-        time.sleep(0.7)
     BACKWARD_PWM.ChangeDutyCycle(0)
     FORWARD_PWM.ChangeDutyCycle(speed)
 def backward(speed):
-    global last_speed
-    if last_speed == 0:
-        BACKWARD_PWM.ChangeDutyCycle(50)
-        FORWARD_PWM.ChangeDutyCycle(0)
-        time.sleep(0.7)
     FORWARD_PWM.ChangeDutyCycle(0)
     BACKWARD_PWM.ChangeDutyCycle(speed)
 def stop_motors():
-    global last_speed
-    last_speed = 0
     FORWARD_PWM.ChangeDutyCycle(0)
     BACKWARD_PWM.ChangeDutyCycle(0)
