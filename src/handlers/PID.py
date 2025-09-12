@@ -1,7 +1,7 @@
 import time
 from components.Servo import CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 
-Kp = 0.06
+Kp = 0.04
 Ki = 0.0
 Kd = 0.02
 
@@ -33,5 +33,6 @@ def PID_control(error):
     # Limitar a rango permitido del servo
     correction = max(RIGHT_POSITION, min(LEFT_POSITION, correction))
     correction = int(round(correction))
+    print(correction)
 
     return correction
