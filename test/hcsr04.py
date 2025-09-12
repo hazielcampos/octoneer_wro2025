@@ -6,9 +6,9 @@ CENTER_POSITION = 52  # Neutral position of the servo
 LEFT_POSITION = 62 # Left position of the servo
 RIGHT_POSITION = 42  # Right position of the servo
 
-Kp = 0.1
+Kp = 0.06
 Ki = 0.0
-Kd = 0.03
+Kd = 0.02
 
 integral = 0
 last_error = 0
