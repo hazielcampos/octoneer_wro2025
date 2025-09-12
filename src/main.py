@@ -23,8 +23,13 @@ def btn_callback():
 
 button.set_callback(btn_callback)
 
+def start():
+    mechanics.start()
+
 def main():
     while True:
+        if is_running:
+            mechanics.main()
         time.sleep(0.1)
 
     

@@ -1,9 +1,7 @@
 # ======================
 # Important base imports
 # ======================
-import shared
 import time
-import threading
 
 # ======================
 # Imports
@@ -36,29 +34,12 @@ def main():
     running_flag = False
 
 # ======================
-# Base module functions to make it work
-# probably you don't have to touch this code too much
-# ======================
-def thread_function():
-    while True:
-        if shared.is_running and not running_flag:
-            main()
-        elif not shared.is_running:
-            # Do something else
-            stop_motors()
-        time.sleep(0.01)
-# ======================
 # Base functions to handle multithreading
 # ======================
-process_thread = threading.Thread(target=thread_function, daemon=True)
 def start():
     # Do something here before the main functions execution
     start_pwm()
     set_angle(CENTER_POSITION)
-    
-    # Module thread start
-    if not process_thread.is_alive():
-        process_thread.start()
     
 def cleanup():
     pass
