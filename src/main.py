@@ -2,6 +2,7 @@
 from src.components.Motor import forward, stop_motors, start as start_pwm
 import time
 from components.Buttton import Button
+import threading
 
 is_running = False
 
@@ -12,7 +13,8 @@ def btn_callback():
     is_running = not is_running
 btn.set_callback(btn_callback)
 
-def main():
+
+def mechanics():
     start_pwm()
     while True:
         if is_running:
@@ -25,7 +27,14 @@ def main():
             forward(40)
             time.sleep(5)
         else:
-            stop_motors()     
+            stop_motors()
+thread_mechanics = threading.Thread(target=mechanics)
+            
+def main():
+    thread_mechanics.start()
+    
+    while True:
+        time.sleep(0.1) 
     
 try:
     main()
