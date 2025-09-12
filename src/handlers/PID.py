@@ -5,6 +5,10 @@ Kp = 0.04
 Ki = 0.0
 Kd = 0.01
 
+integral = 0
+last_error = 0
+last_time = time.time()
+
 def PID_control(error):
     global integral, last_error, last_time
 
