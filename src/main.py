@@ -32,7 +32,7 @@ def vision():
         
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         trigger_line(hsv, frame)
-        cv2.imshow("Frame", hsv)
+        cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
             break
