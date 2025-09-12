@@ -2,7 +2,7 @@ import Rasp.GPIO as GPIO
 import mechanics as mechanics
 import sensors as sensors
 import time
-from shared import is_running
+import shared
 
 # =========================
 # Button sensor configuration
@@ -24,8 +24,8 @@ def loop():
     global is_running
     while True:
         if get_button():
-            is_running = not is_running
-            print(f"Sistema {'activado' if is_running else 'desactivado'}")
+            shared.set_is_running(not shared.is_running)
+            print(f"Sistema {'activado' if shared.is_running else 'desactivado'}")
             time.sleep(0.5)  # Debounce delay
 
 def cleanup():
