@@ -1,5 +1,5 @@
 import time
-from components.Servo import CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
+from src.components.Servo import CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 
 Kp = 0.03
 Ki = 0.0
