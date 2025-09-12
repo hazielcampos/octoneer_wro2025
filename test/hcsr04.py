@@ -1,4 +1,4 @@
-from components.HCSR04 import HCSR04
+from src.components.HCSR04 import HCSR04
 from utils.terminal import clear
 import time
 
