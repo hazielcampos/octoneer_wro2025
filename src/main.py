@@ -90,7 +90,7 @@ def vision():
             continue
         
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-        trigger_line(hsv, frame, callback_1, callback_2)
+        trigger_line(is_running, hsv, frame, callback_1, callback_2)
         text = "NONE" if orientation == ORIEN_NONE else "SOMETHING"
         if orientation == ORIEN_AH:
             text = "ANTIHORARIO"
