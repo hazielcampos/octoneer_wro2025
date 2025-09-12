@@ -20,10 +20,10 @@ BASE_SPEED = 40
 # Main function
 # ======================
 def main():
-    print("Starting with inertia breaker pulse")
-    forward(50)  # Pulso de inercia
-    time.sleep(0.7)
-    
+    forward(10)
+    time.sleep(3)
+    forward(20)
+    time.sleep(3)
     print("Running at base speed")
     forward(BASE_SPEED)
     time.sleep(2)  # Dale más tiempo para alcanzar y mantener la velocidad
