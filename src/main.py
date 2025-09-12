@@ -1,9 +1,10 @@
 import threading
 import cv2
 import time
-from src.components.Motor import forward, stop_motors, start as start_pwm
+from components.Motor import forward, stop_motors, start as start_pwm
 from components.Buttton import Button
 from detection_functions import trigger_line
+from components.Servo import set_angle, CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 is_running = False
 stop_threads = False
 
@@ -13,6 +14,11 @@ def btn_callback():
     global is_running
     is_running = not is_running
 btn.set_callback(btn_callback)
+
+def callback_1():
+    set_angle(RIGHT_POSITION)
+def callback_2():
+    set_angle(LEFT_POSITION)
 
 def vision():
     global stop_threads
@@ -31,7 +37,7 @@ def vision():
             continue
         
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-        trigger_line(hsv, frame)
+        trigger_line(hsv, frame, callback_1, callback_2)
         cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
