@@ -3,6 +3,7 @@ from src.components.Motor import forward, stop_motors, start as start_pwm
 import time
 from components.Buttton import Button
 import threading
+import cv2
 
 is_running = False
 
@@ -13,6 +14,13 @@ def btn_callback():
     is_running = not is_running
 btn.set_callback(btn_callback)
 
+def vision():
+    cap = cv2.VideoCapture(0)
+    
+    while True:
+        ret, frame = cap.read()
+        cv2.imshow("Frame", frame)
+    pass
 
 def mechanics():
     start_pwm()
@@ -28,10 +36,12 @@ def mechanics():
             time.sleep(5)
         else:
             stop_motors()
-thread_mechanics = threading.Thread(target=mechanics)
+thread_mechanics = threading.Thread(target=mechanics, daemon=True)
+thread_vision = threading.Thread(target=vision, daemon=True)
             
 def main():
     thread_mechanics.start()
+    thread_vision.start()
     
     while True:
         time.sleep(0.1) 
