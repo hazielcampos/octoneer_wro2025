@@ -21,7 +21,7 @@ def main():
 
     
 try:
-    pass 
+    main()
 except KeyboardInterrupt:
     print("Interrupción del usuario, limpiando...")
 except Exception as e:
