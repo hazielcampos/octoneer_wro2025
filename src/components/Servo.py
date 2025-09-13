@@ -1,6 +1,10 @@
 from adafruit_pca9685 import PCA9685
 from adafruit_motor import servo
-from utils.i2c_manager import i2c
+
+import busio
+import board
+
+i2c = busio.I2C(board.SCL, board.SDA)
 
 CENTER_POSITION = 52  # Neutral position of the servo
 LEFT_POSITION = 62 # Left position of the servo
