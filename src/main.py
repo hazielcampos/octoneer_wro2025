@@ -45,7 +45,7 @@ def btn_callback():
     is_running = not is_running
 btn.set_callback(btn_callback)
 
-turn_end_delay = 0.4
+turn_end_delay = 0.2
 turn_end_start = 0
 
 def callback_1():
@@ -121,9 +121,9 @@ def mechanics():
     while not stop_threads:
         if is_running:
             if is_turning:
-                forward(45)
+                forward(60)
             else:
-                forward(40)
+                forward(50)
                 
             if not is_turning:
                 correction = PID_control(sensor_left.distance - sensor_right.distance)
@@ -134,13 +134,13 @@ def mechanics():
                 turn_end_start = 0
                 is_turning = False
                 print("turn finished")
-                time.sleep(0.4)
+                time.sleep(0.2)
             laps = turns / 4
             if laps >= 3:
                 time.sleep(0.2)
                 stop_motors()
                 is_running = False
-            time.sleep(0.2)
+            time.sleep(0.1)
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
