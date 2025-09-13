@@ -3,7 +3,7 @@ from utils.terminal import clear
 import time
 
 
-from src.handlers.PID import PID_control
+from handlers.PID import PID_control
 
 right = HCSR04(24, 23)
 left = HCSR04(5, 6)
