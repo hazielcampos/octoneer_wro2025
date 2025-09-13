@@ -45,7 +45,7 @@ def btn_callback():
     is_running = not is_running
 btn.set_callback(btn_callback)
 
-turn_end_delay = 1
+turn_end_delay = 0.4
 turn_end_start = 0
 
 def callback_1():
@@ -134,6 +134,7 @@ def mechanics():
                 turn_end_start = 0
                 is_turning = False
                 print("turn finished")
+                time.sleep(0.4)
             laps = turns / 4
             if laps >= 3:
                 time.sleep(0.2)
