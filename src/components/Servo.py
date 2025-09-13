@@ -1,6 +1,6 @@
 from adafruit_pca9685 import PCA9685
 from adafruit_motor import servo
-from utils.i2c_manager import i2c
+from src.utils.i2c_manager import i2c
 
 CENTER_POSITION = 52  # Neutral position of the servo
 LEFT_POSITION = 62 # Left position of the servo
