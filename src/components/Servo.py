@@ -19,9 +19,6 @@ pca.frequency = 50  # Servo frequency
 direction_servo = servo.Servo(pca.channels[0])
 
 def set_angle(angle: float):
-    """Set the servo angle."""
-    if angle < 42 or angle > 62:
-        raise ValueError("Angle must be between 0 and 180 degrees.")
     direction_servo.angle = angle
 
 def disable():
