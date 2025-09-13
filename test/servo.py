@@ -1,4 +1,4 @@
-from components.Servo import set_angle, CENTER_POSITION, LEFT_POSITION, RIGHT_POSITION, disable as disable_servo
+from src.components.Servo import set_angle, CENTER_POSITION, LEFT_POSITION, RIGHT_POSITION, disable as disable_servo
 
 try:
     set_angle(CENTER_POSITION)
