@@ -3,8 +3,6 @@ from adafruit_motor import servo
 
 import busio
 import board
-import threading
-_angle_lock = threading.Lock()
 
 
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -21,11 +19,10 @@ pca.frequency = 50  # Servo frequency
 direction_servo = servo.Servo(pca.channels[0])
 
 def set_angle(angle: float):
-    """Set the servo angle safely."""
+    """Set the servo angle."""
     if angle < 42 or angle > 62:
-        raise ValueError("Angle must be between 42 y 62 degrees.")
-    with _angle_lock:
-        direction_servo.angle = angle
+        raise ValueError("Angle must be between 0 and 180 degrees.")
+    direction_servo.angle = angle
 
 def disable():
     pca.deinit()  # Deinitialize PCA9685

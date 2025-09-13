@@ -127,7 +127,6 @@ def mechanics():
                 time.sleep(0.2)
                 stop_motors()
                 is_running = False
-            time.sleep(0.2)
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
