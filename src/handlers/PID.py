@@ -9,7 +9,7 @@ integral = 0
 last_error = 0
 last_time = time.time()
 
-def map_error_to_servo_correction(error, max_error=100, max_servo_correction=10):
+def map_error_to_servo_correction(error, max_error=100, max_servo_correction=18):
     """
     Mapea el error de ultrasonicos (-100 a +100) a corrección de servo limitada
     max_servo_correction: máxima corrección en grados desde el centro (52°)
