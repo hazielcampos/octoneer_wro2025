@@ -121,7 +121,7 @@ def mechanics():
     while not stop_threads:
         if is_running:
             if is_turning:
-                forward(50)
+                forward(45)
             else:
                 forward(40)
                 
