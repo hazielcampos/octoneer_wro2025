@@ -2,6 +2,7 @@ from src.components.HCSR04 import HCSR04
 from src.utils.terminal import clear
 import time
 
+
 CENTER_POSITION = 52  # Neutral position of the servo
 LEFT_POSITION = 62 # Left position of the servo
 RIGHT_POSITION = 42  # Right position of the servo
