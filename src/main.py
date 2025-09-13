@@ -113,7 +113,11 @@ def mechanics():
     start_pwm()
     while not stop_threads:
         if is_running:
-            forward(40)
+            if is_turning:
+                forward(100)
+            else:
+                forward(40)
+                
             if not is_turning:
                 correction = PID_control(sensor_left.distance - sensor_right.distance)
                 set_angle(correction)
