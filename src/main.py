@@ -15,7 +15,7 @@ El codigo hace lo siguiente:
 - Esto se repite por 12 curvas o 3 vueltas
 - El robot se detiene a la 3er vuelta
 """
-
+"""hey yo wt"""
 
 import threading
 import cv2

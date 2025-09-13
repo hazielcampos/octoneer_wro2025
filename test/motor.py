@@ -1,5 +1,5 @@
 
-from src.components.Motor import forward, stop_motors, start as start_pwm
+from components.Motor import forward, stop_motors, start as start_pwm
 import time
 
 
