@@ -1,8 +1,8 @@
 
-from src.components.Motor import forward, backward, stop_motors, start as start_pwm
+from components.Motor import forward, backward, stop_motors, start as start_pwm
 import time
 import keyboard
-from src.components.Servo import set_angle, CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
+from components.Servo import set_angle, CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 
 
 speed = 30
