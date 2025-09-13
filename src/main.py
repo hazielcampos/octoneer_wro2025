@@ -56,6 +56,7 @@ def callback_1():
         orientation = ORIEN_AH
     if orientation == ORIEN_AH:
         set_angle(LEFT_POSITION)
+        forward(100)
         is_turning = True
     elif orientation ==ORIEN_H:
         turn_end_start = time.time()
@@ -69,6 +70,8 @@ def callback_2():
         orientation = ORIEN_H
     if orientation == ORIEN_H:
         set_angle(RIGHT_POSITION)
+        forward(100)
+        
         is_turning = True
     elif orientation == ORIEN_AH:
         turn_end_start = time.time()
