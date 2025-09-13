@@ -56,6 +56,8 @@ def callback_1():
         orientation = ORIEN_AH
     if orientation == ORIEN_AH:
         set_angle(LEFT_POSITION)
+        print("turn started")
+        
         forward(100)
         is_turning = True
     elif orientation ==ORIEN_H:
@@ -70,6 +72,8 @@ def callback_2():
         orientation = ORIEN_H
     if orientation == ORIEN_H:
         set_angle(RIGHT_POSITION)
+        print("turn started")
+        
         forward(100)
         
         is_turning = True
@@ -129,11 +133,13 @@ def mechanics():
                 set_angle(CENTER_POSITION)
                 turn_end_start = 0
                 is_turning = False
+                print("turn finished")
             laps = turns / 4
             if laps >= 3:
                 time.sleep(0.2)
                 stop_motors()
                 is_running = False
+            time.sleep(0.2)
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
