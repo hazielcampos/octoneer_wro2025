@@ -44,7 +44,7 @@ def on_curve_detect():
     time.sleep(0.1)
     set_angle(CENTER_POSITION)
     backward(40)
-    time.sleep(0.1)
+    time.sleep(0.5)
     forward(45)
 
 def btn_callback():
