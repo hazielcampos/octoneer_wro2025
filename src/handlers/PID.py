@@ -1,6 +1,6 @@
 import time
 from components.Servo import CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
-Kp = 0.4
+Kp = 0.5
 Ki = 0.0
 Kd = 0.05
 

@@ -53,17 +53,17 @@ def trigger_line(running, hsv, frame, callback_1, callback_2):
     count_2 = cv2.countNonZero(mask_2)
     
     if count_1 > MIN_AREA:
-        print("Azul detectado")
         if not running:
             return
         if callback_1 and last_callback != 1:
+            print("Azul detectado")
             callback_1()
         last_callback = 1
     elif count_2 > MIN_AREA:
-        print("Naranja detectado")
         if not running:
             return
         if callback_2 and last_callback != 2:
+            print("Naranja detectado")
             callback_2()
         last_callback = 2
         
