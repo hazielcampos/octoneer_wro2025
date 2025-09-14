@@ -102,15 +102,7 @@ def vision():
         hsv = cv2.merge([h, s, v])
         
         hsv = cv2.GaussianBlur(hsv, (5, 5), 0)
-        cv2.imshow("HSV", hsv)
         trigger_line(is_running, hsv, frame, callback_1, callback_2)
-        text = "NONE" if orientation == ORIEN_NONE else "SOMETHING"
-        if orientation == ORIEN_AH:
-            text = "ANTIHORARIO"
-        elif orientation == ORIEN_H:
-            text = "HORARIO"
-        cv2.putText(frame, text, (10, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 0), 2)
-        cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
             break
