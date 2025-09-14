@@ -10,7 +10,7 @@ azul_tol = (22, 60, 79)
 MIN_AREA = 20
 
 x1, x2 = 250, 350
-y1, y2 = 400, 440
+y1, y2 = 380, 480
 
 def get_mask(roi, color_hsv, tol_hsv):
     h, s, v = color_hsv
