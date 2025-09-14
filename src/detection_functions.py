@@ -64,3 +64,7 @@ def trigger_line(running, hsv, frame, callback_1, callback_2):
 def invert_last_callback():
     global last_callback
     last_callback = 1 if last_callback == 2 else 2
+
+def reset_last_callback():
+    global last_callback
+    last_callback = 0

@@ -23,7 +23,7 @@ import time
 from components.Motor import backward, forward, stop_motors, start as start_pwm
 from components.HCSR04 import HCSR04
 from components.Buttton import Button
-from detection_functions import trigger_line
+from detection_functions import trigger_line, reset_last_callback, invert_last_callback
 from components.Servo import set_angle, CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 from handlers.PID import PID_control
 
@@ -51,32 +51,20 @@ turn_end_start = 0
 def callback_1():
     if not is_running:
         return
-    global orientation, is_turning, turn_end_start
+    global orientation, is_turning, turn_end_start, turns
     if orientation ==ORIEN_NONE:
         orientation = ORIEN_AH
-    if orientation == ORIEN_AH:
-        set_angle(LEFT_POSITION)
-        print("turn started")
-        
-        is_turning = True
     elif orientation ==ORIEN_H:
-        turn_end_start = time.time()
-
+        turns += 1
 
 def callback_2():
     if not is_running:
         return
-    global orientation, is_turning, turn_end_start
+    global orientation, is_turning, turn_end_start, turns
     if orientation == ORIEN_NONE:
         orientation = ORIEN_H
-    if orientation == ORIEN_H:
-        set_angle(RIGHT_POSITION)
-        print("turn started")
-        
-        
-        is_turning = True
     elif orientation == ORIEN_AH:
-        turn_end_start = time.time()
+        turns += 1
 
 def vision():
     global stop_threads
@@ -111,34 +99,47 @@ def vision():
 sensor_right = HCSR04(24, 23)
 sensor_left = HCSR04(5, 6)
 
+TURN_THRESHOL = 200
+
 def mechanics():
     global orientation, turn_end_start, turns, is_running, is_turning
     start_pwm()
     while not stop_threads:
         if is_running:
+            left_dist = sensor_left.distance
+            right_dist = sensor_right.distance
             if is_turning:
                 forward(45)
-            elif sensor_right.distance < 50 or sensor_left.distance < 50:
-                forward(100)
+                
+                if turn_end_start > 0 and (time.time() - turn_end_start) > turn_end_delay:
+                    set_angle(CENTER_POSITION)
+                    turn_end_start = 0
+                    is_turning = False
+                    print("turn finished")
+                    time.sleep(0.2)
+            
             else:
-                forward(40)
+                if left_dist > TURN_THRESHOL:
+                    set_angle(LEFT_POSITION)
+                    print("[LOG] turn started LEFT")
+                    is_turning = True
+                    turn_end_start = time.time()
                 
-                
-            if not is_turning:
-                correction = PID_control(sensor_left.distance - sensor_right.distance)
-                set_angle(correction)
-            if turn_end_start > 0 and (time.time() - turn_end_start) > turn_end_delay:
-                turns += 1
-                set_angle(CENTER_POSITION)
-                turn_end_start = 0
-                is_turning = False
-                print("turn finished")
-                time.sleep(0.2)
+                elif right_dist > TURN_THRESHOL:
+                    set_angle(RIGHT_POSITION)
+                    print("[LOG] turn started RIGHT")
+                    is_turning = True
+                    turn_end_start = time.time()
+                else:
+                    forward(40)
+                    correction = PID_control(left_dist - right_dist)
+                    set_angle(correction)
+
             laps = turns / 4
             if laps >= 3:
                 # Final PID to center the robot and end
                 print(f"finished at: {laps}")
-                for i in range(10):
+                for i in range(5):
                     PID_control(sensor_left.distance - sensor_right.distance)
                     time.sleep(0.1)
                 stop_motors()
@@ -149,6 +150,7 @@ def mechanics():
             set_angle(CENTER_POSITION)
             orientation = ORIEN_NONE
             turns = 0
+            reset_last_callback()
 
 def main():
     thread_mechanics = threading.Thread(target=mechanics, daemon=True)
