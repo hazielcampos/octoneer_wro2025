@@ -31,6 +31,7 @@ is_running = False
 stop_threads = False
 is_turning = False
 turns = 0
+should_turn = False
 
 ORIEN_H = 0
 ORIEN_AH = 1
@@ -48,18 +49,22 @@ btn.set_callback(btn_callback)
 def callback_1():
     if not is_running:
         return
-    global orientation, turns
+    global orientation, turns, should_turn
     if orientation ==ORIEN_NONE:
         orientation = ORIEN_AH
+    if orientation == ORIEN_AH:
+        should_turn = True
     elif orientation ==ORIEN_H:
         turns += 1
 
 def callback_2():
     if not is_running:
         return
-    global orientation, turns
+    global orientation, turns, should_turn
     if orientation == ORIEN_NONE:
         orientation = ORIEN_H
+    if orientation == ORIEN_H:
+        should_turn = True
     elif orientation == ORIEN_AH:
         turns += 1
 
@@ -103,7 +108,7 @@ turn_end_start = 0
 last_curve_time = 0
 
 def mechanics():
-    global orientation, turn_end_start, turns, is_running, is_turning, last_curve_time
+    global orientation, turn_end_start, turns, is_running, is_turning, last_curve_time, should_turn
     start_pwm()
     while not stop_threads:
         if is_running:
@@ -118,16 +123,19 @@ def mechanics():
                     last_curve_time = time.time()
                     is_turning = False
                     print("turn finished")
+                    should_turn = False
                     time.sleep(0.2)
             
             else:
-                if left_dist > TURN_THRESHOL and (last_curve_time - time.time()) > NEXT_CURVE_THRESHOL:
+                can_turn_left = left_dist > TURN_THRESHOL and (time.time() - last_curve_time) > NEXT_CURVE_THRESHOL
+                can_turn_right = right_dist > TURN_THRESHOL and (time.time() - last_curve_time) > NEXT_CURVE_THRESHOL
+                if can_turn_left and should_turn and orientation == ORIEN_AH:
                     set_angle(LEFT_POSITION)
                     print("[LOG] turn started LEFT")
                     is_turning = True
                     turn_end_start = time.time()
                 
-                elif right_dist > TURN_THRESHOL and (last_curve_time - time.time()) > NEXT_CURVE_THRESHOL:
+                elif can_turn_right and should_turn and orientation == ORIEN_H:
                     set_angle(RIGHT_POSITION)
                     print("[LOG] turn started RIGHT")
                     is_turning = True
@@ -153,6 +161,7 @@ def mechanics():
             orientation = ORIEN_NONE
             turns = 0
             reset_last_callback()
+            should_turn = False
 
 def main():
     thread_mechanics = threading.Thread(target=mechanics, daemon=True)
