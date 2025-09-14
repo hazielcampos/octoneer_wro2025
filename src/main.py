@@ -49,6 +49,7 @@ orientation = Orientation.NO_SET
 turn_end_start = 0
 last_curve_time = 0
 start_time = 0
+current_lane = Lane.RIGHT
 
 # ==============================
 # COMPONENTS
@@ -130,7 +131,7 @@ def vision():
 # Mechanics manager, control the motors and servo using the vision and sensors information
 # ==============================
 def mechanics():
-    global orientation, turn_end_start, turns, is_running, is_turning, last_curve_time, should_turn, start_time
+    global orientation, turn_end_start, turns, is_running, is_turning, last_curve_time, should_turn, start_time, current_lane
     start_pwm()
     while not stop_threads:
         if is_running:
@@ -140,8 +141,13 @@ def mechanics():
             right_dist = sensor_right.distance
             if is_turning:
                 forward(45)
-                
-                if turn_end_start > 0 and (time.time() - turn_end_start) > TURN_END_DELAY:
+                delay = TURN_END_DELAY
+                if current_lane == Lane.RIGHT:
+                    delay = TURN_END_DELAY / 2
+                elif current_lane == Lane.LEFT:
+                    delay = TURN_END_DELAY * 1.5
+                    
+                if turn_end_start > 0 and (time.time() - turn_end_start) > delay:
                     set_angle(CENTER_POSITION)
                     turn_end_start = 0
                     last_curve_time = time.time()
