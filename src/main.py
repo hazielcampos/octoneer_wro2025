@@ -20,7 +20,7 @@ El codigo hace lo siguiente:
 import threading
 import cv2
 import time
-from components.Motor import forward, stop_motors, start as start_pwm
+from components.Motor import backward, forward, stop_motors, start as start_pwm
 from components.HCSR04 import HCSR04
 from components.Buttton import Button
 from detection_functions import trigger_line
@@ -39,6 +39,13 @@ ORIEN_NONE = 2
 orientation = ORIEN_NONE
 
 btn = Button(17, True)
+def on_curve_detect():
+    stop_motors()
+    time.sleep(0.1)
+    set_angle(CENTER_POSITION)
+    backward(40)
+    time.sleep(0.1)
+    forward(45)
 
 def btn_callback():
     global is_running
@@ -55,6 +62,7 @@ def callback_1():
     if orientation ==ORIEN_NONE:
         orientation = ORIEN_AH
     if orientation == ORIEN_AH:
+        on_curve_detect()
         set_angle(CENTER_POSITION)
         time.sleep(0.2)
         set_angle(LEFT_POSITION)
@@ -72,6 +80,7 @@ def callback_2():
     if orientation == ORIEN_NONE:
         orientation = ORIEN_H
     if orientation == ORIEN_H:
+        on_curve_detect()
         set_angle(CENTER_POSITION)
         time.sleep(0.2)
         set_angle(RIGHT_POSITION)
