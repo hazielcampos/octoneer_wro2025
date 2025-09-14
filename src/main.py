@@ -49,7 +49,7 @@ orientation = Orientation.NO_SET
 turn_end_start = 0
 last_curve_time = 0
 start_time = 0
-current_lane = Lane.RIGHT
+current_lane = Lane.CENTER
 
 # ==============================
 # COMPONENTS
@@ -142,9 +142,9 @@ def mechanics():
             if is_turning:
                 forward(45)
                 delay = TURN_END_DELAY
-                if current_lane == Lane.RIGHT:
+                if current_lane == Lane.CENTER:
                     delay = TURN_END_DELAY / 1.5
-                elif current_lane == Lane.LEFT:
+                elif current_lane == Lane.CENTER:
                     delay = TURN_END_DELAY * 1.5
                     
                 if turn_end_start > 0 and (time.time() - turn_end_start) > delay:
