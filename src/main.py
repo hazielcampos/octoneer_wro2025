@@ -123,7 +123,7 @@ def mechanics():
             if is_turning:
                 forward(45)
             else:
-                forward(60)
+                forward(40)
                 
             if not is_turning:
                 correction = PID_control(sensor_left.distance - sensor_right.distance)
