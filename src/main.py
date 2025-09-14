@@ -45,13 +45,10 @@ def btn_callback():
     is_running = not is_running
 btn.set_callback(btn_callback)
 
-turn_end_delay = 1
-turn_end_start = 0
-
 def callback_1():
     if not is_running:
         return
-    global orientation, is_turning, turn_end_start, turns
+    global orientation, turns
     if orientation ==ORIEN_NONE:
         orientation = ORIEN_AH
     elif orientation ==ORIEN_H:
@@ -60,7 +57,7 @@ def callback_1():
 def callback_2():
     if not is_running:
         return
-    global orientation, is_turning, turn_end_start, turns
+    global orientation, turns
     if orientation == ORIEN_NONE:
         orientation = ORIEN_H
     elif orientation == ORIEN_AH:
@@ -100,6 +97,8 @@ sensor_right = HCSR04(24, 23)
 sensor_left = HCSR04(5, 6)
 
 TURN_THRESHOL = 200
+turn_end_delay = 0.7
+turn_end_start = 0
 
 def mechanics():
     global orientation, turn_end_start, turns, is_running, is_turning
