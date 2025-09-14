@@ -39,13 +39,6 @@ ORIEN_NONE = 2
 orientation = ORIEN_NONE
 
 btn = Button(17, True)
-def on_curve_detect():
-    stop_motors()
-    time.sleep(0.1)
-    set_angle(CENTER_POSITION)
-    backward(40)
-    time.sleep(0.5)
-    forward(45)
 
 def btn_callback():
     global is_running
@@ -62,9 +55,6 @@ def callback_1():
     if orientation ==ORIEN_NONE:
         orientation = ORIEN_AH
     if orientation == ORIEN_AH:
-        on_curve_detect()
-        set_angle(CENTER_POSITION)
-        time.sleep(0.2)
         set_angle(LEFT_POSITION)
         print("turn started")
         
@@ -80,9 +70,6 @@ def callback_2():
     if orientation == ORIEN_NONE:
         orientation = ORIEN_H
     if orientation == ORIEN_H:
-        on_curve_detect()
-        set_angle(CENTER_POSITION)
-        time.sleep(0.2)
         set_angle(RIGHT_POSITION)
         print("turn started")
         
