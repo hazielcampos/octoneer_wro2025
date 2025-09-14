@@ -121,9 +121,9 @@ def mechanics():
     while not stop_threads:
         if is_running:
             if is_turning:
-                forward(50)
+                forward(45)
             else:
-                forward(40)
+                forward(60)
                 
             if not is_turning:
                 correction = PID_control(sensor_left.distance - sensor_right.distance)
