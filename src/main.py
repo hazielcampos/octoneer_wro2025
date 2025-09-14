@@ -137,7 +137,9 @@ def mechanics():
                 time.sleep(0.2)
             laps = turns / 4
             if laps >= 3:
-                time.sleep(0.2)
+                for i in range(10):
+                    PID_control(sensor_left.distance - sensor_right.distance)
+                    time.sleep(0.1)
                 stop_motors()
                 is_running = False
             time.sleep(0.05)
