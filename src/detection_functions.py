@@ -7,9 +7,9 @@ naranja_tol = (27, 35, 69)
 azul_hsv = (118, 77, 92)
 azul_tol = (22, 60, 79)
 
-MIN_AREA = 40
+MIN_AREA = 20
 
-x1, x2 = 200, 400
+x1, x2 = 250, 350
 y1, y2 = 400, 440
 
 def get_mask(roi, color_hsv, tol_hsv):
