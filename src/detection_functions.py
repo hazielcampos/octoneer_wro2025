@@ -2,15 +2,15 @@ import cv2
 import numpy as np
 
 naranja_hsv = (0, 97, 112)
-naranja_tol = (17, 25, 69)
+naranja_tol = (27, 35, 69)
 
 azul_hsv = (118, 77, 92)
-azul_tol = (12, 50, 79)
+azul_tol = (22, 60, 79)
 
-MIN_AREA = 100
+MIN_AREA = 40
 
 x1, x2 = 200, 400
-y1, y2 = 400, 480
+y1, y2 = 400, 440
 
 def get_mask(roi, color_hsv, tol_hsv):
     h, s, v = color_hsv
@@ -24,10 +24,7 @@ def get_mask(roi, color_hsv, tol_hsv):
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
-    
-    kernel_dilate = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
-    mask = cv2.dilate(mask, kernel_dilate, iterations=1)
-    
+        
     num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
     clean_mask = np.zeros_like(mask)
     for i in range(1, num_labels):
@@ -45,9 +42,6 @@ def trigger_line(running, hsv, frame, callback_1, callback_2):
     cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
     mask_1 = get_mask(roi, azul_hsv, azul_tol)
     mask_2 = get_mask(roi, naranja_hsv, naranja_tol)
-    
-    cv2.imshow("Mask Azul", mask_1)
-    cv2.imshow("Mask Naranja", mask_2)
     
     count_1 = cv2.countNonZero(mask_1)
     count_2 = cv2.countNonZero(mask_2)
