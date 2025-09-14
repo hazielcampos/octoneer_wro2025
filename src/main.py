@@ -103,7 +103,7 @@ sensor_left = HCSR04(5, 6)
 
 TURN_THRESHOL = 70
 NEXT_CURVE_THRESHOL = 1.2
-turn_end_delay = 0.9
+turn_end_delay = 0.8
 turn_end_start = 0
 last_curve_time = 0
 
