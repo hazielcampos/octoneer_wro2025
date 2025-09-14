@@ -15,64 +15,92 @@ El codigo hace lo siguiente:
 - Esto se repite por 12 curvas o 3 vueltas
 - El robot se detiene a la 3er vuelta
 """
-"""hey yo wt"""
-
+# ==============================
+# IMPORTS
+# ==============================
 import threading
 import cv2
 import time
-from components.Motor import backward, forward, stop_motors, start as start_pwm
+from components.Motor import forward, stop_motors, start as start_pwm
 from components.HCSR04 import HCSR04
 from components.Buttton import Button
-from detection_functions import trigger_line, reset_last_callback, invert_last_callback
+from detection_functions import trigger_line, reset_last_callback
 from components.Servo import set_angle, CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 from handlers.PID import PID_control
+from enums.enums import Orientation
+from Logger import get_logger
+# ==============================
+# CONSTANTS
+# ==============================
+TURN_THRESHOLD = 70
+NEXT_CURVE_THRESHOLD = 1.2
+TURN_END_DELAY = 0.8
 
+
+# ==============================
+# STATE VARIABLES
+# ==============================
 is_running = False
 stop_threads = False
 is_turning = False
 turns = 0
 should_turn = False
+orientation = Orientation.NO_SET
+turn_end_start = 0
+last_curve_time = 0
+start_time = 0
 
-ORIEN_H = 0
-ORIEN_AH = 1
-ORIEN_NONE = 2
-
-orientation = ORIEN_NONE
-
+# ==============================
+# COMPONENTS
+# ==============================
 btn = Button(17, True)
+sensor_right = HCSR04(24, 23)
+sensor_left = HCSR04(5, 6)
+Log = get_logger()
 
+# ==============================
+# CALLBACKS
+# ==============================
 def btn_callback():
     global is_running
     is_running = not is_running
-btn.set_callback(btn_callback)
 
 def callback_1():
     if not is_running:
         return
     global orientation, turns, should_turn
-    if orientation ==ORIEN_NONE:
-        orientation = ORIEN_AH
-    if orientation == ORIEN_AH:
+    if orientation == Orientation.NO_SET:
+        orientation = Orientation.COUNTERCLOCKWISE
+    if orientation == Orientation.COUNTERCLOCKWISE:
         should_turn = True
-    elif orientation ==ORIEN_H:
+    elif orientation == Orientation.CLOCKWISE:
         turns += 1
 
 def callback_2():
     if not is_running:
         return
     global orientation, turns, should_turn
-    if orientation == ORIEN_NONE:
-        orientation = ORIEN_H
-    if orientation == ORIEN_H:
+    if orientation == Orientation.NO_SET:
+        orientation = Orientation.CLOCKWISE
+    if orientation == Orientation.CLOCKWISE:
         should_turn = True
-    elif orientation == ORIEN_AH:
+    elif orientation == Orientation.COUNTERCLOCKWISE:
         turns += 1
 
+# ==============================
+# COMPONENTS SETUP
+# ==============================
+btn.set_callback(btn_callback)
+
+
+# ==============================
+# Computer Vision main function
+# ==============================
 def vision():
     global stop_threads
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
-        print("No se pudo abrir la cámara")
+        print("[ERROR] Camera can't be oppened")
         return
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -98,46 +126,42 @@ def vision():
     cap.release()
     cv2.destroyAllWindows()
 
-sensor_right = HCSR04(24, 23)
-sensor_left = HCSR04(5, 6)
-
-TURN_THRESHOL = 70
-NEXT_CURVE_THRESHOL = 1.2
-turn_end_delay = 0.8
-turn_end_start = 0
-last_curve_time = 0
-
+# ==============================
+# Mechanics manager, control the motors and servo using the vision and sensors information
+# ==============================
 def mechanics():
-    global orientation, turn_end_start, turns, is_running, is_turning, last_curve_time, should_turn
+    global orientation, turn_end_start, turns, is_running, is_turning, last_curve_time, should_turn, start_time
     start_pwm()
     while not stop_threads:
         if is_running:
+            if start_time <= 0:
+                start_time = time.time()
             left_dist = sensor_left.distance
             right_dist = sensor_right.distance
             if is_turning:
                 forward(45)
                 
-                if turn_end_start > 0 and (time.time() - turn_end_start) > turn_end_delay:
+                if turn_end_start > 0 and (time.time() - turn_end_start) > TURN_END_DELAY:
                     set_angle(CENTER_POSITION)
                     turn_end_start = 0
                     last_curve_time = time.time()
                     is_turning = False
-                    print("turn finished")
+                    Log.Info("Turn finished.")
                     should_turn = False
                     time.sleep(0.2)
             
             else:
-                can_turn_left = left_dist > TURN_THRESHOL and (time.time() - last_curve_time) > NEXT_CURVE_THRESHOL
-                can_turn_right = right_dist > TURN_THRESHOL and (time.time() - last_curve_time) > NEXT_CURVE_THRESHOL
-                if can_turn_left and should_turn and orientation == ORIEN_AH:
+                can_turn_left = left_dist > TURN_THRESHOLD and (time.time() - last_curve_time) > NEXT_CURVE_THRESHOLD
+                can_turn_right = right_dist > TURN_THRESHOLD and (time.time() - last_curve_time) > NEXT_CURVE_THRESHOLD
+                if can_turn_left and should_turn and orientation == Orientation.COUNTERCLOCKWISE:
                     set_angle(LEFT_POSITION)
-                    print("[LOG] turn started LEFT")
+                    Log.Info("Turn started LEFT.")
                     is_turning = True
                     turn_end_start = time.time()
                 
-                elif can_turn_right and should_turn and orientation == ORIEN_H:
+                elif can_turn_right and should_turn and orientation == Orientation.CLOCKWISE:
                     set_angle(RIGHT_POSITION)
-                    print("[LOG] turn started RIGHT")
+                    Log.Info("Turn started RIGHT.")
                     is_turning = True
                     turn_end_start = time.time()
                 else:
@@ -148,20 +172,25 @@ def mechanics():
             laps = turns / 4
             if laps >= 3:
                 # Final PID to center the robot and end
-                print(f"finished at: {laps}")
                 for i in range(5):
                     PID_control(sensor_left.distance - sensor_right.distance)
                     time.sleep(0.1)
                 stop_motors()
+                Log.Info(f"Finished with total laps of: {laps}")
+                Log.Info(f"Total run time: {time.time() - start_time} seconds.")
                 is_running = False
             time.sleep(0.05)
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
-            orientation = ORIEN_NONE
+            orientation = Orientation.NO_SET
             turns = 0
             reset_last_callback()
             should_turn = False
+
+# =============================================================
+# MAIN FUNCTION
+# =============================================================
 
 def main():
     thread_mechanics = threading.Thread(target=mechanics, daemon=True)
@@ -176,7 +205,7 @@ def main():
 try:
     main()
 except KeyboardInterrupt:
-    print("User interrupt")
+    Log.Warn("User interrupt.")
 finally:
     stop_threads = True
     stop_motors()

@@ -1,5 +1,8 @@
 import cv2
 import numpy as np
+from Logger import get_logger
+
+Log = get_logger()
 
 naranja_hsv = (0, 97, 112)
 naranja_tol = (27, 35, 69)
@@ -50,14 +53,14 @@ def trigger_line(running, hsv, frame, callback_1, callback_2):
         if not running:
             return
         if callback_1 and last_callback != 1:
-            print("Azul detectado")
+            Log.Info("Blue detected")
             callback_1()
         last_callback = 1
     elif count_2 > MIN_AREA:
         if not running:
             return
         if callback_2 and last_callback != 2:
-            print("Naranja detectado")
+            Log.Info("Orange detected")
             callback_2()
         last_callback = 2
         
