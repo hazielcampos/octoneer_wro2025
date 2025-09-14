@@ -1,3 +1,27 @@
+"""
+valores de naranja
+h = 9
+s = 87
+v = 157
+
+tol_h = 17
+tol_s = 50
+tol_v = 79
+
+"""
+
+"""
+valores de azul
+
+h 118
+s 77
+v 92
+
+tol_h 12
+tol_s 50
+tol_v 79
+"""
+
 import cv2
 import numpy as np
 
@@ -19,6 +43,9 @@ cv2.createTrackbar("V", "Trackbars", 150, 255, nothing)  # brillo
 cv2.createTrackbar("Tol H", "Trackbars", 10, 50, nothing)
 cv2.createTrackbar("Tol S", "Trackbars", 50, 127, nothing)
 cv2.createTrackbar("Tol V", "Trackbars", 50, 127, nothing)
+
+# Tamaño mínimo de área para considerar válido (ajustable)
+MIN_AREA = 500
 
 while True:
     ret, frame = cap.read()
@@ -43,9 +70,23 @@ while True:
     # Crear máscara
     mask = cv2.inRange(hsv, lower, upper)
 
+    # Filtrar ruido con operaciones morfológicas
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)  # elimina ruido fino
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel) # rellena huecos
+
+    # Eliminar blobs muy pequeños
+    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
+    clean_mask = np.zeros_like(mask)
+
+    for i in range(1, num_labels):  # saltar el fondo (i=0)
+        area = stats[i, cv2.CC_STAT_AREA]
+        if area >= MIN_AREA:
+            clean_mask[labels == i] = 255
+
     # Mostrar resultados
     cv2.imshow("Original", frame)
-    cv2.imshow("Mask", mask)
+    cv2.imshow("Mask", clean_mask)
 
     # Imprimir rangos actuales
     print(f"Lower: {lower}, Upper: {upper}", end="\r")
