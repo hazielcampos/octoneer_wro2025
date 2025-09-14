@@ -210,7 +210,7 @@ def mechanics():
                 Log.Info(f"Total run time: {time.time() - start_time} seconds.")
                 is_running = False
                 time.sleep(0.2)
-            time.sleep(0.05)
+            time.sleep(0.01)
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
