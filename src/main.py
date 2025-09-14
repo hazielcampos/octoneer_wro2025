@@ -166,7 +166,7 @@ def mechanics():
                     turn_end_start = time.time()
                 else:
                     forward(100)
-                    correction = PID_control(left_dist - right_dist)
+                    correction = PID_control(left_dist - right_dist, Lane.RIGHT)
                     set_angle(correction)
 
             laps = turns / 4
