@@ -58,7 +58,6 @@ def callback_1():
         set_angle(LEFT_POSITION)
         print("turn started")
         
-        forward(100)
         is_turning = True
     elif orientation ==ORIEN_H:
         turn_end_start = time.time()
@@ -74,7 +73,6 @@ def callback_2():
         set_angle(RIGHT_POSITION)
         print("turn started")
         
-        forward(100)
         
         is_turning = True
     elif orientation == ORIEN_AH:
@@ -119,9 +117,9 @@ def mechanics():
     while not stop_threads:
         if is_running:
             if is_turning:
-                forward(60)
-            else:
                 forward(50)
+            else:
+                forward(40)
                 
             if not is_turning:
                 correction = PID_control(sensor_left.distance - sensor_right.distance)

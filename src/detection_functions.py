@@ -7,7 +7,7 @@ naranja_tol = (17, 25, 69)
 azul_hsv = (118, 77, 92)
 azul_tol = (12, 50, 79)
 
-MIN_AREA = 300
+MIN_AREA = 100
 
 x1, x2 = 200, 400
 y1, y2 = 400, 480
