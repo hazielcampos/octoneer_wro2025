@@ -122,8 +122,10 @@ def mechanics():
         if is_running:
             if is_turning:
                 forward(45)
-            else:
+            elif sensor_right.distance < 50 or sensor_left.distance < 50:
                 forward(60)
+            else:
+                forward(40)
                 
             if not is_turning:
                 correction = PID_control(sensor_left.distance - sensor_right.distance)
