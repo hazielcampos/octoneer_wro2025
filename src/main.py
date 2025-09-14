@@ -201,9 +201,8 @@ def mechanics():
             laps = turns / 4
             if laps >= 3:
                 # Final PID to center the robot and end
-                for i in range(int(round(POST_END_CORRECTION_TIME * 10))):
-                    PID_control(sensor_left.distance - sensor_right.distance, current_lane)
-                    time.sleep(0.1)
+                forward(40)
+                time.sleep(POST_END_CORRECTION_TIME)
                 stop_motors()
                 Log.Info(f"Finished with total laps of: {laps}")
                 Log.Info(f"Total run time: {time.time() - start_time} seconds.")
