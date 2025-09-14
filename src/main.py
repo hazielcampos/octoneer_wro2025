@@ -45,7 +45,7 @@ def btn_callback():
     is_running = not is_running
 btn.set_callback(btn_callback)
 
-turn_end_delay = 0.4
+turn_end_delay = 0.3
 turn_end_start = 0
 
 def callback_1():
@@ -56,7 +56,7 @@ def callback_1():
         orientation = ORIEN_AH
     if orientation == ORIEN_AH:
         set_angle(CENTER_POSITION)
-        time.sleep(0.3)
+        time.sleep(0.2)
         set_angle(LEFT_POSITION)
         print("turn started")
         
@@ -73,7 +73,7 @@ def callback_2():
         orientation = ORIEN_H
     if orientation == ORIEN_H:
         set_angle(CENTER_POSITION)
-        time.sleep(0.3)
+        time.sleep(0.2)
         set_angle(RIGHT_POSITION)
         print("turn started")
         
@@ -140,7 +140,7 @@ def mechanics():
                 time.sleep(0.2)
                 stop_motors()
                 is_running = False
-            time.sleep(0.1)
+            time.sleep(0.05)
         else:
             stop_motors()
             set_angle(CENTER_POSITION)
