@@ -143,7 +143,7 @@ def mechanics():
                 forward(45)
                 delay = TURN_END_DELAY
                 if current_lane == Lane.RIGHT:
-                    delay = TURN_END_DELAY / 2
+                    delay = TURN_END_DELAY / 1.5
                 elif current_lane == Lane.LEFT:
                     delay = TURN_END_DELAY * 1.5
                     
