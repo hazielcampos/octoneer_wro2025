@@ -32,9 +32,9 @@ from Logger import get_logger
 # ==============================
 # CONSTANTS
 # ==============================
-TURN_THRESHOLD = 70
+TURN_THRESHOLD = 100
 NEXT_CURVE_THRESHOLD = 1.2
-TURN_END_DELAY = 0.6
+TURN_END_DELAY = 1.2
 
 
 # ==============================
@@ -165,7 +165,7 @@ def mechanics():
                     is_turning = True
                     turn_end_start = time.time()
                 else:
-                    forward(100)
+                    forward(40)
                     correction = PID_control(left_dist - right_dist, Lane.RIGHT)
                     set_angle(correction)
 
