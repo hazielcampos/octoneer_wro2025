@@ -26,18 +26,18 @@ def trigger_line(running, hsv, frame, callback_1, callback_2):
     count_1 = cv2.countNonZero(mask_1)
     count_2 = cv2.countNonZero(mask_2)
     
-    if count_1 > 200 and last_callback != 1:
+    if count_1 > 200:
         cv2.putText(frame, "Mask 1 Detected", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 165, 255), 2)
         if not running:
             return
-        if callback_1:
+        if callback_1 and last_callback != 1:
             callback_1()
         last_callback = 1
-    elif count_2 > 200 and last_callback != 2:
+    elif count_2 > 200:
         cv2.putText(frame, "Mask 2 Detected", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 165, 255), 2)
         if not running:
             return
-        if callback_2:
+        if callback_2 and last_callback != 2:
             callback_2()
         last_callback = 2
     else:
