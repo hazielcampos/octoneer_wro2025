@@ -3,7 +3,7 @@ from components.Servo import CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 from enums.enums import Lane
 Kp = 0.5
 Ki = 0.0
-Kd = 0.1
+Kd = 0.05
 
 
 integral = 0
