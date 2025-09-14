@@ -23,6 +23,11 @@ cv2.createTrackbar("UV", "Trackbars", 255, 255, nothing)
 while True:
     _, frame = cap.read()
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    h, s, v = cv2.split(hsv)
+    v = cv2.equalizeHist(v)
+    hsv = cv2.merge([h, s, v])
+    
+    hsv = cv2.GaussianBlur(hsv, (5, 5), 0)
 
     # Leer valores de los sliders
     lh = cv2.getTrackbarPos("LH", "Trackbars")
@@ -40,6 +45,7 @@ while True:
 
     cv2.imshow("Mask", mask)
     cv2.imshow("Result", result)
+    cv2.imshow("HSV", hsv)
 
     if cv2.waitKey(1) & 0xFF == 27: # ESC para salir
         break
