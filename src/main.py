@@ -123,7 +123,7 @@ def mechanics():
             if is_turning:
                 forward(45)
             elif sensor_right.distance < 50 or sensor_left.distance < 50:
-                forward(60)
+                forward(80)
             else:
                 forward(40)
                 
