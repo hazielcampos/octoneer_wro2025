@@ -9,7 +9,7 @@ integral = 0
 last_error = 0
 last_time = time.time()
 
-def map_error_to_servo_correction(error, max_error=100, max_servo_correction=18):
+def map_error_to_servo_correction(error, max_error=100, max_servo_correction=13):
     """
     Mapea el error de ultrasonicos (-100 a +100) a corrección de servo limitada
     max_servo_correction: máxima corrección en grados desde el centro (52°)
@@ -22,7 +22,7 @@ def map_error_to_servo_correction(error, max_error=100, max_servo_correction=18)
     
     return servo_correction
 
-def quantize_to_discrete_steps(correction, center=52, step_size=2, min_val=42, max_val=62):
+def quantize_to_discrete_steps(correction, center=CENTER_POSITION, step_size=2, min_val=RIGHT_POSITION, max_val=LEFT_POSITION):
     """
     Convierte la corrección continua a pasos discretos de step_size grados
     centrados en center, con límites min_val y max_val
