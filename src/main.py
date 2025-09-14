@@ -209,6 +209,7 @@ def mechanics():
                 Log.Info(f"Finished with total laps of: {laps}")
                 Log.Info(f"Total run time: {time.time() - start_time} seconds.")
                 is_running = False
+                time.sleep(0.2)
             time.sleep(0.05)
         else:
             stop_motors()
