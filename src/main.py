@@ -137,6 +137,7 @@ def mechanics():
                 time.sleep(0.2)
             laps = turns / 4
             if laps >= 3:
+                # Final PID to center the robot and end
                 for i in range(10):
                     PID_control(sensor_left.distance - sensor_right.distance)
                     time.sleep(0.1)
