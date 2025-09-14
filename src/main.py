@@ -55,6 +55,8 @@ def callback_1():
     if orientation ==ORIEN_NONE:
         orientation = ORIEN_AH
     if orientation == ORIEN_AH:
+        set_angle(CENTER_POSITION)
+        time.sleep(0.2)
         set_angle(LEFT_POSITION)
         print("turn started")
         
@@ -70,6 +72,8 @@ def callback_2():
     if orientation == ORIEN_NONE:
         orientation = ORIEN_H
     if orientation == ORIEN_H:
+        set_angle(CENTER_POSITION)
+        time.sleep(0.2)
         set_angle(RIGHT_POSITION)
         print("turn started")
         
