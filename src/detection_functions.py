@@ -1,10 +1,10 @@
 import cv2
 
-lower_1 = (101, 20, 78)
-upper_1 = (154, 126, 128)
+lower_1 = (80, 79, 9)
+upper_1 = (134, 160, 174)
 
-lower_2 = (0, 35, 88)
-upper_2 = (37, 124, 199)
+lower_2 = (5, 40, 179)
+upper_2 = (84, 115, 255)
 
 x1, x2 = 200, 400
 y1, y2 = 400, 480
@@ -16,20 +16,24 @@ def trigger_line(running, hsv, frame, callback_1, callback_2):
     cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
     mask_1 = cv2.inRange(roi, lower_1, upper_1)
     mask_2 = cv2.inRange(roi, lower_2, upper_2)
+    
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+    mask_1 = cv2.morphologyEx(mask_1, cv2.MORPH_OPEN, kernel)
+    mask_2 = cv2.morphologyEx(mask_2, cv2.MORPH_OPEN, kernel)
     cv2.imshow("Mask 1", mask_1)
     cv2.imshow("Mask 2", mask_2)
     
     count_1 = cv2.countNonZero(mask_1)
     count_2 = cv2.countNonZero(mask_2)
     
-    if count_1 > 500 and last_callback != 1:
+    if count_1 > 300 and last_callback != 1:
         cv2.putText(frame, "Mask 1 Detected", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 165, 255), 2)
         if not running:
             return
         if callback_1:
             callback_1()
         last_callback = 1
-    elif count_2 > 500 and last_callback != 2:
+    elif count_2 > 300 and last_callback != 2:
         cv2.putText(frame, "Mask 2 Detected", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 165, 255), 2)
         if not running:
             return

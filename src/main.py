@@ -97,6 +97,12 @@ def vision():
             continue
         
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        h, s, v = cv2.split(hsv)
+        v = cv2.equalizeHist(v)
+        hsv = cv2.merge([h, s, v])
+        
+        hsv = cv2.GaussianBlur(hsv, (5, 5), 0)
+        cv2.imshow("HSV", hsv)
         trigger_line(is_running, hsv, frame, callback_1, callback_2)
         text = "NONE" if orientation == ORIEN_NONE else "SOMETHING"
         if orientation == ORIEN_AH:
