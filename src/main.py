@@ -155,6 +155,15 @@ def mechanics():
                     Log.Info("Turn finished.")
                     should_turn = False
                     time.sleep(0.2)
+                elif orientation == Orientation.CLOCKWISE and right_dist <= 10:
+                    set_angle(CENTER_POSITION)
+                    turn_end_start = 0
+                    last_curve_time = time.time()
+                    is_turning = False
+                    Log.Info("Turn finished.")
+                    should_turn = False
+                    time.sleep(0.2)
+                
             
             else:
                 can_turn_left = left_dist > TURN_THRESHOLD and (time.time() - last_curve_time) > NEXT_CURVE_THRESHOLD
