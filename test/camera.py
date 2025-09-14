@@ -1,12 +1,12 @@
 """
 valores de naranja
-h = 9
-s = 87
-v = 157
+h = 0
+s = 97
+v = 112
 
 tol_h = 17
-tol_s = 50
-tol_v = 79
+tol_s = 25
+tol_v = 69
 
 """
 

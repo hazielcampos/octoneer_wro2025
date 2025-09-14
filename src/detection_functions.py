@@ -1,39 +1,65 @@
 import cv2
+import numpy as np
 
-lower_1 = (107, 46, 63)
-upper_1 = (130, 129, 148)
+naranja_hsv = (0, 97, 112)
+naranja_tol = (17, 25, 69)
 
-lower_2 = (0, 76, 24)
-upper_2 = (45, 124, 113)
+azul_hsv = (118, 77, 92)
+azul_tol = (12, 50, 79)
+
+MIN_AREA = 300
 
 x1, x2 = 200, 400
 y1, y2 = 400, 480
+
+def get_mask(roi, color_hsv, tol_hsv):
+    h, s, v = color_hsv
+    tol_h, tol_s, tol_v = tol_hsv
+    
+    lower = (max(0, h - tol_h), max(0, s - tol_s), max(0, v - tol_v))
+    upper = (min(179, h + tol_h), min(255, s + tol_s), min(255, v + tol_v))
+    
+    mask = cv2.inRange(roi, lower, upper)
+    
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+    
+    kernel_dilate = cv2.getStructuringElement(cv2.MORPH_RECT, (9,9))
+    mask = cv2.dilate(mask, kernel_dilate, iterations=1)
+    
+    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
+    clean_mask = np.zeros_like(mask)
+    for i in range(1, num_labels):
+        area = stats[i, cv2.CC_STAT_AREA]
+        if area >= MIN_AREA:
+            clean_mask[labels == i] = 255
+            
+    return clean_mask
+    
 
 last_callback = 0
 def trigger_line(running, hsv, frame, callback_1, callback_2):
     global last_callback
     roi = hsv[y1:y2, x1:x2]
     cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-    mask_1 = cv2.inRange(roi, lower_1, upper_1)
-    mask_2 = cv2.inRange(roi, lower_2, upper_2)
+    mask_1 = get_mask(roi, azul_hsv, azul_tol)
+    mask_2 = get_mask(roi, naranja_hsv, naranja_tol)
     
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
-    mask_1 = cv2.morphologyEx(mask_1, cv2.MORPH_OPEN, kernel)
-    mask_2 = cv2.morphologyEx(mask_2, cv2.MORPH_OPEN, kernel)
-    cv2.imshow("Mask 1", mask_1)
-    cv2.imshow("Mask 2", mask_2)
+    cv2.imshow("Mask Azul", mask_1)
+    cv2.imshow("Mask Naranja", mask_2)
     
     count_1 = cv2.countNonZero(mask_1)
     count_2 = cv2.countNonZero(mask_2)
     
-    if count_1 > 200:
+    if count_1 > MIN_AREA:
         print("Azul detectado")
         if not running:
             return
         if callback_1 and last_callback != 1:
             callback_1()
         last_callback = 1
-    elif count_2 > 200:
+    elif count_2 > MIN_AREA:
         print("Naranja detectado")
         if not running:
             return
