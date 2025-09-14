@@ -21,6 +21,29 @@ tol_h 12
 tol_s 50
 tol_v 79
 """
+
+"""
+valores verde
+h 80
+s 109
+v 91
+
+tol_h 21
+tol_s 44
+tol_v 48
+"""
+
+"""
+valores rojo
+
+h 179
+s 133
+v 141
+
+tol_h 15 
+tol_s 72
+tol_v 120
+"""
 import cv2
 import numpy as np
 

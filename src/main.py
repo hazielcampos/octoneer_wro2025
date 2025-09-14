@@ -35,6 +35,9 @@ from Logger import get_logger
 TURN_THRESHOLD = 100
 NEXT_CURVE_THRESHOLD = 1.2
 TURN_END_DELAY = 1.2
+AVERAGE_SPEED = 40
+TURN_SPEED = 45
+POST_END_CORRECTION_TIME = 1.5 # seconds
 
 
 # ==============================
@@ -140,7 +143,7 @@ def mechanics():
             left_dist = sensor_left.distance
             right_dist = sensor_right.distance
             if is_turning:
-                forward(45)
+                forward(TURN_SPEED)
                 delay = TURN_END_DELAY
                 if current_lane == Lane.CENTER:
                     delay = TURN_END_DELAY / 1.5
@@ -191,14 +194,14 @@ def mechanics():
                     is_turning = True
                     turn_end_start = time.time()
                 else:
-                    forward(40)
+                    forward(AVERAGE_SPEED)
                     correction = PID_control(left_dist - right_dist, current_lane)
                     set_angle(correction)
 
             laps = turns / 4
             if laps >= 3:
                 # Final PID to center the robot and end
-                for i in range(15):
+                for i in range(POST_END_CORRECTION_TIME * 10):
                     PID_control(sensor_left.distance - sensor_right.distance, current_lane)
                     time.sleep(0.1)
                 stop_motors()

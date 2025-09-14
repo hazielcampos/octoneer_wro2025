@@ -1,9 +1,9 @@
 import time
 from components.Servo import CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 from enums.enums import Lane
-Kp = 0.6
+Kp = 0.5
 Ki = 0.0
-Kd = 0.04
+Kd = 0.1
 
 
 integral = 0
