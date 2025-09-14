@@ -27,14 +27,14 @@ from components.Buttton import Button
 from detection_functions import trigger_line, reset_last_callback
 from components.Servo import set_angle, CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 from handlers.PID import PID_control
-from enums.enums import Orientation
+from enums.enums import Orientation, Lane
 from Logger import get_logger
 # ==============================
 # CONSTANTS
 # ==============================
 TURN_THRESHOLD = 70
 NEXT_CURVE_THRESHOLD = 1.2
-TURN_END_DELAY = 0.4
+TURN_END_DELAY = 0.6
 
 
 # ==============================
@@ -173,7 +173,7 @@ def mechanics():
             if laps >= 3:
                 # Final PID to center the robot and end
                 for i in range(15):
-                    PID_control(sensor_left.distance - sensor_right.distance)
+                    PID_control(sensor_left.distance - sensor_right.distance, Lane.RIGHT)
                     time.sleep(0.1)
                 stop_motors()
                 Log.Info(f"Finished with total laps of: {laps}")
