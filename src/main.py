@@ -156,6 +156,8 @@ def mechanics():
                     should_turn = False
                     time.sleep(0.2)
                 elif orientation == Orientation.CLOCKWISE and right_dist <= 10:
+                    set_angle(LEFT_POSITION)
+                    time.sleep(0.2)
                     set_angle(CENTER_POSITION)
                     turn_end_start = 0
                     last_curve_time = time.time()
@@ -163,6 +165,15 @@ def mechanics():
                     Log.Info("Turn finished.")
                     should_turn = False
                     time.sleep(0.2)
+                elif orientation == Orientation.COUNTERCLOCKWISE and left_dist <= 10:
+                    set_angle(RIGHT_POSITION)
+                    time.sleep(0.2)
+                    set_angle(CENTER_POSITION)
+                    turn_end_start = 0
+                    last_curve_time = time.time()
+                    is_turning = False
+                    Log.Info("Turn finished.")
+                    should_turn = False
                 
             
             else:
@@ -181,14 +192,14 @@ def mechanics():
                     turn_end_start = time.time()
                 else:
                     forward(40)
-                    correction = PID_control(left_dist - right_dist, Lane.RIGHT)
+                    correction = PID_control(left_dist - right_dist, current_lane)
                     set_angle(correction)
 
             laps = turns / 4
             if laps >= 3:
                 # Final PID to center the robot and end
                 for i in range(15):
-                    PID_control(sensor_left.distance - sensor_right.distance, Lane.RIGHT)
+                    PID_control(sensor_left.distance - sensor_right.distance, current_lane)
                     time.sleep(0.1)
                 stop_motors()
                 Log.Info(f"Finished with total laps of: {laps}")
