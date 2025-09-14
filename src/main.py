@@ -165,7 +165,7 @@ def mechanics():
                     is_turning = True
                     turn_end_start = time.time()
                 else:
-                    forward(40)
+                    forward(60)
                     correction = PID_control(left_dist - right_dist)
                     set_angle(correction)
 
@@ -187,6 +187,7 @@ def mechanics():
             turns = 0
             reset_last_callback()
             should_turn = False
+            start_time = 0
 
 # =============================================================
 # MAIN FUNCTION
