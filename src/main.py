@@ -96,7 +96,7 @@ def vision():
 sensor_right = HCSR04(24, 23)
 sensor_left = HCSR04(5, 6)
 
-TURN_THRESHOL = 200
+TURN_THRESHOL = 100
 NEXT_CURVE_THRESHOL = 2
 turn_end_delay = 0.7
 turn_end_start = 0
