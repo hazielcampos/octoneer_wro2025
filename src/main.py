@@ -33,10 +33,10 @@ from Logger import get_logger
 # CONSTANTS
 # ==============================
 TURN_THRESHOLD = 100
-NEXT_CURVE_THRESHOLD = 1.2
-TURN_END_DELAY = 1.2
-AVERAGE_SPEED = 80
-TURN_SPEED = 45
+NEXT_CURVE_THRESHOLD = 3
+TURN_END_DELAY = 1.5
+AVERAGE_SPEED = 90
+TURN_SPEED = 100
 POST_END_CORRECTION_TIME = 1.5 # seconds
 
 
@@ -178,6 +178,7 @@ def mechanics():
                     Log.Info("Turn finished.")
                     should_turn = False
                 
+            
             
             else:
                 can_turn_left = left_dist > TURN_THRESHOLD and (time.time() - last_curve_time) > NEXT_CURVE_THRESHOLD
