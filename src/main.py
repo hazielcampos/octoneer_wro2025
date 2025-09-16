@@ -33,10 +33,10 @@ from Logger import get_logger
 # CONSTANTS
 # ==============================
 TURN_THRESHOLD = 100
-NEXT_CURVE_THRESHOLD = 3
+NEXT_CURVE_THRESHOLD = 1.2
 TURN_END_DELAY = 1.5
-AVERAGE_SPEED = 90
-TURN_SPEED = 100
+AVERAGE_SPEED = 80
+TURN_SPEED = 45
 POST_END_CORRECTION_TIME = 1.5 # seconds
 
 
@@ -123,6 +123,7 @@ def vision():
         
         hsv = cv2.GaussianBlur(hsv, (5, 5), 0)
         trigger_line(is_running, hsv, frame, callback_1, callback_2)
+        cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
             break
