@@ -130,8 +130,10 @@ def vision():
         
         obstacleClasifier.set_frame(frame)
         
-        area, (x, y, w, heigth), color, bgr = obstacleClasifier.get_nearest_box()
-        next_obstacle = color
+        obs = obstacleClasifier.get_nearest_box()
+        if obs:
+            area, (x, y, w, heigth), color, bgr = obs
+            next_obstacle = color
         cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
