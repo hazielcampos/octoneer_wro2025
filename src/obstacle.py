@@ -27,8 +27,9 @@ from components.Buttton import Button
 from detection_functions import trigger_line, reset_last_callback
 from components.Servo import set_angle, CENTER_POSITION, RIGHT_POSITION, LEFT_POSITION
 from handlers.PID import PID_control
-from enums.enums import Orientation, Lane
+from enums.enums import Orientation, Lane, Color
 from Logger import get_logger
+from clasifier import ObstacleClasifier
 # ==============================
 # CONSTANTS
 # ==============================
@@ -53,6 +54,7 @@ turn_end_start = 0
 last_curve_time = 0
 start_time = 0
 current_lane = Lane.CENTER
+next_obstacle = Color.NONE
 
 # ==============================
 # COMPONENTS
@@ -101,7 +103,7 @@ btn.set_callback(btn_callback)
 # Computer Vision main function
 # ==============================
 def vision():
-    global stop_threads
+    global stop_threads, next_obstacle
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
         print("[ERROR] Camera can't be oppened")
@@ -123,6 +125,13 @@ def vision():
         
         hsv = cv2.GaussianBlur(hsv, (5, 5), 0)
         trigger_line(is_running, hsv, frame, callback_1, callback_2)
+        
+        obstacleClasifier = ObstacleClasifier(((0, 150), (640, 300)))
+        
+        obstacleClasifier.set_frame(frame)
+        
+        area, (x, y, w, heigth), color, bgr = obstacleClasifier.get_nearest_box()
+        next_obstacle = color
         cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
@@ -135,7 +144,7 @@ def vision():
 # Mechanics manager, control the motors and servo using the vision and sensors information
 # ==============================
 def mechanics():
-    global orientation, turn_end_start, turns, is_running, is_turning, last_curve_time, should_turn, start_time, current_lane
+    global orientation, turn_end_start, turns, is_running, is_turning, last_curve_time, should_turn, start_time, current_lane, next_obstacle
     start_pwm()
     while not stop_threads:
         if is_running:
@@ -196,6 +205,13 @@ def mechanics():
                     is_turning = True
                     turn_end_start = time.time()
                 else:
+                    if next_obstacle == Color.RED:
+                        current_lane = Lane.RIGHT
+                    elif next_obstacle == Color.GREEN:
+                        current_lane = Lane.LEFT
+                    else:
+                        current_lane = Lane.CENTER
+                    
                     forward(AVERAGE_SPEED)
                     correction = PID_control(left_dist - right_dist, current_lane)
                     set_angle(correction)
@@ -221,6 +237,7 @@ def mechanics():
             reset_last_callback()
             should_turn = False
             start_time = 0
+            next_obstacle = Color.NONE
 
 # =============================================================
 # MAIN FUNCTION

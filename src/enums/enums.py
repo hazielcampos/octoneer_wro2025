@@ -8,6 +8,11 @@ class Orientation(Enum):
     CLOCKWISE = 0
     COUNTERCLOCKWISE = 1
     NO_SET = 2
+
+class Color(Enum):
+    NONE = 0
+    RED = 1
+    GREEN = 2
     
 class Lane(Enum):
     RIGHT = 0
