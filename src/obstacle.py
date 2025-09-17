@@ -119,6 +119,7 @@ def vision():
         ret, frame = cap.read()
         if not ret:
             continue
+        obstacleClasifier.set_frame(frame)
         
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         h, s, v = cv2.split(hsv)
@@ -129,9 +130,7 @@ def vision():
         trigger_line(is_running, hsv, frame, callback_1, callback_2)
         
         
-        
-        obstacleClasifier.set_frame(frame)
-        
+                
         obs = obstacleClasifier.get_nearest_box()
         if obs:
             area, (x, y, w, heigth), color, bgr = obs
