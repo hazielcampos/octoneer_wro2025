@@ -97,6 +97,8 @@ def callback_2():
 # COMPONENTS SETUP
 # ==============================
 btn.set_callback(btn_callback)
+obstacleClasifier = ObstacleClasifier(((0, 150), (640, 300)))
+obstacleClasifier.start()
 
 
 # ==============================
@@ -126,7 +128,7 @@ def vision():
         hsv = cv2.GaussianBlur(hsv, (5, 5), 0)
         trigger_line(is_running, hsv, frame, callback_1, callback_2)
         
-        obstacleClasifier = ObstacleClasifier(((0, 150), (640, 300)))
+        
         
         obstacleClasifier.set_frame(frame)
         
