@@ -53,9 +53,9 @@ def quantize_to_discrete_steps(correction, center=CENTER_POSITION, step_size=4, 
 def PID_control(error, lane, Kp = 0.5, Ki = 0.0, Kd = 0.05):
     global integral, last_error, last_time
     if lane == Lane.RIGHT:
-        error = error - 30
+        error = error - 40
     elif lane == Lane.LEFT:
-        error = error + 30
+        error = error + 40
     # Tiempo transcurrido desde la última llamada
     now = time.time()
     dt = now - last_time if now - last_time > 0 else 1e-6
