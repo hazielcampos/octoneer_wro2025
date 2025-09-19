@@ -37,7 +37,7 @@ NEXT_CURVE_THRESHOLD = 1.2
 TURN_END_DELAY = 1.2
 AVERAGE_SPEED = 80
 TURN_SPEED = 100
-POST_END_CORRECTION_TIME = 1.5 # seconds
+POST_END_CORRECTION_TIME = 0.5 # seconds
 
 
 # ==============================

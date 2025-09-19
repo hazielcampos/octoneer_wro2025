@@ -4,11 +4,11 @@ from Logger import get_logger
 
 Log = get_logger()
 
-naranja_hsv = (0, 97, 112)
-naranja_tol = (27, 35, 69)
+naranja_hsv = (7, 111, 129)
+naranja_tol = (10, 50, 50)
 
-azul_hsv = (118, 77, 92)
-azul_tol = (22, 60, 79)
+azul_hsv = (107, 117, 121)
+azul_tol = (16, 54, 50)
 
 MIN_AREA = 20
 
