@@ -33,7 +33,7 @@ from clasifier import ObstacleClasifier
 # ==============================
 # CONSTANTS
 # ==============================
-TURN_THRESHOLD = 100
+TURN_THRESHOLD = 70
 NEXT_CURVE_THRESHOLD = 1.2
 TURN_END_DELAY = 1.2
 AVERAGE_SPEED = 80
