@@ -123,7 +123,6 @@ def vision():
         
         hsv = cv2.GaussianBlur(hsv, (5, 5), 0)
         trigger_line(is_running, hsv, frame, callback_1, callback_2)
-        cv2.imshow("Frame", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
             break
