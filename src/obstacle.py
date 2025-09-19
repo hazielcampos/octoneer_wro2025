@@ -135,9 +135,6 @@ def vision():
         if obs:
             area, (x, y, w, heigth), color, bgr = obs
             next_obstacle = color
-        display = obstacleClasifier.get_display_frame()
-        cv2.imshow("Frame", frame)
-        cv2.imshow("Frame display", display)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             stop_threads = True
             break
