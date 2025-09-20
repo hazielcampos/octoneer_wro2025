@@ -136,15 +136,36 @@ def vision():
 def mechanics():
     global orientation, turn_end_start, turns, is_running, is_turning, last_curve_time, should_turn, start_time, current_lane
     start_pwm()
+    already_started = False
     while not stop_threads:
         if is_running:
-            if start_time <= 0:
-                start_time = time.time()
             left_dist = sensor_left.distance
             right_dist = sensor_right.distance
+            if not already_started:
+                if left_dist < 20 and right_dist > 40:
+                    set_angle(RIGHT_POSITION)
+                    forward(40)
+                    time.sleep(0.3)
+                    set_angle(LEFT_POSITION)
+                    time.sleep(0.2)
+                    set_angle(CENTER_POSITION)
+                elif right_dist < 20 and left_dist > 40:
+                    set_angle(LEFT_POSITION)
+                    forward(40)
+                    time.sleep(0.3)
+                    set_angle(RIGHT_POSITION)
+                    time.sleep(0.2)
+                    set_angle(CENTER_POSITION)
+            already_started = True
+            if start_time <= 0:
+                start_time = time.time()
             if is_turning:
                 forward(TURN_SPEED)
                 delay = TURN_END_DELAY
+                if current_lane == Lane.CENTER:
+                    delay = TURN_END_DELAY / 1.5
+                elif current_lane == Lane.CENTER:
+                    delay = TURN_END_DELAY * 1.5
                     
                 if turn_end_start > 0 and (time.time() - turn_end_start) > delay:
                     set_angle(CENTER_POSITION)
@@ -216,6 +237,7 @@ def mechanics():
             orientation = Orientation.NO_SET
             turns = 0
             reset_last_callback()
+            already_started = False
             should_turn = False
             start_time = 0
 
