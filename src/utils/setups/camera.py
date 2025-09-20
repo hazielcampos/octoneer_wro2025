@@ -25,15 +25,15 @@ while True:
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     # Leer valores de los sliders
-    lh = cv2.getTrackbarPos("LH", "Trackbars")
-    ls = cv2.getTrackbarPos("LS", "Trackbars")
-    lv = cv2.getTrackbarPos("LV", "Trackbars")
-    uh = cv2.getTrackbarPos("UH", "Trackbars")
-    us = cv2.getTrackbarPos("US", "Trackbars")
-    uv = cv2.getTrackbarPos("UV", "Trackbars")
+    ll = cv2.getTrackbarPos("L_lower", "Trackbars")
+    ul = cv2.getTrackbarPos("L_upper", "Trackbars")
+    la = cv2.getTrackbarPos("A_lower", "Trackbars")
+    ua = cv2.getTrackbarPos("A_upper", "Trackbars")
+    lb = cv2.getTrackbarPos("B_lower", "Trackbars")
+    ub = cv2.getTrackbarPos("B_upper", "Trackbars")
 
-    lower = np.array([lh, ls, lv])
-    upper = np.array([uh, us, uv])
+    lower = np.array([ll, la, lb])
+    upper = np.array([ul, ua, ub])
 
     mask = cv2.inRange(hsv, lower, upper)
     result = cv2.bitwise_and(frame, frame, mask=mask)
