@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 from Logger import get_logger
-from masks import lower_orange, upper_orange, lower_blue, upper_blue
 
 Log = get_logger()
 
@@ -15,23 +14,6 @@ MIN_AREA = 20
 
 x1, x2 = 250, 350
 y1, y2 = 380, 480
-
-def get_mask_lab(roi, lower, upper):
-    
-    mask = cv2.inRange(roi, lower, upper)
-    
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
-    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
-    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
-        
-    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
-    clean_mask = np.zeros_like(mask)
-    for i in range(1, num_labels):
-        area = stats[i, cv2.CC_STAT_AREA]
-        if area >= MIN_AREA:
-            clean_mask[labels == i] = 255
-            
-    return clean_mask
 
 def get_mask(roi, color_hsv, tol_hsv):
     h, s, v = color_hsv
@@ -60,8 +42,8 @@ last_callback = 0
 def trigger_line(running, hsv, frame, callback_1, callback_2):
     global last_callback
     roi = hsv[y1:y2, x1:x2]
-    mask_1 = get_mask(roi, lower_blue, upper_blue)
-    mask_2 = get_mask(roi, lower_orange, upper_orange)
+    mask_1 = get_mask(roi, azul_hsv, azul_tol)
+    mask_2 = get_mask(roi, naranja_hsv, naranja_tol)
     
     count_1 = cv2.countNonZero(mask_1)
     count_2 = cv2.countNonZero(mask_2)
