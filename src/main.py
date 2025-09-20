@@ -34,7 +34,7 @@ from Logger import get_logger
 # ==============================
 TURN_THRESHOLD = 50
 NEXT_CURVE_THRESHOLD = 0.8
-TURN_END_DELAY = 0.4
+TURN_END_DELAY = 1.2
 AVERAGE_SPEED = 40
 TURN_SPEED = 100
 POST_END_CORRECTION_TIME = 0.5 # seconds
