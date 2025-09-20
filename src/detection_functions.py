@@ -66,7 +66,7 @@ def trigger_line(running, hsv, frame, callback_1, callback_2):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     roi = hsv[y1:y2, x1:x2]
     mask_1 = get_mask(roi, azul_hsv, azul_tol)
-    mask_2 = get_mask(roi, naranja_hsv, naranja_tol)
+    mask_2 = get_mask_special(hsv, naranja_hsv, naranja_tol)
     
     count_1 = cv2.countNonZero(mask_1)
     count_2 = cv2.countNonZero(mask_2)
