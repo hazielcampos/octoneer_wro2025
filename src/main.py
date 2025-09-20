@@ -34,7 +34,7 @@ from Logger import get_logger
 # ==============================
 TURN_THRESHOLD = 50
 NEXT_CURVE_THRESHOLD = 0.8
-TURN_END_DELAY = 0.7
+TURN_END_DELAY = 0.5
 AVERAGE_SPEED = 80
 TURN_SPEED = 100
 POST_END_CORRECTION_TIME = 0.5 # seconds
@@ -190,7 +190,7 @@ def mechanics():
                     is_turning = True
                     turn_end_start = time.time()
                 
-                elif can_turn_right:
+                elif can_turn_right and should_turn and orientation == Orientation.CLOCKWISE:
                     set_angle(RIGHT_POSITION)
                     Log.Info("Turn started RIGHT.")
                     is_turning = True

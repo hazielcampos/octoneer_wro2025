@@ -4,7 +4,7 @@ from Logger import get_logger
 
 Log = get_logger()
 
-naranja_hsv = (7, 111, 129)
+naranja_hsv = (10, 120, 150)
 naranja_tol = (10, 50, 50)
 
 azul_hsv = (107, 117, 121)
