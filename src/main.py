@@ -183,6 +183,7 @@ def mechanics():
             else:
                 can_turn_left = left_dist > TURN_THRESHOLD and (time.time() - last_curve_time) > NEXT_CURVE_THRESHOLD
                 can_turn_right = right_dist > TURN_THRESHOLD and (time.time() - last_curve_time) > NEXT_CURVE_THRESHOLD
+                
                 if can_turn_left and should_turn and orientation == Orientation.COUNTERCLOCKWISE:
                     set_angle(LEFT_POSITION)
                     Log.Info("Turn started LEFT.")
