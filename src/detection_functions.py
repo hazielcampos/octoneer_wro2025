@@ -15,6 +15,28 @@ MIN_AREA = 20
 x1, x2 = 250, 350
 y1, y2 = 380, 480
 
+def get_mask_special(hsv, color_hsv, tol_hsv):
+    h, s, v = color_hsv
+    tol_h, tol_s, tol_v = tol_hsv
+    
+    lower = (max(0, h - tol_h), max(0, s - tol_s), max(0, v - tol_v))
+    upper = (min(179, h + tol_h), min(255, s + tol_s), min(255, v + tol_v))
+    
+    mask = cv2.inRange(hsv, lower, upper)
+    
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+        
+    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
+    clean_mask = np.zeros_like(mask)
+    for i in range(1, num_labels):
+        area = stats[i, cv2.CC_STAT_AREA]
+        if area >= MIN_AREA:
+            clean_mask[labels == i] = 255
+            
+    return clean_mask[y1:y2, x1:x2]
+
 def get_mask(roi, color_hsv, tol_hsv):
     h, s, v = color_hsv
     tol_h, tol_s, tol_v = tol_hsv
