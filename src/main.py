@@ -33,10 +33,10 @@ from Logger import get_logger
 # CONSTANTS
 # ==============================
 TURN_THRESHOLD = 50
-NEXT_CURVE_THRESHOLD = 0.8
+NEXT_CURVE_THRESHOLD = 1.2
 TURN_END_DELAY = 1.2
 AVERAGE_SPEED = 40
-TURN_SPEED = 100
+TURN_SPEED = 80
 POST_END_CORRECTION_TIME = 0.5 # seconds
 
 
