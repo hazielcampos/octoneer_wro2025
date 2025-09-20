@@ -145,10 +145,6 @@ def mechanics():
             if is_turning:
                 forward(TURN_SPEED)
                 delay = TURN_END_DELAY
-                if current_lane == Lane.CENTER:
-                    delay = TURN_END_DELAY / 1.5
-                elif current_lane == Lane.CENTER:
-                    delay = TURN_END_DELAY * 1.5
                     
                 if turn_end_start > 0 and (time.time() - turn_end_start) > delay:
                     set_angle(CENTER_POSITION)
