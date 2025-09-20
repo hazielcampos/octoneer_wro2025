@@ -168,9 +168,10 @@ def mechanics():
                     Log.Info("Turn finished.")
                     should_turn = False
                     time.sleep(0.2)
-                elif orientation == Orientation.COUNTERCLOCKWISE and left_dist <= 10:
+                elif orientation == Orientation.COUNTERCLOCKWISE and left_dist <= 15:
+                    forward(TURN_SPEED)
                     set_angle(RIGHT_POSITION)
-                    time.sleep(0.2)
+                    time.sleep(0.3)
                     set_angle(CENTER_POSITION)
                     turn_end_start = 0
                     last_curve_time = time.time()
