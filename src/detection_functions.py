@@ -41,6 +41,7 @@ def get_mask(roi, color_hsv, tol_hsv):
 last_callback = 0
 def trigger_line(running, hsv, frame, callback_1, callback_2):
     global last_callback
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     roi = hsv[y1:y2, x1:x2]
     mask_1 = get_mask(roi, azul_hsv, azul_tol)
     mask_2 = get_mask(roi, naranja_hsv, naranja_tol)
